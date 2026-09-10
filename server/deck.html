@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Mission Control · Uday’s Universe</title>
+    <link rel="stylesheet" href="/shared/universe.css" />
+    <link rel="stylesheet" href="/command/command.css" />
+    <script defer src="/command/deck.js"></script>
+  </head>
+  <body class="u-page">
+    <main class="u-container">
+      <nav class="u-nav">
+        <a href="/index.html">Return to orbit</a
+        ><span class="u-eyebrow">COMMAND DECK / PRIVATE</span>
+      </nav>
+      <header class="deck-header">
+        <div>
+          <p class="u-eyebrow">MISSION CONTROL</p>
+          <h1>Welcome aboard.</h1>
+          <p id="owner-email" class="u-muted"></p>
+        </div>
+        <form action="/auth/logout" method="post">
+          <input type="hidden" name="csrf" id="logout-csrf" /><button
+            id="sign-out"
+            disabled
+          >
+            Sign out
+          </button>
+        </form>
+      </header>
+      <p id="deck-status" role="status">Loading your destinations…</p>
+      <div class="u-grid" id="private-apps"></div>
+      <div class="deck-empty" id="deck-empty" hidden>
+        <h2>No private destinations yet.</h2>
+        <p>
+          Your owner session is active. Add your applications to the gateway
+          configuration to make them appear here.
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

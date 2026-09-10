@@ -66,87 +66,16 @@ function initConsole() {
 }
 
 function writeToConsole(text) {
-    // Save to circular buffer
-    consoleLogBuffer.push(text);
+    consoleLogBuffer.push(String(text));
     if (consoleLogBuffer.length > MAX_LOG_BUFFER) consoleLogBuffer.shift();
-    
-    const output = document.getElementById('ap-console-out');
-
-    
-    // Left input setup
-    if (inputLeft) {
-        inputLeft.addEventListener('focus', () => {
-            isConsoleTyping = true;
-        });
-        inputLeft.addEventListener('blur', () => {
-            isConsoleTyping = false;
-        });
-        inputLeft.addEventListener('keydown', () => {
-            playClickSound();
-        });
-        inputLeft.addEventListener('keyup', (event) => {
-            if (event.key === 'Enter') {
-                const rawVal = inputLeft.value;
-                const cleanVal = rawVal.trim().toLowerCase();
-                inputLeft.value = '';
-                if (inputBottom) inputBottom.value = '';
-                
-                if (cleanVal.length === 0) return;
-                
-                writeToConsole(`> ${rawVal}`);
-                executeConsoleCommand(cleanVal);
-            }
-        });
-    }
-
-    // Bottom input setup
-    if (inputBottom) {
-        inputBottom.addEventListener('focus', () => {
-            isConsoleTyping = true;
-        });
-        inputBottom.addEventListener('blur', () => {
-            isConsoleTyping = false;
-        });
-        inputBottom.addEventListener('keydown', () => {
-            playClickSound();
-        });
-        inputBottom.addEventListener('keyup', (event) => {
-            if (event.key === 'Enter') {
-                const rawVal = inputBottom.value;
-                const cleanVal = rawVal.trim().toLowerCase();
-                inputBottom.value = '';
-                if (inputLeft) inputLeft.value = '';
-                
-                if (cleanVal.length === 0) return;
-                
-                writeToConsole(`> ${rawVal}`);
-                executeConsoleCommand(cleanVal);
-            }
-        });
-    }
-}
-
-function writeToConsole(text) {
     const output = document.getElementById('ap-console-out');
     if (!output) return;
-    
-    const div = document.createElement('div');
-    div.style.marginBottom = '6px';
-    div.style.fontFamily = "'Courier New', Courier, monospace";
-    output.appendChild(div);
-    
-    let charIdx = 0;
-    function typeChar() {
-        if (charIdx < text.length) {
-            div.textContent += text.charAt(charIdx);
-            charIdx++;
-            output.scrollTop = output.scrollHeight;
-            playClickSound();
-            setTimeout(typeChar, 10);
-        }
-    }
-    
-    typeChar();
+    output.replaceChildren(...consoleLogBuffer.map(line => {
+        const div = document.createElement('div');
+        div.textContent = line;
+        return div;
+    }));
+    output.scrollTop = output.scrollHeight;
 }
 
 function executeConsoleCommand(command) {

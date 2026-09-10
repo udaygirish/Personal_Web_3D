@@ -1,2 +1,9 @@
 .DS_Store
 notes.txt
+node_modules/
+.env
+.env.*
+!.env.example
+.sessions/
+server/apps.json
+coverage/

@@ -1,0 +1,116 @@
+.world-directory {
+  position: fixed;
+  left: 20px;
+  top: 80px;
+  width: 280px;
+  padding: 20px;
+  background: #091422ed;
+  border: 1px solid #29425e;
+  border-radius: 12px;
+  color: #e8eef7;
+  font: 15px/1.5 system-ui;
+  z-index: 1100;
+  max-height: calc(100dvh - 130px);
+  overflow: auto;
+  backdrop-filter: blur(12px);
+}
+.world-directory h2 {
+  margin: 10px 0;
+  font-size: 1.5rem;
+}
+.world-directory p {
+  color: #a5b8cf;
+}
+.world-directory a {
+  color: #81e4df;
+}
+.world-directory label {
+  display: block;
+  margin: 15px 0;
+}
+.world-directory button,
+.world-directory select,
+.world-photo-controls button {
+  background: #14273c;
+  border: 1px solid #37516c;
+  border-radius: 5px;
+  color: #e8eef7;
+  padding: 10px;
+  cursor: pointer;
+  font: inherit;
+  min-height: 44px;
+}
+.world-planet-list {
+  display: grid;
+  gap: 8px;
+}
+.world-planet-list button {
+  text-align: left;
+  display: grid;
+  gap: 4px;
+}
+.world-planet-list span {
+  font-size: 0.85rem;
+  color: #a5b8cf;
+}
+.world-directory.collapsed > :not(#world-directory-toggle) {
+  display: none;
+}
+.world-directory.collapsed {
+  width: auto;
+  padding: 6px;
+}
+.world-photo-controls {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20000;
+  display: flex;
+  gap: 12px;
+  background: #0b192b;
+  padding: 12px;
+  border: 1px solid #29425e;
+  color: white;
+  font: 14px system-ui;
+  align-items: center;
+}
+.world-photo #cockpit-bezel,
+.world-photo .world-directory,
+.world-photo .universe-nav,
+.world-photo #rover-hud,
+.world-photo .title-overlay,
+.world-photo .view-toggle,
+.world-photo #planetInfoCard,
+.world-photo #planet-approach-hud {
+  display: none !important;
+}
+#planetInfoCard {
+  max-height: 65dvh;
+  overflow: auto;
+}
+#world-exhibit input[type="range"] {
+  width: 100%;
+  accent-color: #81e4df;
+}
+#land-btn {
+  min-height: 44px;
+}
+@media (max-width: 800px) {
+  .world-directory {
+    top: 65px;
+    left: 10px;
+    width: 220px;
+    padding: 12px;
+  }
+  .world-directory:not(:focus-within):not(:hover) {
+    max-height: 160px;
+  }
+  .world-photo-controls {
+    flex-wrap: wrap;
+    width: 90%;
+  }
+}
+body:has(.u-tour) .world-directory {
+  max-height: calc(100dvh - 340px);
+}

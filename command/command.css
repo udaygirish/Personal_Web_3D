@@ -1,0 +1,50 @@
+.u-page {
+  padding-top: 65px;
+}
+.command-gate {
+  max-width: 850px;
+  margin: 70px auto;
+}
+.command-gate h1 {
+  font-size: clamp(2.7rem, 7vw, 5.5rem);
+  margin: 25px 0;
+}
+.gate-panel {
+  padding: 30px;
+  border: 1px solid var(--u-line);
+  border-left: 3px solid var(--u-gold);
+  border-radius: 8px;
+  background: #12223788;
+  margin: 35px 0;
+}
+.gate-panel h2 {
+  font-size: 1.6rem;
+}
+.deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 50px 0;
+}
+.deck-header h1 {
+  font-size: 3rem;
+  margin: 10px 0;
+}
+.deck-header p {
+  margin: 8px 0;
+}
+.deck-empty {
+  border: 1px dashed var(--u-line);
+  padding: 35px;
+  border-radius: 10px;
+}
+@media (max-width: 600px) {
+  .command-gate {
+    margin: 40px auto;
+  }
+  .gate-panel {
+    padding: 20px;
+  }
+}

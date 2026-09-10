@@ -425,7 +425,7 @@ function shatterCrystal(index, point) {
             opacity: 0.8,
             blending: THREE.AdditiveBlending
         });
-        const debris = new THREE.Mesh(debrisGeo, debrisMat);
+        const debris = new THREE.Mesh(debrisGeo.clone(), debrisMat);
         debris.position.copy(point);
         
         debris.userData = {
@@ -440,6 +440,7 @@ function shatterCrystal(index, point) {
         crystalDebris.push(debris);
     }
     
+    debrisGeo.dispose();
     // 2. Spawn harvestable energy matrix octahedron
     const matrixGeo = new THREE.OctahedronGeometry(0.5, 0);
     const matrixMat = new THREE.MeshStandardMaterial({

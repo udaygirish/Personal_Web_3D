@@ -3,7 +3,7 @@
 // ========================================
 
 // We expose state to the window object to allow seamless access 
-// across all our new ES modules without rewriting 3,400 lines of code.
+// across our classic scripts without rewriting 3,400 lines of code.
 
 window.scene = null;
 window.camera = null;

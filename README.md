@@ -269,3 +269,12 @@ Visit the live site: [Your deployment URL here]
 **Made with ❤️ and lots of ☕ by Uday Girish Maradana**
 
 *Explore the universe, one wormhole at a time.* 🌌
+
+## Universe expansion (feature branch)
+
+This branch adds visitor modes, an expanded My World View, the Transmission Archive and an optional owner-only Google-authenticated Command Deck.
+
+- [Architecture, content editing and validation](docs/universe-expansion.md)
+- [Private gateway and Google sign-in setup](docs/private-command-deck.md)
+
+Use Node 22+ and run `npm ci`, `npm run build`, `npm run check`, `npm test`, then `npm start`. The existing public pages still work on a static host. Private routes require the optional Node gateway and real owner/provider configuration; they fail closed without it.

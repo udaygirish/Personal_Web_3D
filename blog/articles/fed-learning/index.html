@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Federated Learning and Continual Learning · Uday’s Universe</title><meta name="description" content="An introduction to distributed machine learning techniques (Federated Learning) and incremental learning systems (Continual Learning)."><meta property="og:title" content="Federated Learning and Continual Learning"><meta property="og:description" content="An introduction to distributed machine learning techniques (Federated Learning) and incremental learning systems (Continual Learning)."><meta property="og:type" content="website"><link rel="stylesheet" href="../../../shared/universe.css"><link rel="stylesheet" href="../../../blog/style.css"><link rel="stylesheet" href="../../../blog/vendor/katex/katex.min.css"><script defer src="../../../shared/universe.js"></script></head><body class="u-page"><div class="u-container"><nav class="u-nav"><a href="../../../index.html">UDAY’S UNIVERSE</a><a href="../../../my_world_view/index.html">My World View</a><a href="../../../blog/index.html">Transmission Archive</a></nav><main><header class="u-hero article-hero"><p class="u-eyebrow">TRANSMISSION / 2021-08-06 / 2 MIN READ</p><h1>Federated Learning and Continual Learning</h1><p class="u-muted">Uday Girish Maradana</p><div class="u-actions"><a class="u-button" href="../../index.html">All transmissions</a><button data-save="fed-learning" aria-pressed="false">Save to reading queue</button><button id="copy-link">Copy link</button></div><p id="reader-status" role="status"></p></header><div class="reading-layout"><aside class="article-toc"><p class="u-eyebrow">ON THIS FREQUENCY</p><a href="#section-0"></a><a href="#section-1">Federated Learning:</a><a href="#section-2">Continual Learning</a></aside><article class="article-body"><h1 id="section-0"></h1><h3 id="section-1">Federated Learning:</h3><p>Link: <a href="https://federated.withgoogle.com/" rel="noopener noreferrer">https://federated.withgoogle.com/</a></p>
+<p>Firms actively working on it : Google, Facebook , NVIDIA</p>
+<p>Federated Learning (FL)  is a distributed machine learning approach which enables training on a large corpus of decentralized data residing on devices like mobile phones. FL is one instance of the more general approach of “bringing the code to the data, instead of the
+data to the code” and addresses the fundamental problems of privacy, ownership, and locality of data.   </p>
+<ul>
+<li>Read Paper <a href="https://arxiv.org/pdf/1902.01046.pdf" rel="noopener noreferrer">here.</a></li>
+</ul>
+<p><img src="../../../my_web/_posts/Federated_learning_Intro/Untitled.png" alt="Federated%20learning%20and%20Continual%20learning%204a67eea70937471ca5304bbe6c88193a/Untitled.png" loading="lazy" /></p>
+<ul>
+<li>Google Blog Image</li>
+</ul>
+<p><img src="../../../my_web/_posts/Federated_learning_Intro/Untitled_1.png" alt="Federated%20learning%20and%20Continual%20learning%204a67eea70937471ca5304bbe6c88193a/Untitled%201.png" loading="lazy" /></p>
+<ul>
+<li>Nvidia Clara Federated Server Description</li>
+</ul>
+<p><img src="../../../my_web/_posts/Federated_learning_Intro/Untitled_2.png" alt="Federated%20learning%20and%20Continual%20learning%204a67eea70937471ca5304bbe6c88193a/Untitled%202.png" loading="lazy" /></p>
+<p>Where it can be used :</p>
+<ol>
+<li>Healthcare</li>
+<li>Analytics on Private Data</li>
+<li>Distributed Weight Shared learning use cases - ML Technical Point of View</li>
+</ol>
+<h3 id="section-2">Continual Learning</h3><p>Most of the information collected from </p>
+<p>Main Link: <a href="https://www.continualai.org/home/" rel="noopener noreferrer">https://www.continualai.org/home/</a></p>
+<p><a href="https://medium.com/continual-ai/why-continuous-learning-is-the-key-towards-machine-intelligence-1851cb57c308" rel="noopener noreferrer">https://medium.com/continual-ai/why-continuous-learning-is-the-key-towards-machine-intelligence-1851cb57c308</a></p>
+<p>Continual learning, also called lifelong learning or online machine learning, is a fundamental idea in machine learning in which models continuously learn and evolve based on the input of increasing amounts of data while retaining previously learned knowledge. In practice, this refers to supporting a model’s ability to autonomously learn and adapt in production as new data comes in. Just like us, this concept too, is based on mimicking humans’ ability to learn incrementally by acquiring, fine-tuning, and transferring knowledge and skills throughout their lifespan.</p>
+<p>Basically it is Incremental Knowledge Learning with Continuity in Adapting to the Knowledge.</p>
+<p>Use cases:</p>
+<ol>
+<li>Continual Bias addition to knowledge - recommender systems and Anomaly detection</li>
+<li>Ever changing data either partial or complete updates</li>
+</ol>
+<p>CL Enables Multimodal- Multitask learning too .</p>
+<p>Lukasz Kaiser &amp; All from Google Brain this year [8] come up with a single model which has been able to learn very different tasks in very different domains and with many input modalities (with a huge static training set).</p>
+<p><strong>State-of-the-art &amp; Future Challenges</strong></p>
+<p><strong>Pros</strong>:</p>
+<ol>
+<li>Contrasting <em><a href="https://en.wikipedia.org/wiki/Catastrophic_interference" rel="noopener noreferrer">Catastrophic Forgetting</a></em> is possible in many ways, and not only through careful hyper-parametrizations or regularization techniques.</li>
+<li>We have already proved that CL can be used in complex problems in <em>Vision</em>, <em>Supervised</em> or with <em>Reinforce</em>.</li>
+<li>Accuracy results (on some toy benchmarks) are impressively high, almost in line with other techniques which <em>have access</em> to previously encountered data.</li>
+</ol>
+<p><strong>Cons</strong>:</p>
+<ol>
+<li>It’s not completely clear how evaluate CL techniques, and a more formalized framework may be needed.</li>
+<li>We have pretty much focused on solving a rigid sequence of (simple) tasks (on the scale of dozens) and not on streaming perception data, neither on multimodal/multitask problems.</li>
+<li>It’s not clear how to behave after the saturation of the capability of the model, neither how to selectively forget.</li>
+</ol>
+</article></div><section><h2>AI field notes</h2><ol><li><a href="../ai-graphics/" >AI in Graphics - Gaming, VFX, Movie Making</a></li><li><a href="../autonomous-cv/" >AI in Robotics &amp; Autonomous Systems</a></li><li><a href="../low-power-cv/" >Low Power Computer Vision &amp; Microcontrollers</a></li><li><a href="../quantum-computing/" >Quantum Computing to Quantum Machine Learning</a></li><li><a href="../fed-learning/" aria-current="page">Federated Learning and Continual Learning</a></li></ol></section><section class="related"><p class="u-eyebrow">CONNECTED SIGNALS</p><h2>Continue exploring.</h2><div class="u-grid"><article class="u-card transmission" data-post="quantum-computing"><p class="u-eyebrow">AI / 2021-07-06</p><h2><a href="../../articles/quantum-computing/">Quantum Computing to Quantum Machine Learning</a></h2><p class="u-muted">How superposition and entanglement can scale machine learning models exponentially using tools like Cirq and Qiskit.</p><div><span class="u-chip">AI</span><span class="u-chip">ML</span><span class="u-chip">Quantum Computing</span></div><div class="u-actions"><span class="u-muted">2 min read</span><button data-save="quantum-computing" aria-pressed="false">Save</button></div></article><article class="u-card transmission" data-post="low-power-cv"><p class="u-eyebrow">AI / 2021-06-06</p><h2><a href="../../articles/low-power-cv/">Low Power Computer Vision &amp; Microcontrollers</a></h2><p class="u-muted">Exploring low-power computer vision for industrial automation and deploying models on edge devices like Google Coral and Jetson Nano.</p><div><span class="u-chip">AI</span><span class="u-chip">Low Power CV</span><span class="u-chip">Embedded ML</span></div><div class="u-actions"><span class="u-muted">2 min read</span><button data-save="low-power-cv" aria-pressed="false">Save</button></div></article><article class="u-card transmission" data-post="autonomous-cv"><p class="u-eyebrow">AI / 2021-05-15</p><h2><a href="../../articles/autonomous-cv/">AI in Robotics &amp; Autonomous Systems</a></h2><p class="u-muted">Deep dive into computer vision, speech processing, and reinforcement learning in mobile, aerial, and defense robotics.</p><div><span class="u-chip">AI</span><span class="u-chip">Robotics</span><span class="u-chip">Self Driving</span><span class="u-chip">Defence</span></div><div class="u-actions"><span class="u-muted">2 min read</span><button data-save="autonomous-cv" aria-pressed="false">Save</button></div></article></div></section></main><footer class="u-footer">Transmission Archive ·  · <a href="../../../my_world_view/index.html?planet=Projects">Explore projects in orbit</a></footer><script src="../../reader.js"></script></div></body></html>

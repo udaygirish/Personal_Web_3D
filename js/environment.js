@@ -76,6 +76,7 @@ function simulateLoading() {
     // Guard: skip can only fire once
     let skipAllowed = false;
     let skipFired = false;
+    let completed = false;
 
     function skipLoading() {
         if (!skipAllowed || skipFired) return;
@@ -84,8 +85,8 @@ function simulateLoading() {
     }
 
     // Attach skip listeners — keydown or click anywhere
-    document.addEventListener('keydown', skipLoading, { once: true });
-    document.addEventListener('click', skipLoading, { once: true });
+    document.addEventListener('keydown', skipLoading);
+    document.addEventListener('click', skipLoading);
 
     // Step 1: Show blinking cursor with Matrix rain
     function showCursor() {
@@ -279,6 +280,8 @@ function simulateLoading() {
 
     // Step 4: Complete and launch
     function completeLoading() {
+        if (completed) return;
+        completed = true;
         // Remove skip hint
         const skipHint = document.getElementById('skip-hint');
         if (skipHint) skipHint.remove();

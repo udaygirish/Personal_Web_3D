@@ -1,49 +1,9 @@
-# How to Edit Content
+# Editing content
 
-You can now edit content in simple markdown files! Here's how:
+Personal, Work, and Research content currently lives in their `index.html` files. The legacy `content/` Markdown loader is not enabled.
 
-## Personal Site (`left/`)
+Blog posts live in `blog/posts/` with metadata in `blog/blog-config.js`. Run `npm run build` after editing either to regenerate article pages, search data, and RSS.
 
-Edit these files in `left/content/`:
-- `about.md` - About me section
-- `interests.md` - My interests
+World destinations and exhibit links are in `my_world_view/world-content.js`. Expanded personal destinations live in `worlds/content.js`. The page clearly labels proposed and unpublished entries.
 
-## Professional Site (`right/`)
-
-Edit these files in `right/content/`:
-- `about.md` - Professional summary
-- `experience.md` - Work history (coming soon)
-- `skills.md` - Technical skills (coming soon)
-
-## Markdown Syntax Examples
-
-```markdown
-# Heading 1
-## Heading 2
-### Heading 3
-
-**Bold text**
-*Italic text*
-
-- Bullet point
-- Another bullet
-
-1. Numbered list
-2. Item two
-
-[Link text](https://example.com)
-
-> Quote
-
-\`\`\`
-Code block
-\`\`\`
-```
-
-## How It Works
-
-1. Edit any `.md` file in the `content/` folders
-2. Reload the page
-3. Content automatically renders with styling!
-
-No need to touch HTML anymore - just edit markdown files! 🎉
+See `docs/universe-expansion.md` for the full architecture and `docs/private-command-deck.md` for authentication.

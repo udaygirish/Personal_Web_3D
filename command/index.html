@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Command Deck · Uday’s Universe</title>
+    <link rel="stylesheet" href="../shared/universe.css" />
+    <link rel="stylesheet" href="command.css" />
+    <script defer src="../shared/universe.js"></script>
+    <script defer src="config.js"></script>
+    <script defer src="command.js"></script>
+  </head>
+  <body class="u-page">
+    <div class="u-container">
+      <nav class="u-nav">
+        <a href="../index.html?from=command">Return to the universe</a
+        ><span class="u-eyebrow">OWNER ACCESS</span>
+      </nav>
+      <main class="command-gate">
+        <p class="u-eyebrow">RESTRICTED SECTOR / COMMAND DECK</p>
+        <h1>Your universe.<br />Your controls.</h1>
+        <p class="u-muted">Authenticate to open your private applications.</p>
+        <div class="gate-panel">
+          <span class="u-chip">IDENTITY CHECK</span>
+          <h2 id="gate-title">Checking the gateway…</h2>
+          <p id="gate-status" role="status">Establishing a connection.</p>
+          <a id="gate-login" class="u-button primary" hidden
+            >Continue with Google</a
+          ><a id="gate-open" class="u-button primary" hidden
+            >Open Command Deck</a
+          ><button id="gate-retry" hidden>Try again</button>
+        </div>
+        <p class="u-muted">
+          Public destinations remain available without signing in.
+        </p>
+      </main>
+    </div>
+  </body>
+</html>

@@ -22,7 +22,7 @@ function initScene() {
         alpha: true
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
 
     // Setup post-processing with bloom
     composer = new THREE.EffectComposer(renderer);
@@ -63,12 +63,13 @@ function init() {
     const urlParams = new URLSearchParams(window.location.search);
     const returningFrom = urlParams.get('from');
 
-    if (returningFrom) {
+    if (returningFrom && WORMHOLE_CONFIG.some(w => w.id === returningFrom)) {
         // Skip loading and cockpit - go straight to reverse tunnel
         handleReturnFromSite(returningFrom);
     } else {
         // Normal loading sequence
-        simulateLoading();
+        document.getElementById("loading-screen").classList.add("hidden");
+        showScene(SCENES.COCKPIT);
     }
 
     animate();
@@ -301,12 +302,12 @@ function createStarfield() {
     scene.add(starLayers.far);
 }
 
-let spaceCrystalsMesh;
-let spaceCrystalsData = [];
+// Crystal state is owned by state.js.
 
 function createSpaceCrystals() {
     // Colors matching the wormholes
     const colors = [0x00ff88, 0x06ffa5, 0xff6b35, 0x4cc9f0, 0x9d4edd];
+    spaceCrystalsData = [];
     const numCrystals = 45;
     
     // We use a single geometry for the instanced mesh.
@@ -489,21 +490,7 @@ function triggerCrystalCollision(index, data) {
     writeToConsole(`[WARNING] METEOR COLLISION AT SECTOR (${cpX}, ${cpY}, ${cpZ})`);
     writeToConsole(`SHIELD ENERGY ATTENUATED: ${shieldEnergy.toFixed(1)}%`);
 
-    // Temporary emissive intensity increase and flash red
-    if (crystal.material) {
-        const originalIntensity = crystal.material.emissiveIntensity || 0.22;
-        const originalColor = crystal.userData.originalColor || 0x00ff88;
-        
-        crystal.material.emissiveIntensity = 2.5;
-        crystal.material.color.setHex(0xff3333); // flash red
-        
-        setTimeout(() => {
-            if (crystal.material) {
-                crystal.material.emissiveIntensity = originalIntensity;
-                crystal.material.color.setHex(originalColor);
-            }
-        }, 400);
-    }
+
 }
 
 function createWarpLines() {

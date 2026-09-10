@@ -19,17 +19,18 @@ function resetIdleTimer() {
     }
 }
 
-function animate() {
-    requestAnimationFrame(animate);
+function animate() { UniverseClock.start(simulateFrame, () => { composer.render(); }); }
+
+function simulateFrame() {
 
     if (currentScene === SCENES.OPEN_SPACE || currentScene === SCENES.COCKPIT) {
         if (currentScene === SCENES.OPEN_SPACE) {
             updateFlightControls();
             checkWormholeProximity();
         }
-        animateWormholes();
+        if (!window.universeReducedMotion) animateWormholes();
         animateSpaceCrystals();
-        animateWarpLines();
+        if (!window.universeReducedMotion) animateWarpLines();
         
         // Cockpit shield regeneration (dependent on powerMode shunts)
         if (shieldEnergy < 100) {
@@ -117,6 +118,8 @@ function animate() {
             debris.material.opacity = debris.scale.x;
             if (debris.scale.x < 0.05) {
                 scene.remove(debris);
+                debris.geometry.dispose();
+                debris.material.dispose();
                 crystalDebris.splice(i, 1);
             }
         }
@@ -133,6 +136,8 @@ function animate() {
             const dist = em.position.distanceTo(camera.position);
             if (dist < 6.0) {
                 scene.remove(em);
+                em.geometry.dispose();
+                em.material.dispose();
                 energyMatrixes.splice(i, 1);
                 
                 // Recover shield
@@ -145,7 +150,7 @@ function animate() {
         }
         
         // Rare Solar Supernova Event triggers (1/8000 chance per frame)
-        if (!supernovaActive && Math.random() < 0.00012) {
+        if (!window.universeReducedMotion && !supernovaActive && Math.random() < 0.00012) {
             supernovaActive = true;
             supernovaTime = 100; // lasts 100 frames
             playRumbleSound();
@@ -217,7 +222,7 @@ function animate() {
         }
 
         // Idle Screensaver check
-        if (!idleOrbitActive && Date.now() - lastActivityTime > IDLE_TIMEOUT_MS && wormholes.length > 0) {
+        if (!document.querySelector("dialog[open]") && !idleOrbitActive && Date.now() - lastActivityTime > IDLE_TIMEOUT_MS && wormholes.length > 0) {
             idleOrbitActive = true;
             warpActive = true;
             if (typeof playWarpSpoolSound === 'function') playWarpSpoolSound(true);
@@ -242,10 +247,11 @@ function animate() {
         }
     }
 
-    composer.render();
+
 }
 
 function updateFlightControls() {
+    if (document.querySelector("dialog[open]")) return;
     // Autopilot check override
     if (autopilotActive && autopilotTarget) {
         if (moveForward || moveBackward || moveLeft || moveRight || moveUp || moveDown || barrelRoll !== 0) {
@@ -364,6 +370,7 @@ function updateFlightControls() {
 }
 
 function checkWormholeProximity() {
+    if (document.querySelector("dialog[open]")) return;
     if (Date.now() - lastWormholeExitTime < 3000) return; // 3-second cooldown after exiting!
     
     wormholes.forEach(wormhole => {
@@ -785,7 +792,7 @@ function setupEventListeners() {
 
     // Click on canvas or background viewport to fire mining laser
     window.addEventListener('click', (event) => {
-        if (currentScene !== SCENES.OPEN_SPACE || isConsoleTyping) return;
+        if (currentScene !== SCENES.OPEN_SPACE || isConsoleTyping || document.querySelector('dialog[open]') || event.target.closest?.('.universe-nav, .u-tour, a, button')) return;
         
         // Block firing when clicking on interactive cockpit buttons/inputs/panels
         const target = event.target;
@@ -822,6 +829,7 @@ function initMobileControls() {
 }
 
 function onTouchStart(event) {
+    if (document.querySelector("dialog[open]") || event.target.closest?.(".universe-nav, .u-tour, a, button, input, select, label")) return;
     if (isConsoleTyping) return;
     
     // Ignore UI touches
@@ -860,6 +868,7 @@ function onTouchStart(event) {
 }
 
 function onTouchMove(event) {
+    if (document.querySelector("dialog[open]") || event.target.closest?.(".universe-nav, .u-tour, a, button, input, select, label")) return;
     if (event.touches.length > 0 && currentScene === SCENES.OPEN_SPACE) {
         // Prevent default scrolling on canvas
         const target = event.target;
@@ -886,6 +895,7 @@ function onTouchEnd(event) {
 }
 
 function onKeyDown(event) {
+    if (event.target.closest?.("input, textarea, select, [contenteditable], dialog[open]")) return;
     if (isConsoleTyping) return;
     const key = event.key.toLowerCase();
 

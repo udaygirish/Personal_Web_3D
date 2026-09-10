@@ -3,8 +3,8 @@
 The Personal Web 3D portfolio is a multi-page interactive web experience. It utilizes vanilla JavaScript, HTML, CSS, and Three.js for 3D rendering.
 
 ## Directory Structure
-- `/` - Root directory containing the main landing page (`index.html`), global styles, and overarching JavaScript (`app.js`, `hud.js`).
-- `/my_world_view/` - The core 3D interactive portfolio. Contains its own `index.html` and a highly customized `app.js` using Three.js to render a solar system and procedural planet biomes.
+- `/` - Root directory containing the main landing page (`index.html`), global styles, and shared-global JavaScript (`js/core.js`, `hud.js`).
+- `/my_world_view/` - The core 3D interactive portfolio. Contains its own `index.html` and a highly customized `js/core.js` using Three.js to render a solar system and procedural planet biomes.
 - `/docs/` - System documentation.
 - `/personal/`, `/work/`, `/blog/` - Other sub-sections of the portfolio for detailed content pages.
 - `/js/` - Shared scripts.
