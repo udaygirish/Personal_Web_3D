@@ -66,7 +66,21 @@
   };
 
   let toastHost;
+  const booting = () => {
+    const l = document.getElementById("loading-screen");
+    return l && !l.classList.contains("hidden");
+  };
   function toast(eyebrow, title, desc) {
+    // Never cover the boot terminal; show once it has finished.
+    if (booting()) {
+      const wait = setInterval(() => {
+        if (!booting()) {
+          clearInterval(wait);
+          toast(eyebrow, title, desc);
+        }
+      }, 400);
+      return;
+    }
     if (!toastHost) {
       toastHost = document.createElement("div");
       toastHost.className = "u-toasts";
@@ -95,7 +109,7 @@
     store.set("universe-badges", saved);
     const [, title, desc] = byId[id];
     toast("BADGE UNLOCKED", title, desc);
-    if (typeof writeToConsole === "function") writeToConsole(`[BADGE] ${title.toUpperCase()} UNLOCKED.`);
+    if (typeof writeToConsole === "function" && !booting()) writeToConsole(`[BADGE] ${title.toUpperCase()} UNLOCKED.`);
     renderLog();
     const all = earned();
     if (id !== "completionist" && BADGES.every(([b]) => b === "completionist" || all.has(b)))
