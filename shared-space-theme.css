@@ -18,6 +18,12 @@
     --font-mono: 'Courier New', Courier, monospace;
 }
 
+/* Scroll-reveal cards start shifted sideways; don't let that widen the page */
+html,
+body.space-theme-active {
+    overflow-x: clip;
+}
+
 /* Base Body Override */
 body.space-theme-active {
     background-color: var(--space-bg) !important;
