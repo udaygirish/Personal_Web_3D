@@ -107,11 +107,25 @@
     const bar = document.createElement("nav");
     bar.className = "universe-nav";
     bar.setAttribute("aria-label", "Universe navigation");
+    // Pages with their own "Return to Navigation" link get it folded into
+    // this bar (keeping its ?from= reverse-wormhole URL) instead of two
+    // overlapping top-left controls.
+    const back = document.querySelector("a.back-button[href]");
+    if (back) back.hidden = true;
     bar.innerHTML =
       '<button type="button" data-open="map">Star map</button><button type="button" data-open="quick">Quick access</button><a href="' +
-      url("index.html") +
-      '">Home</a>';
-    document.body.append(bar);
+      (back ? back.href : url("index.html")) +
+      '">' +
+      (back
+        ? '&#8592; <span class="u-long">Return to navigation</span><span class="u-short">Back</span>'
+        : "Home") +
+      "</a>";
+    // Inside a page header, sit where the back link was so the header's own
+    // links keep their place; otherwise float over the page.
+    if (back && back.closest(".navbar")) {
+      bar.classList.add("universe-nav--inline");
+      back.before(bar);
+    } else document.body.append(bar);
     const dialog = document.createElement("dialog");
     dialog.className = "u-dialog";
     dialog.setAttribute("aria-labelledby", "universe-title");

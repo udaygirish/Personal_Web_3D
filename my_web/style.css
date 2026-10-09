@@ -9,18 +9,18 @@
 }
 
 :root {
-    /* Research Theme Colors: Deep Purple & Electric Blue */
-    --color-bg: #0b071e;
-    --color-bg-secondary: #130e2f;
-    --color-primary: #9d4edd;
-    --color-secondary: #00f0ff;
-    --color-accent: #f72585;
+    /* Research Theme Colors: cockpit neon (matches shared-space-theme.css) */
+    --color-bg: #03080e;
+    --color-bg-secondary: #071510;
+    --color-primary: #00ff88;
+    --color-secondary: #00d9ff;
+    --color-accent: #06ffa5;
     --color-text: #ffffff;
-    --color-text-secondary: #b8b3d9;
+    --color-text-secondary: #8fb8a8;
     
     /* Glassmorphism */
-    --glass-bg: rgba(157, 78, 221, 0.05);
-    --glass-border: rgba(157, 78, 221, 0.15);
+    --glass-bg: rgba(0, 255, 136, 0.05);
+    --glass-border: rgba(0, 255, 136, 0.15);
     
     /* Typography */
     --font-display: 'Orbitron', sans-serif;
@@ -36,7 +36,7 @@
     
     /* Effects */
     --transition: 0.3s ease;
-    --glow: 0 0 20px rgba(157, 78, 221, 0.5);
+    --glow: 0 0 20px rgba(0, 255, 136, 0.5);
 }
 
 html {
@@ -100,7 +100,7 @@ body {
     left: 0;
     right: 0;
     padding: var(--spacing-sm) var(--spacing-md);
-    background: rgba(11, 7, 30, 0.85);
+    background: rgba(0, 10, 5, 0.85);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--glass-border);
     display: flex;
@@ -117,7 +117,7 @@ body {
     padding: 0.6rem 1.2rem;
     background: var(--glass-bg);
     border: 1px solid var(--color-primary);
-    border-radius: 50px;
+    border-radius: 4px;
     color: var(--color-text);
     text-decoration: none;
     font-weight: 500;
@@ -198,7 +198,7 @@ body {
     padding: 0.5rem 1.5rem;
     background: var(--glass-bg);
     border: 1px solid var(--color-primary);
-    border-radius: 50px;
+    border-radius: 4px;
     color: var(--color-primary);
     font-size: 0.9rem;
     font-weight: 600;
@@ -227,7 +227,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: 0 0 80px rgba(157, 78, 221, 0.4);
+    text-shadow: 0 0 80px rgba(0, 255, 136, 0.4);
 }
 
 .hero-subtitle {
@@ -248,7 +248,7 @@ body {
 
 .btn {
     padding: 1rem 2.5rem;
-    border-radius: 50px;
+    border-radius: 4px;
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
@@ -265,7 +265,7 @@ body {
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(157, 78, 221, 0.4);
+    box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
 }
 
 .btn-secondary {
@@ -278,7 +278,7 @@ body {
 .btn-secondary:hover {
     background: var(--color-primary);
     transform: translateY(-3px);
-    box-shadow: 0 15px 40px rgba(157, 78, 221, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 255, 136, 0.3);
 }
 
 .scroll-indicator {
@@ -362,15 +362,15 @@ body {
     padding: var(--spacing-lg);
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    border-radius: 20px;
+    border-radius: 4px;
     backdrop-filter: blur(20px);
     transition: var(--transition);
 }
 
 .about-card:hover {
     transform: translateY(-10px);
-    background: rgba(157, 78, 221, 0.08);
-    box-shadow: 0 20px 60px rgba(157, 78, 221, 0.2);
+    background: rgba(0, 255, 136, 0.08);
+    box-shadow: 0 20px 60px rgba(0, 255, 136, 0.2);
     border-color: var(--color-primary);
 }
 
@@ -397,7 +397,7 @@ body {
    ======================================== */
 
 .publications {
-    background: linear-gradient(180deg, transparent, rgba(157, 78, 221, 0.02), transparent);
+    background: linear-gradient(180deg, transparent, rgba(0, 255, 136, 0.02), transparent);
 }
 
 .timeline {
@@ -455,9 +455,9 @@ body {
 
 .timeline-content:hover {
     transform: translateX(10px);
-    background: rgba(157, 78, 221, 0.06);
+    background: rgba(0, 255, 136, 0.06);
     border-color: var(--color-secondary);
-    box-shadow: 0 10px 40px rgba(0, 240, 255, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 217, 255, 0.15);
 }
 
 .timeline-date {
@@ -491,9 +491,9 @@ body {
 .pub-link {
     display: inline-block;
     padding: 0.4rem 1rem;
-    background: rgba(0, 240, 255, 0.08);
+    background: rgba(0, 217, 255, 0.08);
     border: 1px solid var(--color-secondary);
-    border-radius: 50px;
+    border-radius: 4px;
     color: var(--color-secondary);
     text-decoration: none;
     font-size: 0.85rem;
@@ -504,7 +504,7 @@ body {
 .pub-link:hover {
     background: var(--color-secondary);
     color: var(--color-bg);
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
     transform: scale(1.05);
 }
 
@@ -532,9 +532,9 @@ body {
 
 .repo-card:hover {
     transform: translateY(-5px);
-    background: rgba(157, 78, 221, 0.08);
+    background: rgba(0, 255, 136, 0.08);
     border-color: var(--color-primary);
-    box-shadow: 0 15px 40px rgba(157, 78, 221, 0.25);
+    box-shadow: 0 15px 40px rgba(0, 255, 136, 0.25);
 }
 
 .repo-icon {
@@ -583,7 +583,7 @@ body {
     padding: var(--spacing-lg);
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    border-radius: 20px;
+    border-radius: 4px;
     backdrop-filter: blur(20px);
     text-align: center;
     text-decoration: none;
@@ -593,9 +593,9 @@ body {
 
 .contact-card:hover {
     transform: translateY(-10px) rotate(1deg);
-    background: rgba(157, 78, 221, 0.08);
+    background: rgba(0, 255, 136, 0.08);
     border-color: var(--color-primary);
-    box-shadow: 0 20px 60px rgba(157, 78, 221, 0.25);
+    box-shadow: 0 20px 60px rgba(0, 255, 136, 0.25);
 }
 
 .contact-icon {
@@ -621,7 +621,7 @@ body {
 
 .footer {
     padding: var(--spacing-lg) var(--spacing-md);
-    background: rgba(11, 7, 30, 0.85);
+    background: rgba(0, 10, 5, 0.85);
     border-top: 1px solid var(--glass-border);
     text-align: center;
     z-index: 2;

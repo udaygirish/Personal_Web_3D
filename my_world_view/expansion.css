@@ -89,6 +89,24 @@
   display: grid;
   gap: 6px;
 }
+/* Title sits left of the PLANETARY SCANNER panel instead of under it */
+.title-overlay {
+  right: 210px;
+  top: 22px;
+}
+.title-overlay h1 {
+  font-size: 1.4rem;
+  margin-bottom: 2px;
+}
+.title-overlay p {
+  font: 0.7rem/1.4 var(--u-mono);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--u-muted);
+}
+.system-info {
+  display: none;
+}
 /* Keep the shared nav clear of the NAV COMPUTER panel */
 .universe-nav {
   left: 50%;

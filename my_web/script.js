@@ -19,7 +19,7 @@ class Particle {
         this.speedX = (Math.random() - 0.5) * 0.4;
         this.speedY = (Math.random() - 0.5) * 0.4;
         this.opacity = Math.random() * 0.4 + 0.2;
-        this.color = Math.random() > 0.5 ? '#9d4edd' : '#00f0ff';
+        this.color = Math.random() > 0.5 ? '#00ff88' : '#00d9ff';
     }
 
     update() {
@@ -62,7 +62,7 @@ function animateParticles() {
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < 110) {
-                ctx.strokeStyle = `rgba(0, 240, 255, ${0.15 * (1 - distance / 110)})`;
+                ctx.strokeStyle = `rgba(0, 217, 255, ${0.15 * (1 - distance / 110)})`;
                 ctx.lineWidth = 0.5;
                 ctx.beginPath();
                 ctx.moveTo(particles[i].x, particles[i].y);
@@ -123,10 +123,10 @@ window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
 
     if (currentScroll > 100) {
-        navbar.style.background = 'rgba(11, 7, 30, 0.96)';
-        navbar.style.boxShadow = '0 5px 20px rgba(157, 78, 221, 0.2)';
+        navbar.style.background = 'rgba(0, 10, 5, 0.96)';
+        navbar.style.boxShadow = '0 5px 20px rgba(0, 255, 136, 0.2)';
     } else {
-        navbar.style.background = 'rgba(11, 7, 30, 0.85)';
+        navbar.style.background = 'rgba(0, 10, 5, 0.85)';
         navbar.style.boxShadow = 'none';
     }
 });
@@ -170,4 +170,4 @@ window.addEventListener('load', () => {
     }, 100);
 });
 
-console.log('%c🔬 Welcome to My Research & Publications Portal! 🔬', 'color: #00f0ff; font-size: 18px; font-weight: bold;');
+console.log('%c🔬 Welcome to My Research & Publications Portal! 🔬', 'color: #00ff88; font-size: 18px; font-weight: bold;');

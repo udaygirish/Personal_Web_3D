@@ -284,6 +284,12 @@ button:disabled {
   border-color: var(--u-accent);
   box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
 }
+.universe-nav--inline {
+  position: static;
+}
+.universe-nav .u-short {
+  display: none;
+}
 /* Keep the terminal boot sequence clean: no nav until it finishes. */
 #loading-screen:not(.hidden) ~ .universe-nav {
   display: none;
@@ -382,6 +388,17 @@ button:disabled {
   .universe-nav {
     left: 8px;
     top: 8px;
+  }
+  .universe-nav button,
+  .universe-nav a {
+    padding: 6px 8px;
+    letter-spacing: 1px;
+  }
+  .universe-nav .u-long {
+    display: none;
+  }
+  .universe-nav .u-short {
+    display: inline;
   }
   .u-tour {
     bottom: 10px;
