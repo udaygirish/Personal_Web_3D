@@ -11,7 +11,7 @@ The Personal Web 3D portfolio is a multi-page interactive web experience. It uti
 
 ## Tech Stack
 - **Core Framework**: Vanilla JS, HTML, CSS
-- **3D Library**: [Three.js](https://threejs.org/) (r128)
+- **3D Library**: [Three.js](https://threejs.org/) (r147, global build loaded from jsDelivr)
 - **Styling**: Vanilla CSS with futuristic neon-green space themes (`shared-space-theme.css`, `styles.css`).
 
 ## Key Concepts
