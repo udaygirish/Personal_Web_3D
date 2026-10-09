@@ -18,6 +18,12 @@
     --font-mono: 'Courier New', Courier, monospace;
 }
 
+/* Scroll-reveal cards start shifted sideways; don't let that widen the page */
+html,
+body.space-theme-active {
+    overflow-x: clip;
+}
+
 /* Base Body Override */
 body.space-theme-active {
     background-color: var(--space-bg) !important;
@@ -218,4 +224,322 @@ body.space-theme-active::before {
     z-index: 2;
     background-size: 100% 2px, 3px 100%;
     pointer-events: none;
+}
+
+/* ========================================================================
+   Polish layer (Personal / Work / Research)
+   Calmer type hierarchy, HUD-consistent shapes, mission-patch projects.
+   ======================================================================== */
+
+/* Starfield behind the grid */
+body.space-theme-active > .stars-background {
+    display: block !important;
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.7;
+    background-image:
+        radial-gradient(1px 1px at 12% 18%, #e0f8f0 50%, transparent 51%),
+        radial-gradient(1px 1px at 72% 12%, #c8fff0 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 38% 64%, #00d9ff 50%, transparent 51%),
+        radial-gradient(1px 1px at 88% 78%, #e0f8f0 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 58% 34%, #00ff88 50%, transparent 51%),
+        radial-gradient(1px 1px at 6% 52%, #c8fff0 50%, transparent 51%) !important;
+    background-size: 340px 340px, 420px 420px, 510px 510px, 380px 380px, 560px 560px, 440px 440px !important;
+    animation: none !important;
+}
+
+/* Header: compact mono links with an active-section marker */
+.space-theme-active .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8fb8a8 !important;
+}
+.space-theme-active .nav-links a:hover,
+.space-theme-active .nav-links a.active {
+    color: var(--space-neon) !important;
+    text-shadow: 0 0 8px var(--space-neon-glow);
+}
+.space-theme-active .nav-links a.active::after {
+    width: 100% !important;
+    background: var(--space-neon) !important;
+}
+
+/* Type hierarchy: big uppercase only for section titles; everything
+   inside cards reads in normal case. */
+.space-theme-active .section-eyebrow {
+    display: block;
+    font: 0.72rem/1.4 var(--font-mono);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--space-cyan);
+    margin-bottom: 6px;
+}
+.space-theme-active h2.section-title {
+    font-size: clamp(1.7rem, 3.6vw, 2.6rem) !important;
+    letter-spacing: 0.06em;
+}
+.space-theme-active h3,
+.space-theme-active h4 {
+    text-transform: none !important;
+    letter-spacing: 0.03em !important;
+}
+.space-theme-active .about-card h3,
+.space-theme-active .interest-card h3,
+.space-theme-active .project-content h3,
+.space-theme-active .skill-category h3,
+.space-theme-active .highlight-card h3,
+.space-theme-active .contact-card h3 {
+    font-size: 1.12rem !important;
+}
+.space-theme-active .timeline-content h3 {
+    font-size: 1.2rem !important;
+}
+.space-theme-active .timeline-content h4,
+.space-theme-active .about-intro h3 {
+    color: var(--space-cyan) !important;
+    text-shadow: none;
+}
+.space-theme-active .about-intro h3 {
+    font-size: clamp(1.25rem, 2.4vw, 1.6rem) !important;
+    line-height: 1.35;
+}
+.space-theme-active p,
+.space-theme-active li {
+    color: #c3ddd3;
+}
+
+/* Icons sit in a small HUD ring instead of floating emoji */
+.space-theme-active .card-icon,
+.space-theme-active .interest-icon,
+.space-theme-active .highlight-icon,
+.space-theme-active .contact-icon,
+.space-theme-active .info-icon {
+    display: inline-grid !important;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    font-size: 1.6rem !important;
+    border-radius: 50%;
+    border: 1px solid var(--space-border);
+    background: radial-gradient(circle, rgba(0, 255, 136, 0.12), transparent 70%);
+    box-shadow: inset 0 0 12px rgba(0, 255, 136, 0.08);
+    filter: none !important;
+    margin-bottom: 14px;
+}
+.space-theme-active .info-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 1.25rem !important;
+    margin-bottom: 0;
+    flex: none;
+}
+
+/* Sharp HUD shapes for every pill, badge and stat box */
+.space-theme-active .hero-badge,
+.space-theme-active .tag,
+.space-theme-active .pub-link,
+.space-theme-active .stat-card,
+.space-theme-active .project-tag,
+.space-theme-active .info-item,
+.space-theme-active .project-card,
+.space-theme-active .contact-card {
+    border-radius: 3px !important;
+}
+.space-theme-active .hero-badge {
+    font-family: var(--font-mono);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    background: rgba(0, 255, 136, 0.06) !important;
+}
+.space-theme-active .stat-card {
+    background: var(--space-glass) !important;
+    border: 1px solid var(--space-border) !important;
+    backdrop-filter: blur(8px);
+}
+.space-theme-active .stat-number {
+    font-family: var(--font-orbitron);
+    color: var(--space-neon);
+    text-shadow: 0 0 12px var(--space-neon-glow);
+}
+.space-theme-active .tag {
+    background: rgba(0, 255, 136, 0.08) !important;
+    border: 1px solid var(--space-border) !important;
+    color: var(--space-neon) !important;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+}
+.space-theme-active .pub-link {
+    background: transparent !important;
+    border: 1px solid var(--space-neon) !important;
+    color: var(--space-neon) !important;
+    font-family: var(--font-orbitron);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.space-theme-active .pub-link:hover {
+    background: var(--space-neon) !important;
+    color: #000 !important;
+}
+
+/* Work › About: give the intro text room inside its panel */
+.space-theme-active .about-intro {
+    padding: clamp(22px, 3vw, 36px) !important;
+}
+
+/* Work › Contact: one frame, not a frame inside a frame */
+.space-theme-active .contact-info {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    display: grid;
+    gap: 14px;
+}
+.space-theme-active .info-item {
+    background: var(--space-glass) !important;
+    border: 1px solid var(--space-border) !important;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 !important;
+    padding: 16px 20px !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.space-theme-active .info-item:hover {
+    border-color: var(--space-neon) !important;
+    box-shadow: 0 0 16px var(--space-neon-glow);
+    transform: none !important;
+}
+.space-theme-active .info-item a,
+.space-theme-active .contact-card p,
+.space-theme-active .contact-card a {
+    color: #c3ddd3 !important;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    overflow-wrap: anywhere;
+}
+
+/* Personal › Projects: mission patches instead of flat gradients */
+.space-theme-active .project-card {
+    background: var(--space-glass) !important;
+    border: 1px solid var(--space-border) !important;
+    overflow: hidden !important;
+}
+.space-theme-active .project-image {
+    position: relative;
+    height: 150px !important;
+    background:
+        radial-gradient(circle at 50% 120%, rgba(0, 255, 136, 0.25), transparent 60%),
+        linear-gradient(rgba(0, 255, 136, 0.07) 1px, transparent 1px) 0 0 / 22px 22px,
+        linear-gradient(90deg, rgba(0, 255, 136, 0.07) 1px, transparent 1px) 0 0 / 22px 22px,
+        #020a08 !important;
+    border-bottom: 1px solid var(--space-border);
+}
+.space-theme-active .project-image::before,
+.space-theme-active .project-image::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 255, 136, 0.35);
+    transform: translate(-50%, -50%);
+}
+.space-theme-active .project-image::before {
+    width: 92px;
+    height: 92px;
+    border-style: dashed;
+    animation: patch-spin 30s linear infinite;
+}
+.space-theme-active .project-image::after {
+    width: 26px;
+    height: 26px;
+    background: radial-gradient(circle, var(--space-neon), rgba(0, 255, 136, 0.2) 60%, transparent 70%);
+    border: 0;
+    box-shadow: 0 0 22px var(--space-neon);
+}
+.space-theme-active .project-card:nth-child(2) .project-image::after {
+    background: radial-gradient(circle, var(--space-cyan), rgba(0, 217, 255, 0.2) 60%, transparent 70%);
+    box-shadow: 0 0 22px var(--space-cyan);
+}
+.space-theme-active .project-card:nth-child(3) .project-image::after {
+    background: radial-gradient(circle, #ffbe0b, rgba(255, 190, 11, 0.2) 60%, transparent 70%);
+    box-shadow: 0 0 22px #ffbe0b;
+}
+@keyframes patch-spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.space-theme-active .project-overlay {
+    position: absolute !important;
+    inset: 12px auto auto 14px !important;
+    background: none !important;
+    opacity: 1 !important;
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+}
+.space-theme-active .project-tag {
+    display: inline-block;
+    padding: 4px 9px !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: 1px solid var(--space-border) !important;
+    color: var(--space-neon) !important;
+    font: 0.68rem/1.3 var(--font-mono) !important;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    backdrop-filter: none !important;
+}
+
+/* Footer matches the deck */
+.space-theme-active .footer {
+    background: rgba(0, 10, 5, 0.9) !important;
+    border-top: 1px solid var(--space-border) !important;
+    position: relative;
+    z-index: 3;
+}
+.space-theme-active .footer p {
+    font: 0.78rem/1.6 var(--font-mono);
+    letter-spacing: 0.08em;
+    color: #8fb8a8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .space-theme-active .project-image::before { animation: none; }
+}
+
+/* Personal › Contact: leave-a-message panel */
+.space-theme-active .transmission-panel {
+    position: relative;
+    max-width: 760px;
+    margin: 48px auto 0;
+    padding: clamp(22px, 4vw, 36px);
+    background: var(--space-glass);
+    border: 1px solid var(--space-border);
+    border-radius: 3px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.5), inset 0 0 14px rgba(0, 255, 136, 0.05);
+}
+.space-theme-active .transmission-panel::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 12px;
+    height: 12px;
+    border-top: 2px solid var(--space-neon);
+    border-left: 2px solid var(--space-neon);
+}
+.space-theme-active .transmission-head h3 {
+    font-size: 1.35rem !important;
+    margin: 4px 0 6px;
+}
+.space-theme-active .transmission-head p {
+    margin: 0;
 }

@@ -177,8 +177,10 @@ function init() {
         antialias: true,
         alpha: true
     });
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
 
     // Add ambient light for better visibility
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
@@ -205,8 +207,14 @@ function init() {
     const terminalInput = document.getElementById('ap-console-input-bottom');
     if (terminalInput) {
         terminalInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab' && window.UniverseTerminal) {
+                e.preventDefault();
+                terminalInput.value = UniverseTerminal.complete(terminalInput.value, ['help', 'sound', 'land']);
+            }
             if (e.key === 'Enter') {
-                const cmd = terminalInput.value.trim().toLowerCase();
+                const rawCmd = terminalInput.value.trim();
+                if (rawCmd) window.UniverseFun?.countCommand();
+                const cmd = rawCmd.toLowerCase();
                 terminalInput.value = '';
                 if (cmd) {
                     writeToConsole(cmd.toUpperCase());
@@ -220,7 +228,8 @@ function init() {
                         } else if (mainCmd === 'land' || (mainCmd === 'help' && args[1] === 'land')) {
                             writeToConsole("LAND [no args]: Initiates atmospheric entry on the currently locked planetary target.");
                         } else {
-                            writeToConsole("COMMANDS LOG:\n- help: show options\n- sound: toggle audio feedback\n- land: initiate landing on target\nUsage: <command> --help");
+                            writeToConsole("COMMANDS LOG:\n- help: show options\n- sound: toggle audio feedback\n- land: initiate landing on target\nUsage: <command> --help  ·  Tab completes");
+                            if (window.UniverseTerminal) writeToConsole(UniverseTerminal.help);
                         }
                     } else if (mainCmd === 'sound') {
                         toggleSound();
@@ -230,8 +239,11 @@ function init() {
                         } else {
                             writeToConsole("ERROR: NO PLANETARY TARGET LOCKED.");
                         }
-                    } else {
-                        writeToConsole("UNRECOGNIZED COMMAND.");
+                    } else if (!(window.UniverseTerminal && UniverseTerminal.run(mainCmd, rawCmd.slice(mainCmd.length), writeToConsole, () => {
+                        const out = document.getElementById('ap-console-out');
+                        if (out) out.textContent = '';
+                    }))) {
+                        writeToConsole("UNRECOGNIZED COMMAND. Type 'help' for options.");
                     }
                 }
             }
@@ -248,6 +260,7 @@ function init() {
         }
     }
 
+    window.addEventListener("DOMContentLoaded", initWorldExplorer);
     // Start animation
     animate();
 
@@ -386,6 +399,7 @@ function createSolarSystems() {
         }
     ];
 
+    enrichWorldSystems(systems);
     systems.forEach(systemData => {
         const system = createSystem(systemData);
         starSystems.push(system);
@@ -459,6 +473,8 @@ function createSystem(data) {
     const systemPlanets = [];
     data.planets.forEach(planetData => {
         const planet = createPlanet(planetData);
+        planet.userData.href = planetData.href;
+        planet.userData.size = planetData.size;
         planet.userData.orbit       = planetData.orbit;
         planet.userData.speed       = planetData.speed;
         planet.userData.angle       = Math.random() * Math.PI * 2;
@@ -543,7 +559,7 @@ function createPlanet(data) {
     planetGroup.userData.rotationSpeed = 0.001 + Math.random() * 0.002;
 
     // Cloud layer for some variety
-    if (Math.random() > 0.5) {
+    if (data.name === 'Skills' || data.name === 'Education') {
         const cloudGeometry = new THREE.SphereGeometry(data.size * 1.015, 32, 32);
         const cloudTexture = createCloudTexture(data.size);
         const cloudMaterial = new THREE.MeshStandardMaterial({
@@ -744,8 +760,9 @@ function createAsteroidField() {
 // Tracks launch pad pulse animation
 let launchPadPulseTime = 0;
 
-function animate() {
-    requestAnimationFrame(animate);
+function animate() { UniverseClock.start(simulateFrame, () => { renderer.render(scene, camera); }); }
+
+function simulateFrame() {
 
     if (isRoverMode) {
         updateRoverMovement();
@@ -804,10 +821,10 @@ function animate() {
             // Adjust light intensity based on height
             if (surfaceSun.position.y > 0) {
                 surfaceSun.intensity = Math.min(1.2, surfaceSun.position.y / 50);
-                roverScene.background = new THREE.Color().lerpColors(new THREE.Color(0x000000), roverScene.userData.skyColor, surfaceSun.intensity);
+                scene.background = new THREE.Color().lerpColors(new THREE.Color(0x000000), roverScene.userData.skyColor, surfaceSun.intensity);
             } else {
                 surfaceSun.intensity = 0;
-                roverScene.background = new THREE.Color(0x000000); // Night sky
+                scene.background = new THREE.Color(0x000000); // Night sky
             }
         }
 
@@ -819,7 +836,7 @@ function animate() {
             if (labelsContainer) labelsContainer.style.display = 'none';
         }
 
-        renderer.render(scene, camera);
+
         return;
     }
 
@@ -931,7 +948,7 @@ function animate() {
         if (labelsContainer) labelsContainer.style.display = 'none';
     }
 
-    renderer.render(scene, camera);
+
 }
 
 // ========================================
@@ -939,15 +956,15 @@ function animate() {
 // ========================================
 
 function updateRoverMovement() {
-    if (!rover || isLandingAnim) return;
+    if (!rover || isLandingAnim || isLaunching || document.querySelector("dialog[open]")) return;
 
     const biome = roverScene.userData.biome;
     const ground = roverScene.userData.ground;
-    let isGroundedState = true;
+    let isGroundedState = rover.userData.grounded !== false;
 
     // Check Water Physics
     let inWater = false;
-    if (biome === 'forest' && rover.position.y < 2) {
+    if (biome === 'forest' && rover.position.y < -1) {
         inWater = true;
     }
 
@@ -1043,6 +1060,8 @@ function updateRoverMovement() {
             rover.position.y = Math.max(rover.position.y, 0);
         }
     }
+
+    rover.userData.grounded = isGroundedState;
 
     // Boundary check: Warn and return to base if wandering too far
     const distFromBase = Math.sqrt(rover.position.x**2 + rover.position.z**2);
@@ -1256,6 +1275,7 @@ function drawMinimap() {
 
 
 function updateMovement() {
+    if (document.querySelector("dialog[open]")) return;
     if (currentView !== '3D') return;
 
     const speed = baseSpeed;
@@ -1384,6 +1404,7 @@ function setupEventListeners() {
     window.addEventListener('resize', onWindowResize);
 
     window.addEventListener('keydown', (e) => {
+        if (e.target.closest?.('input, textarea, select, [contenteditable], dialog[open]')) return;
         switch (e.key.toLowerCase()) {
             case 'w': controls.forward  = true; break;
             case 's': controls.backward = true; break;
@@ -1402,24 +1423,7 @@ function setupEventListeners() {
                 break;
             case 'f':
                 // F key = Interact with Kiosk
-                if (isRoverMode && currentInteractiveKioskBoard) {
-                    const modal = document.getElementById('kiosk-modal');
-                    if (modal.style.display === 'none') {
-                        document.getElementById('kiosk-title').textContent = currentInteractiveKioskBoard.title;
-                        document.getElementById('kiosk-body').innerHTML = `
-                            <p>${currentInteractiveKioskBoard.desc}</p>
-                            <p style="margin-top:20px; color:#888;">(Detailed content can be placed here. e.g. project links, deeper descriptions, embedded videos, or GitHub repo links.)</p>
-                        `;
-                        const actionBtn = document.getElementById('kiosk-action-btn');
-                        actionBtn.style.display = 'inline-block';
-                        actionBtn.href = '#'; // Update with actual links from config later
-                        
-                        modal.style.display = 'flex';
-                        if (document.pointerLockElement) document.exitPointerLock();
-                    } else {
-                        modal.style.display = 'none';
-                    }
-                }
+                if (isRoverMode && currentInteractiveKioskBoard) showWorldExhibit(currentInteractiveKioskBoard);
                 break;
             case 'escape':
                 document.getElementById('kiosk-modal').style.display = 'none';
@@ -1539,7 +1543,8 @@ function setupEventListeners() {
         
         const cockpitLandBtn = document.getElementById('cockpit-land-btn');
         if (cockpitLandBtn) cockpitLandBtn.style.display = 'none';
-        const cpTarget = document.getElementById('cp-target');
+        enhancePlanetCard(planet);
+    const cpTarget = document.getElementById('cp-target');
         if (cpTarget) cpTarget.textContent = '---';
     });
 
@@ -1721,6 +1726,7 @@ function showPlanetInfo(planet) {
         };
     }
 
+    enhancePlanetCard(planet);
     const cpTarget = document.getElementById('cp-target');
     if (cpTarget) cpTarget.textContent = content.title.toUpperCase();
 }
@@ -1737,13 +1743,13 @@ function createSurfaceEnvironment(planetData) {
     // Biome-tuned fog: thick enough that the terrain edge is NEVER visible.
     // The world wraps seamlessly under the fog cover.
     if (name === 'Experience') {
-        skyColor = 0xb7410e; groundColor = 0xc1440e; fogDensity = 0.028; biome = 'desert';
+        skyColor = 0x8c5946; groundColor = 0x9a6144; fogDensity = 0.009; biome = 'desert';
     } else if (name === 'Skills') {
-        skyColor = 0x2d6a2d; groundColor = 0x228b22; fogDensity = 0.018; biome = 'forest';
+        skyColor = 0x284c52; groundColor = 0x32604b; fogDensity = 0.008; biome = 'forest';
     } else if (name === 'Projects') {
-        skyColor = 0x1a0033; groundColor = 0x4a0e4e; fogDensity = 0.022; biome = 'alien';
+        skyColor = 0x15192e; groundColor = 0x3c3555; fogDensity = 0.010; biome = 'alien';
     } else {
-        skyColor = 0xc8eaf5; groundColor = 0xddeeff; fogDensity = 0.020; biome = 'ice';
+        skyColor = 0x789bad; groundColor = 0xc6dce2; fogDensity = 0.009; biome = 'ice';
     }
 
     scene.background = new THREE.Color(skyColor);
@@ -1781,12 +1787,15 @@ function createSurfaceEnvironment(planetData) {
         flatShading: biome === 'alien'
     });
     const ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.receiveShadow = true;
     ground.rotation.x = -Math.PI / 2;
     roverScene.add(ground);
+    ground.updateMatrixWorld(true);
 
     roverScene.userData.ground = ground;
     roverScene.userData.biome = biome;
     roverScene.userData.skyColor = new THREE.Color(skyColor);
+    addWorldLandmarks(planetData);
 
     // Water for forest
     if (biome === 'forest') {
@@ -1800,7 +1809,7 @@ function createSurfaceEnvironment(planetData) {
         });
         const water = new THREE.Mesh(waterGeo, waterMat);
         water.rotation.x = -Math.PI / 2;
-        water.position.y = 2; // Fill valleys
+        water.position.y = -1; // Fill valleys
         roverScene.add(water);
     }
 
@@ -1842,7 +1851,7 @@ function createSurfaceEnvironment(planetData) {
         const intersects = raycaster.intersectObject(ground);
         if (intersects.length > 0) {
             const y = intersects[0].point.y;
-            if (biome === 'forest' && y < 2) continue; // Don't spawn underwater
+            if (biome === 'forest' && y < -1) continue; // Don't spawn underwater
             
             dummy.position.set(x, y, z);
             if (biome !== 'forest' && biome !== 'alien') {
@@ -2420,8 +2429,10 @@ function createCollectibles(biome, ground) {
 // ========================================
 
 function initiateLanding(planet) {
-    if (isRoverMode) return;
+    if (isRoverMode || planet.userData.href) return;
     isRoverMode = true;
+    isLandingAnim = true;
+    camera = camera3D;
     currentPlanetData = planet.userData;
 
     // Stop spaceship movement
@@ -2731,6 +2742,9 @@ function returnToOrbit() {
             roverScene.remove(child);
             disposeHierarchy(child);
         }
+        surfaceParticles = null;
+        surfaceSun = null;
+        roverScene.userData = {};
         rover = null;
         launchPad = null;
         launchPadPulseTime = 0;

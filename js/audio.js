@@ -68,10 +68,32 @@ function initAudioSynth() {
     }
 }
 
+// Keep the cockpit SOUND readout in step with the real audio state.
+function renderSoundState() {
+    const soundToggle = document.getElementById('cp-sound-val');
+    if (!soundToggle) return;
+    soundToggle.textContent = soundEnabled ? 'ON' : 'OFF';
+    soundToggle.className = soundEnabled ? 'pv ok' : 'pv alert';
+}
+
+// Browsers only allow audio after a user gesture, so start the synth on the
+// first click/key press when sound is enabled.
+function unlockAudioOnGesture() {
+    const unlock = () => {
+        window.removeEventListener('pointerdown', unlock);
+        window.removeEventListener('keydown', unlock);
+        if (!soundEnabled) return;
+        initAudioSynth();
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    };
+    window.addEventListener('pointerdown', unlock);
+    window.addEventListener('keydown', unlock);
+}
+
 function toggleSound(forcedState) {
     soundEnabled = forcedState !== undefined ? forcedState : !soundEnabled;
-    localStorage.setItem('soundEnabled', soundEnabled);
-    const soundToggle = document.getElementById('cp-sound-val');
+    try { localStorage.setItem('soundEnabled', soundEnabled); } catch (e) {}
+    renderSoundState();
     
     if (soundEnabled) {
         // Initialize if not already initialized
@@ -82,11 +104,6 @@ function toggleSound(forcedState) {
             audioCtx.resume();
         }
         
-        if (soundToggle) {
-            soundToggle.textContent = 'ON';
-            soundToggle.className = 'pv ok';
-        }
-        
         // Start engine hum at low base volume
         if (engineGain) {
             engineGain.gain.setTargetAtTime(0.12, audioCtx.currentTime, 0.1);
@@ -95,10 +112,6 @@ function toggleSound(forcedState) {
         writeToConsole("AUDIO SUBSYSTEMS: INITIALIZED & ONLINE.");
         speakCoPilot("Audio systems online. Co-pilot initialized.");
     } else {
-        if (soundToggle) {
-            soundToggle.textContent = 'OFF';
-            soundToggle.className = 'pv alert';
-        }
         // Fade out engine hum
         if (engineGain) {
             engineGain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.1);
@@ -407,6 +420,7 @@ function fireMiningLaser() {
 }
 
 function shatterCrystal(index, point) {
+    window.UniverseFun?.unlock('miner');
     const data = spaceCrystalsData[index];
     if (!data || data.scale.x <= 0.01) return; // already shattered
 
@@ -425,7 +439,7 @@ function shatterCrystal(index, point) {
             opacity: 0.8,
             blending: THREE.AdditiveBlending
         });
-        const debris = new THREE.Mesh(debrisGeo, debrisMat);
+        const debris = new THREE.Mesh(debrisGeo.clone(), debrisMat);
         debris.position.copy(point);
         
         debris.userData = {
@@ -440,6 +454,7 @@ function shatterCrystal(index, point) {
         crystalDebris.push(debris);
     }
     
+    debrisGeo.dispose();
     // 2. Spawn harvestable energy matrix octahedron
     const matrixGeo = new THREE.OctahedronGeometry(0.5, 0);
     const matrixMat = new THREE.MeshStandardMaterial({

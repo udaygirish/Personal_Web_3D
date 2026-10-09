@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My World View | Uday Girish Maradana</title>
+    <link rel="icon" href="../shared/favicon.svg" type="image/svg+xml">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="My World View · Uday Girish Maradana">
+    <meta property="og:description" content="Explore four planets of experience, skills, projects and education — then land and drive a rover.">
+    <meta property="og:image" content="https://new.udaygirish.com/shared/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#03080e">
     <meta name="description" content="3D immersive solar system portfolio — explore my universe">
 
     <!-- Google Fonts -->
@@ -15,6 +22,9 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../shared/universe.css?v=7">
+<script defer src="../shared/universe.js?v=7"></script>
+<link rel="stylesheet" href="expansion.css?v=6">
 </head>
 
 <body>
@@ -27,9 +37,9 @@
     <!-- HUD Overlay -->
     <div class="hud">
         <!-- Back Button -->
-        <button class="back-button" onclick="window.location.href='../index.html?from=my_world_view'">
+        <a href="../index.html?from=my_world_view" class="back-button">
             &#8592; Return to Navigation
-        </button>
+        </a>
 
         <!-- Title -->
         <div class="title-overlay">
@@ -255,8 +265,11 @@ READY FOR INTERFACE COMMANDS.</div>
     <link rel="stylesheet" href="../styles.css">
 
     <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
     <script src="sun_shader.js"></script>
+    <script src="../shared/clock.js"></script>
+    <script src="world-content.js?v=5"></script>
+    <script src="world-enhancements.js?v=6"></script>
     <script src="app.js?v=9"></script>
 </body>
 

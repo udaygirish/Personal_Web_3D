@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Command Deck · Uday’s Universe</title>
+    <link rel="icon" href="../shared/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../shared/universe.css?v=7" />
+    <link rel="stylesheet" href="command.css?v=5" />
+    <script defer src="../shared/universe.js?v=7"></script>
+    <script defer src="config.js"></script>
+    <script defer src="command.js?v=5"></script>
+  </head>
+  <body class="u-page gate-pending">
+    <div class="u-container">
+      <nav class="u-nav">
+        <a href="../index.html?from=command">Return to the universe</a
+        ><span class="u-eyebrow">OWNER ACCESS</span>
+      </nav>
+      <main class="command-gate">
+        <div class="airlock" aria-hidden="true">
+          <div class="ring ring-1"></div>
+          <div class="ring ring-2"></div>
+          <div class="ring ring-3"></div>
+          <div class="airlock-core">
+            <svg viewBox="0 0 48 48" class="lock">
+              <path class="shackle" d="M15 22v-6a9 9 0 0 1 18 0v6" fill="none" stroke-width="3" stroke-linecap="round" />
+              <rect x="11" y="22" width="26" height="18" rx="3" />
+              <circle cx="24" cy="31" r="2.6" class="keyhole" />
+            </svg>
+          </div>
+          <div class="scanline"></div>
+        </div>
+        <div class="gate-copy">
+          <p class="u-eyebrow">RESTRICTED SECTOR / COMMAND DECK</p>
+          <h1>Command<br />Deck</h1>
+          <p class="u-muted">The owner-only bridge to my private applications.</p>
+          <section class="gate-panel" aria-labelledby="gate-title">
+            <ul class="gate-checks" aria-label="Access checks">
+              <li data-check="gateway"><span class="led"></span>Gateway link</li>
+              <li data-check="identity"><span class="led"></span>Identity</li>
+              <li data-check="session"><span class="led"></span>Session</li>
+            </ul>
+            <h2 id="gate-title">Checking the gateway…</h2>
+            <p id="gate-status" role="status">Establishing a connection.</p>
+            <ol class="gate-log" id="gate-log" aria-label="Access log"></ol>
+            <div class="u-actions">
+              <a id="gate-login" class="u-button primary" hidden>Continue with Google</a
+              ><a id="gate-open" class="u-button primary" hidden>Open Command Deck</a
+              ><button id="gate-retry" hidden>Try again</button>
+            </div>
+          </section>
+          <p class="u-muted gate-foot">
+            Not the owner? Every public destination is open in <strong>Quick access</strong> above.
+          </p>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
