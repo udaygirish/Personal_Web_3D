@@ -12,7 +12,7 @@ Set `endpoint` in `shared/chat-config.json`:
 ```json
 {
   "endpoint": "https://chat.example.com/api/chat",
-  "title": "Chat with Uday",
+  "title": "Talk to Uday",
   "greeting": "Hi, I'm Uday. Ask me anything about my work.",
   "timeoutMs": 45000,
   "headers": {}
@@ -95,3 +95,15 @@ async def chat(body: Chat):
                          json={"model": "llama3.1", "messages": msgs, "stream": False})
     return {"reply": r.json()["message"]["content"]}
 ```
+
+## Leave a message (email)
+
+The comms panel has a second tab, **Leave a message**. The Personal page has the same form under
+"Let's Connect" (it mounts into any `<div data-mail-mount="label">`). Both post to the Formspree
+form that `udaygirish.github.io` uses (`messageEndpoint`, default `https://formspree.io/f/mleagkar`).
+Formspree then forwards each submission to Uday's email. To change it, set `messageEndpoint` in
+`shared/chat-config.json`.
+
+Each submission sends `name`, `email`/`_replyto` (so Reply goes to the visitor), `topic`, `message`,
+`sent_from` (page + placement) and the subject `Uday's Universe · <topic> · from <name>`. `_gotcha` is
+Formspree's honeypot field for catching spam bots. The terminal command `message` opens this tab.

@@ -513,3 +513,33 @@ body.space-theme-active > .stars-background {
 @media (prefers-reduced-motion: reduce) {
     .space-theme-active .project-image::before { animation: none; }
 }
+
+/* Personal › Contact: leave-a-message panel */
+.space-theme-active .transmission-panel {
+    position: relative;
+    max-width: 760px;
+    margin: 48px auto 0;
+    padding: clamp(22px, 4vw, 36px);
+    background: var(--space-glass);
+    border: 1px solid var(--space-border);
+    border-radius: 3px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.5), inset 0 0 14px rgba(0, 255, 136, 0.05);
+}
+.space-theme-active .transmission-panel::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 12px;
+    height: 12px;
+    border-top: 2px solid var(--space-neon);
+    border-left: 2px solid var(--space-neon);
+}
+.space-theme-active .transmission-head h3 {
+    font-size: 1.35rem !important;
+    margin: 4px 0 6px;
+}
+.space-theme-active .transmission-head p {
+    margin: 0;
+}

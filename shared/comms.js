@@ -41,7 +41,13 @@
   };
 
   // ---------------------------------------------------------------- chat --
-  let config = { endpoint: "", title: "Chat with Uday", timeoutMs: 45000 };
+  let config = {
+    endpoint: "",
+    title: "Talk to Uday",
+    timeoutMs: 45000,
+    // Formspree form shared with udaygirish.github.io; forwards to Uday's inbox.
+    messageEndpoint: "https://formspree.io/f/mleagkar",
+  };
   const configReady = fetch(url("shared/chat-config.json"), { cache: "no-cache" })
     .then((r) => (r.ok ? r.json() : {}))
     .then((c) => (config = { ...config, ...c }))
@@ -94,7 +100,7 @@
       return `My experience and skills are on the Work page: ${url(DESTINATIONS.work[0])}`;
     if (/(blog|write|article)/.test(q)) return `I write in the Transmission Archive: ${url(DESTINATIONS.blog[0])}`;
     if (/^(hi|hello|hey|yo)\b/.test(q)) return "Hey! Thanks for flying by. What would you like to know?";
-    return `My AI co-pilot isn't connected yet, so I can't answer that one live. Ask about my CV, work, research or how to contact me — or email me at mailto:${PROFILE.email}.`;
+    return "My AI co-pilot isn't connected yet, so I can't answer that one live. Ask about my CV, work, research or how to contact me — or switch to \"Leave a message\" above and it goes straight to my inbox.";
   }
 
   async function askBackend(message, bodyEl) {
@@ -166,11 +172,72 @@
     status.classList.toggle("online", online);
   }
 
+  // ------------------------------------------------- leave-a-message form --
+  const TOPICS = [
+    "Just saying hi",
+    "Collaboration / project",
+    "Job or consulting opportunity",
+    "Research question",
+    "Feedback on this site",
+    "Something else",
+  ];
+  let mailCount = 0;
+  function mailForm(where) {
+    const id = "u-mail-" + ++mailCount;
+    const form = document.createElement("form");
+    form.className = "u-mail";
+    form.noValidate = true;
+    form.innerHTML = `<div class="u-mail-row"><label for="${id}-name">Your name<input id="${id}-name" name="name" required autocomplete="name" maxlength="120"></label><label for="${id}-email">Your email<input id="${id}-email" name="email" type="email" required autocomplete="email" maxlength="200"></label></div><label for="${id}-topic">Topic<select id="${id}-topic" name="topic">${TOPICS.map((t) => `<option>${t}</option>`).join("")}</select></label><label for="${id}-msg">Message<textarea id="${id}-msg" name="message" rows="5" required maxlength="5000" placeholder="I'm writing to you about…"></textarea></label><input class="u-hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true"><div class="u-mail-actions"><button type="submit" class="primary">Transmit ▸</button><p class="u-mail-status" role="status" aria-live="polite"></p></div><p class="u-mail-note">Goes straight to Uday's inbox. Your email is only used to reply.</p>`;
+    const status = form.querySelector(".u-mail-status");
+    const button = form.querySelector("button");
+    const say = (text, kind) => {
+      status.replaceChildren(linkify(text));
+      status.dataset.kind = kind || "";
+    };
+    form.addEventListener("keydown", (e) => e.stopPropagation());
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      await configReady;
+      const data = new FormData(form);
+      const name = String(data.get("name")).trim();
+      const email = String(data.get("email")).trim();
+      data.set("_replyto", email);
+      data.set("_subject", `Uday's Universe · ${data.get("topic")} · from ${name}`);
+      data.set("sent_from", `${location.pathname} (${where})`);
+      button.disabled = true;
+      say("Transmitting…", "pending");
+      try {
+        const res = await fetch(config.messageEndpoint, {
+          method: "POST",
+          body: data,
+          headers: { Accept: "application/json" },
+        });
+        const body = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(body.errors?.map((x) => x.message).join(", ") || "HTTP " + res.status);
+        form.reset();
+        say(`Transmission received ✓ Thanks, ${name} — I'll reply to ${email}.`, "ok");
+        window.UniverseFun?.unlock("comms");
+      } catch (err) {
+        say(`Couldn't send that (${err.message}). You can email me directly: mailto:${PROFILE.email}`, "error");
+      } finally {
+        button.disabled = false;
+      }
+    };
+    return form;
+  }
+  function mountMailForms() {
+    document.querySelectorAll("[data-mail-mount]:not([data-mounted])").forEach((el) => {
+      el.dataset.mounted = "1";
+      el.append(mailForm(el.dataset.mailMount || "page"));
+    });
+  }
+
   function build() {
     dialog = document.createElement("dialog");
     dialog.className = "u-dialog u-chat";
     dialog.setAttribute("aria-labelledby", "u-chat-title");
-    dialog.innerHTML = `<button class="u-close" aria-label="Close chat">Close</button><p class="u-eyebrow">COMMS LINK / DIRECT CHANNEL</p><h2 id="u-chat-title"></h2><p class="u-chat-status" role="status"></p><div class="u-chat-log" aria-live="polite"></div><form class="u-chat-form"><input type="text" autocomplete="off" placeholder="Ask me anything…" aria-label="Message"><button type="submit" class="primary">Send</button></form>`;
+    dialog.innerHTML = `<button class="u-close" aria-label="Close comms">Close</button><p class="u-eyebrow">COMMS LINK / DIRECT CHANNEL</p><h2 id="u-chat-title"></h2><div class="u-tabs" role="tablist" aria-label="Comms mode"><button role="tab" id="u-tab-chat" aria-controls="u-pane-chat" aria-selected="true">Live chat</button><button role="tab" id="u-tab-msg" aria-controls="u-pane-msg" aria-selected="false" tabindex="-1">Leave a message ✉</button></div><section id="u-pane-chat" role="tabpanel" aria-labelledby="u-tab-chat"><p class="u-chat-status" role="status"></p><div class="u-chat-log" aria-live="polite"></div><form class="u-chat-form"><input type="text" autocomplete="off" placeholder="Ask me anything…" aria-label="Message"><button type="submit" class="primary">Send</button></form></section><section id="u-pane-msg" role="tabpanel" aria-labelledby="u-tab-msg" hidden><p class="u-muted u-msg-intro">Rather talk to the real me? Send a transmission — it lands in my email and I'll reply personally.</p></section>`;
     document.body.append(dialog);
     dialog.querySelector("#u-chat-title").textContent = config.title;
     log = dialog.querySelector(".u-chat-log");
@@ -178,7 +245,18 @@
     status = dialog.querySelector(".u-chat-status");
     setStatus(!!config.endpoint);
     dialog.querySelector(".u-close").onclick = () => dialog.close();
-    dialog.querySelector("form").onsubmit = (e) => {
+    dialog.querySelector("#u-pane-msg").append(mailForm("comms panel"));
+    const tabs = [...dialog.querySelectorAll('[role="tab"]')];
+    tabs.forEach((tab) => {
+      tab.onclick = () => selectTab(tab.id === "u-tab-msg" ? "message" : "chat");
+      tab.onkeydown = (e) => {
+        if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+        const other = tabs.find((t) => t !== tab);
+        selectTab(other.id === "u-tab-msg" ? "message" : "chat");
+        other.focus();
+      };
+    });
+    dialog.querySelector(".u-chat-form").onsubmit = (e) => {
       e.preventDefault();
       const v = input.value;
       input.value = "";
@@ -193,12 +271,23 @@
     );
   }
 
-  async function open(prefill) {
+  function selectTab(which) {
+    const msg = which === "message";
+    dialog.querySelector("#u-tab-chat").setAttribute("aria-selected", String(!msg));
+    dialog.querySelector("#u-tab-msg").setAttribute("aria-selected", String(msg));
+    dialog.querySelector("#u-tab-chat").tabIndex = msg ? -1 : 0;
+    dialog.querySelector("#u-tab-msg").tabIndex = msg ? 0 : -1;
+    dialog.querySelector("#u-pane-chat").hidden = msg;
+    dialog.querySelector("#u-pane-msg").hidden = !msg;
+    (msg ? dialog.querySelector("#u-pane-msg input") : input).focus();
+  }
+
+  async function open(prefill, tab = "chat") {
     await configReady;
     if (!dialog) build();
     if (!dialog.open) dialog.showModal();
-    if (prefill) send(prefill);
-    input.focus();
+    selectTab(tab);
+    if (prefill && tab === "chat") send(prefill);
   }
 
   // ------------------------------------------------------------ terminal --
@@ -208,6 +297,7 @@
     "- places: list destinations\n" +
     "- map / quick: open star map / quick access\n" +
     "- chat [message]: open the comms link and talk to me\n" +
+    "- message: send me an email from right here\n" +
     "- whoami: who flies this ship\n" +
     "- contact / cv / github / linkedin\n" +
     "- time: ship clock\n" +
@@ -218,7 +308,7 @@
 
   const COMMANDS = [
     "goto", "open", "cd", "places", "ls", "map", "quick", "chat", "ask", "whoami",
-    "about", "contact", "cv", "resume", "github", "linkedin", "time", "date", "clear",
+    "about", "message", "mail", "contact", "cv", "resume", "github", "linkedin", "time", "date", "clear",
     "badges", "hint", "keys", "fortune",
   ];
 
@@ -246,6 +336,12 @@
         return true;
       case "quick":
         document.querySelector('.universe-nav [data-open="quick"]')?.click();
+        return true;
+      case "message":
+      case "mail":
+      case "email":
+        write("OPENING TRANSMISSION CHANNEL — YOUR MESSAGE GOES TO UDAY'S INBOX.");
+        open("", "message");
         return true;
       case "chat":
       case "ask":
@@ -322,6 +418,9 @@
     return hits.length === 1 ? hits[0] + " " : value;
   }
 
-  window.UniverseChat = { open, send };
+  window.UniverseChat = { open, send, message: () => open("", "message") };
+  window.UniverseMail = { form: mailForm, mount: mountMailForms };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mountMailForms);
+  else mountMailForms();
   window.UniverseTerminal = { run, complete, help: HELP, commands: COMMANDS };
 })();
