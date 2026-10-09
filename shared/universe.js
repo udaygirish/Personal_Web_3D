@@ -108,7 +108,7 @@
     bar.className = "universe-nav";
     bar.setAttribute("aria-label", "Universe navigation");
     bar.innerHTML =
-      '<button type="button">Star map</button><a href="' +
+      '<button type="button" data-open="map">Star map</button><button type="button" data-open="quick">Quick access</button><a href="' +
       url("index.html") +
       '">Home</a>';
     document.body.append(bar);
@@ -123,7 +123,12 @@
       if (!dialog.open) dialog.showModal();
     }
     window.openUniverseMap = open;
-    bar.querySelector("button").onclick = open;
+    bar.querySelector('[data-open="map"]').onclick = open;
+    bar.querySelector('[data-open="quick"]').onclick = () => {
+      open();
+      dialog.querySelector('[data-mode="quick"]').click();
+      dialog.querySelector("#u-destinations").scrollIntoView({ block: "start" });
+    };
     dialog.querySelector(".u-close").onclick = () => dialog.close();
     dialog.addEventListener("click", (e) => {
       if (e.target === dialog) {
@@ -236,15 +241,10 @@
     const isHome =
       location.pathname === root.pathname ||
       location.pathname === new URL("index.html", root).pathname;
-    if (isHome && !params.has("from")) {
-      if (params.get("mode") === "explore" || remembered === "explore")
-        dialog.querySelector('[data-mode="explore"]').click();
-      else {
-        open();
-        if (remembered === "guided")
-          dialog.querySelector('[data-mode="guided"]').click();
-      }
-    }
+    // The home page keeps the terminal boot sequence; the star map stays
+    // behind the HUD button instead of opening over it.
+    if (isHome && params.get("mode") === "explore")
+      dialog.querySelector('[data-mode="explore"]').click();
     window.addEventListener("blur", stopMovement);
   });
 })();
