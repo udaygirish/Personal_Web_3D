@@ -104,7 +104,7 @@
     if (typeof disableAutopilot === "function") disableAutopilot();
   }
   // Chat panel + shared terminal commands, and the badges / a11y layer.
-  for (const file of ["shared/comms.js", "shared/fun.js"]) {
+  for (const file of ["shared/comms.js?v=4", "shared/fun.js?v=4"]) {
     const s = document.createElement("script");
     s.src = url(file);
     document.head.append(s);
