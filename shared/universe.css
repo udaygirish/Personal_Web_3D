@@ -440,6 +440,145 @@ body.u-hyper canvas {
   }
 }
 
+/* UDAY-OS terminal mode */
+dialog.uos {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: none;
+  flex-direction: column;
+  background: radial-gradient(ellipse at 50% 40%, #031a0e 0%, #010604 75%);
+  color: #33ff99;
+  font: 15px/1.55 "JetBrains Mono", "Fira Code", "Courier New", monospace;
+  text-shadow: 0 0 6px rgba(51, 255, 153, 0.45);
+}
+dialog.uos[open] {
+  display: flex;
+}
+dialog.uos::backdrop {
+  background: #000;
+}
+dialog.uos::after {
+  /* CRT scanlines */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(rgba(0, 0, 0, 0) 0 2px, rgba(0, 0, 0, 0.18) 2px 3px);
+}
+.uos-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(51, 255, 153, 0.25);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(51, 255, 153, 0.75);
+}
+.uos-hint {
+  margin-left: auto;
+  color: rgba(51, 255, 153, 0.45);
+}
+.uos-x {
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid rgba(51, 255, 153, 0.35);
+  border-radius: 3px;
+  padding: 4px 10px;
+  text-transform: uppercase;
+}
+.uos-out {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px clamp(14px, 4vw, 48px) 8px;
+}
+.uos-l {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  min-height: 1.55em;
+  max-width: 110ch;
+}
+.uos-l a {
+  color: #7df9ff;
+}
+.uos-echo {
+  color: #c8ffe4;
+}
+.uos-dim {
+  color: rgba(51, 255, 153, 0.55);
+}
+.uos-err {
+  color: #ff6b81;
+  text-shadow: 0 0 6px rgba(255, 107, 129, 0.4);
+}
+.uos-ok {
+  color: #9dffcb;
+}
+.uos-h {
+  color: #7df9ff;
+  letter-spacing: 0.12em;
+}
+.uos-dir {
+  color: #7df9ff;
+}
+.uos-ai {
+  color: #ffd166;
+  text-shadow: 0 0 6px rgba(255, 209, 102, 0.35);
+}
+.uos-art {
+  color: #33ff99;
+  white-space: pre;
+  overflow: hidden;
+  line-height: 1.2;
+  min-height: 0;
+}
+.uos-line {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 10px clamp(14px, 4vw, 48px) 18px;
+}
+.uos-prompt {
+  white-space: pre;
+  color: #7df9ff;
+}
+.uos-line input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: max(16px, 1em); /* no zoom-on-focus on phones */
+  color: #c8ffe4;
+  background: transparent;
+  border: 0;
+  outline: none;
+  caret-color: #33ff99;
+  text-shadow: inherit;
+}
+.uos-line input:focus-visible {
+  outline: none !important; /* the blinking caret is the focus indicator */
+}
+@media (max-width: 600px) {
+  dialog.uos {
+    font-size: 13px;
+  }
+  .uos-hint {
+    display: none;
+  }
+  .uos-art {
+    font-size: 9px;
+  }
+}
+
 /* Comms tabs + leave-a-message form (shared by the comms panel and pages) */
 .u-tabs {
   display: flex;

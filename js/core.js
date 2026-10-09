@@ -66,7 +66,7 @@ function init() {
     if (returningFrom && WORMHOLE_CONFIG.some(w => w.id === returningFrom)) {
         // Skip loading and cockpit - go straight to reverse tunnel
         handleReturnFromSite(returningFrom);
-    } else if (urlParams.get('mode') === 'explore') {
+    } else if (urlParams.get('mode') === 'explore' || urlParams.get('mode') === 'terminal') {
         // Explicit "Explore" link from another page - skip the boot terminal
         document.getElementById("loading-screen").classList.add("hidden");
         showScene(SCENES.COCKPIT);

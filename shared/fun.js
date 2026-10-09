@@ -52,6 +52,7 @@
     ["comms", "Open Channel", "Send a message over the comms link.", "Press Chat in the top bar."],
     ["hacker", "Terminal Velocity", "Run 10 commands in a nav terminal.", "Type 'help' to start."],
     ["konami", "Cheat Code", "Overload the hyperdrive.", "Some codes never die: ↑↑↓↓←→←→BA."],
+    ["root_access", "Root Access", "Explore the universe from the UDAY-OS terminal.", "Press the ` key, or pick Terminal on the star map."],
     ["night_owl", "Night Shift", "Explore the universe between midnight and 5 a.m.", "Come back late."],
     ["completionist", "Fleet Admiral", "Earn every other badge.", "Collect them all."],
   ];
@@ -230,6 +231,7 @@
   };
   const GLOBAL_KEYS = [
     ["?", "This help"],
+    ["`", "Terminal mode — explore the whole site as text"],
     ["/", "Focus the nav terminal"],
     ["Esc", "Close any panel"],
     ["Tab", "Move between buttons and links; completes terminal commands"],
