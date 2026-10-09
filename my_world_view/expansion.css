@@ -164,9 +164,9 @@
 .world-photo #planet-approach-hud {
   display: none !important;
 }
-#planetInfoCard {
-  max-height: 65dvh;
-  overflow: auto;
+/* Only the details scroll, so the landing button always stays in view */
+#planetInfoCard .card-body {
+  max-height: min(26dvh, 230px);
 }
 #world-exhibit input[type="range"] {
   width: 100%;
@@ -192,4 +192,77 @@
 }
 body:has(.u-tour) .world-directory {
   max-height: calc(100dvh - 340px);
+}
+
+/* Floating planet labels */
+.world-labels {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+}
+.world-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  justify-items: center;
+  gap: 1px;
+  padding: 4px 8px;
+  background: rgba(0, 12, 10, 0.55);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 3px;
+  color: var(--u-text);
+  cursor: pointer;
+  pointer-events: auto;
+  white-space: nowrap;
+  transition:
+    opacity 0.3s,
+    border-color 0.2s,
+    background 0.2s;
+}
+.world-label strong {
+  font: 700 0.62rem/1.2 var(--u-display);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--u-accent);
+}
+.world-label em {
+  font: normal 0.6rem/1.2 var(--u-mono);
+  color: var(--u-muted);
+}
+.world-label .dot {
+  position: absolute;
+  top: -9px;
+  width: 1px;
+  height: 8px;
+  background: rgba(0, 255, 136, 0.5);
+}
+.world-label:hover,
+.world-label:focus-visible,
+.world-label.active {
+  background: rgba(0, 255, 136, 0.15);
+  border-color: var(--u-accent);
+}
+.world-label.minor {
+  padding: 2px 6px;
+  border-color: rgba(0, 217, 255, 0.25);
+}
+.world-label.minor strong {
+  font-size: 0.55rem;
+  color: var(--u-cyan);
+}
+.world-label.minor em {
+  display: none;
+}
+.world-planet-list button[aria-pressed="true"],
+#world-tour[aria-pressed="true"] {
+  border-color: var(--u-accent);
+  background: rgba(0, 255, 136, 0.14);
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+}
+/* On a planet surface the orbital directory is just clutter */
+.world-surface .world-directory,
+.world-surface .world-labels {
+  display: none;
 }

@@ -225,6 +225,8 @@ function initWorldExplorer() {
   exhibit
     .querySelectorAll("[data-joint]")
     .forEach((e) => (e.oninput = drawRobot));
+  // Glide the camera to a planet instead of teleporting.
+  let flight = null;
   const choose = (name) => {
     const p = planets.find((p) => p.userData.name === name);
     if (!p || isRoverMode) return;
@@ -232,22 +234,143 @@ function initWorldExplorer() {
     currentView = "3D";
     switchView("3D");
     scene.updateMatrixWorld(true);
-    const pos = p.getWorldPosition(new THREE.Vector3());
-    camera3D.position.copy(pos).add(new THREE.Vector3(0, 35, 95));
-    camera3D.lookAt(pos);
-    const euler = new THREE.Euler().setFromQuaternion(
-      camera3D.quaternion,
-      "YXZ",
-    );
-    shipPitch = euler.x;
-    shipYaw = euler.y;
+    document.getElementById("planetInfoCard")?.classList.remove("active");
+    const fromPos = camera3D.position.clone();
+    const fromQuat = camera3D.quaternion.clone();
+    const reduce = window.universeReducedMotion || matchMedia("(prefers-reduced-motion: reduce)").matches;
+    flight = { p, fromPos, fromQuat, start: performance.now(), duration: reduce ? 0 : 1600 };
     selectedObject = p;
-    showPlanetInfo(p);
+    panel.querySelectorAll("[data-planet]").forEach((b) =>
+      b.setAttribute("aria-pressed", String(b.dataset.planet === name)),
+    );
   };
+  function stepFlight(now) {
+    if (!flight) return;
+    const { p, fromPos, fromQuat, start, duration } = flight;
+    const pos = p.getWorldPosition(new THREE.Vector3());
+    const toPos = pos.clone().add(new THREE.Vector3(0, 40, 125));
+    // Camera-convention orientation (-Z toward the target). Aim a little
+    // above the planet so it sits low on screen, leaving room for its card.
+    const aim = pos.clone().add(new THREE.Vector3(0, 14, 0));
+    const toQuat = new THREE.Quaternion().setFromRotationMatrix(
+      new THREE.Matrix4().lookAt(toPos, aim, camera3D.up),
+    );
+    const t = duration ? Math.min(1, (now - start) / duration) : 1;
+    const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; // easeInOutCubic
+    camera3D.position.lerpVectors(fromPos, toPos, e);
+    camera3D.quaternion.slerpQuaternions(fromQuat, toQuat, e);
+    if (t >= 1) {
+      const euler = new THREE.Euler().setFromQuaternion(camera3D.quaternion, "YXZ");
+      shipPitch = euler.x;
+      shipYaw = euler.y;
+      flight = null;
+      showPlanetInfo(p);
+    }
+  }
+
+  // Floating 3D labels for every world and satellite.
+  const labelLayer = document.createElement("div");
+  labelLayer.className = "world-labels";
+  document.body.append(labelLayer);
+  const labels = new Map();
+  planets.forEach((p) => {
+    const name = p.userData.name;
+    if (!name) return;
+    const main = WORLD_CONTENT[name];
+    const b = document.createElement("button");
+    b.className = "world-label" + (main ? "" : " minor");
+    b.innerHTML = "<span class=\"dot\"></span><strong></strong><em></em>";
+    b.querySelector("strong").textContent = name;
+    b.querySelector("em").textContent = main ? main.subtitle : "satellite";
+    b.setAttribute("aria-label", `Fly to ${name}`);
+    b.onclick = () => {
+      stopTour();
+      choose(name);
+    };
+    labelLayer.append(b);
+    labels.set(p, b);
+  });
+  const v = new THREE.Vector3();
+  // Visible "glass" between the cockpit panels, refreshed occasionally.
+  let glass = { l: 0, r: innerWidth, t: 0, b: innerHeight }, glassAt = 0;
+  const edge = (sel, side, fallback) => {
+    const el = document.querySelector(sel);
+    if (!el || getComputedStyle(el).display === "none") return fallback;
+    return el.getBoundingClientRect()[side];
+  };
+  function tick(now) {
+    if (now - glassAt > 500) {
+      glassAt = now;
+      glass = {
+        l: edge(".cockpit-panel-left", "right", 0),
+        r: edge(".cockpit-panel-right", "left", innerWidth),
+        t: 0,
+        b: edge(".cockpit-bottom", "top", innerHeight),
+      };
+    }
+    requestAnimationFrame(tick);
+    document.body.classList.toggle("world-surface", !!isRoverMode);
+    stepFlight(now);
+    const show = !isRoverMode && currentView === "3D" && !document.body.classList.contains("world-photo");
+    labelLayer.hidden = !show;
+    if (!show) return;
+    const card = document.getElementById("planetInfoCard")?.classList.contains("active");
+    labels.forEach((el, p) => {
+      p.getWorldPosition(v);
+      const dist = v.distanceTo(camera3D.position);
+      v.project(camera3D);
+      const visible = v.z < 1 && Math.abs(v.x) < 1.02 && Math.abs(v.y) < 1.02 && !(card && p === selectedObject);
+      el.style.display = visible ? "" : "none";
+      if (!visible) return;
+      const x = (v.x * 0.5 + 0.5) * innerWidth;
+      const y = (-v.y * 0.5 + 0.5) * innerHeight;
+      if (x < glass.l + 40 || x > glass.r - 40 || y > glass.b - 50) {
+        el.style.display = "none";
+        return;
+      }
+      el.style.transform = `translate(${x}px, ${y}px) translate(-50%, 14px)`;
+      el.style.opacity = dist > 1600 ? 0.5 : 1;
+      el.classList.toggle("active", p === selectedObject);
+    });
+  }
+  requestAnimationFrame(tick);
+
+  // Cinematic tour: glide between the four main worlds.
+  let tourTimer = null;
+  const tourButton = document.createElement("button");
+  tourButton.id = "world-tour";
+  tourButton.textContent = "Cinematic tour";
+  tourButton.setAttribute("aria-pressed", "false");
+  function stopTour() {
+    if (!tourTimer) return;
+    clearInterval(tourTimer);
+    tourTimer = null;
+    tourButton.textContent = "Cinematic tour";
+    tourButton.setAttribute("aria-pressed", "false");
+  }
+  tourButton.onclick = () => {
+    if (tourTimer) return stopTour();
+    const names = Object.keys(WORLD_CONTENT);
+    let i = 0;
+    const next = () => choose(names[i++ % names.length]);
+    next();
+    tourTimer = setInterval(next, 7000);
+    tourButton.textContent = "Stop tour";
+    tourButton.setAttribute("aria-pressed", "true");
+  };
+  window.addEventListener("keydown", (e) => {
+    if (["w", "a", "s", "d", "escape"].includes(e.key.toLowerCase())) stopTour();
+  });
   panel
     .querySelectorAll("[data-planet]")
-    .forEach((b) => (b.onclick = () => choose(b.dataset.planet)));
+    .forEach((b) => (b.onclick = () => {
+      stopTour();
+      choose(b.dataset.planet);
+    }));
+  panel.querySelector(".u-actions").prepend(tourButton);
   panel.querySelector("#world-orbit").onclick = () => {
+    stopTour();
+    flight = null;
     if (isRoverMode) {
       returnToOrbit();
       return;
