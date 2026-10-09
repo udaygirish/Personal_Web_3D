@@ -15,13 +15,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle, #193550, transparent 70%);
-  font: 12px ui-monospace;
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.12), transparent 70%);
+  font: 12px var(--u-mono);
   letter-spacing: 0.1em;
   color: var(--u-muted);
 }
 .archive-signal strong {
-  font: 300 6rem/1.2 system-ui;
+  font: 700 5rem/1.2 var(--u-display);
+  text-shadow: 0 0 20px var(--u-glow);
   color: var(--u-accent);
 }
 .archive-controls {
@@ -119,18 +120,18 @@
 }
 .hljs-keyword,
 .hljs-selector-tag {
-  color: #c7b4ff;
+  color: #00d9ff;
 }
 .hljs-string,
 .hljs-title {
-  color: #81e4df;
+  color: #00ff88;
 }
 .hljs-number,
 .hljs-literal {
-  color: #f4c77e;
+  color: #ffbe0b;
 }
 .hljs-comment {
-  color: #8da0b8;
+  color: #6f8f82;
 }
 @media (max-width: 760px) {
   .archive-hero {

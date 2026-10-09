@@ -185,13 +185,13 @@ function drawRobot() {
     angle += joint;
     const nx = x + Math.cos(angle) * (80 - i * 15),
       ny = y + Math.sin(angle) * (80 - i * 15);
-    ctx.strokeStyle = ["#81e4df", "#c7b4ff", "#f4c77e"][i];
+    ctx.strokeStyle = ["#00ff88", "#00d9ff", "#06ffa5"][i];
     ctx.lineWidth = 12;
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.lineTo(nx, ny);
     ctx.stroke();
-    ctx.fillStyle = "#e8eef7";
+    ctx.fillStyle = "#e0f8f0";
     ctx.beginPath();
     ctx.arc(x, y, 8, 0, Math.PI * 2);
     ctx.fill();
@@ -297,9 +297,9 @@ function initWorldExplorer() {
     c.height = renderer.domElement.height;
     const ctx = c.getContext("2d");
     ctx.drawImage(renderer.domElement, 0, 0);
-    ctx.fillStyle = "#07101dcc";
+    ctx.fillStyle = "#03080ecc";
     ctx.fillRect(0, c.height - 70, c.width, 70);
-    ctx.fillStyle = "#e8eef7";
+    ctx.fillStyle = "#e0f8f0";
     ctx.font = "22px sans-serif";
     ctx.fillText(
       "UDAY’S UNIVERSE · " + (currentPlanetData?.name || "My Journey"),

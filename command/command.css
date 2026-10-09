@@ -14,7 +14,7 @@
   border: 1px solid var(--u-line);
   border-left: 3px solid var(--u-gold);
   border-radius: 8px;
-  background: #12223788;
+  background: rgba(0, 255, 136, 0.06);
   margin: 35px 0;
 }
 .gate-panel h2 {
