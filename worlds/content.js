@@ -32,7 +32,7 @@ window.OUTER_WORLDS = [
       {
         title: "Personal projects",
         text: "Explore the projects and interests already in the personal portfolio.",
-        image: "../personal/assets/ROSX3Master_Robot.png",
+        image: "../assets/ROSX3Master_Robot.png",
         href: "../personal/index.html#projects",
       },
       {

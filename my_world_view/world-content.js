@@ -35,25 +35,25 @@ window.WORLD_CONTENT = {
 };
 window.WORLD_EXHIBITS = {
   MinNav: {
-    image: "../personal/assets/MinNav_Paper_Image.png",
+    image: "../assets/MinNav_Paper_Image.png",
     href: "../my_web/index.html#publications",
     label: "Read publications",
     text: "Explore the publication and its supporting research from the research page.",
   },
   "Robot Grasping": {
-    image: "../personal/assets/UR10.jpg",
+    image: "../assets/UR10.jpg",
     href: "../my_web/index.html#repositories",
     label: "Explore research",
     text: "Robot perception and grasping research. Inspect the scene, then visit the research page for the technical work.",
   },
   "3R Manipulator": {
-    image: "../personal/assets/3r_robot_arm_animation.gif",
+    image: "../assets/3r_robot_arm_animation.gif",
     href: "../my_web/index.html#repositories",
     label: "Explore projects",
     text: "A three-joint robot arm study. Adjust the joints in the interactive exhibit to explore its workspace.",
   },
   "RIGGU V2": {
-    image: "../personal/assets/ROSX3Master_Robot.png",
+    image: "../assets/ROSX3Master_Robot.png",
     href: "../personal/index.html#projects",
     label: "View creative projects",
     text: "Explore the interactive robotics projects in the personal portfolio.",
