@@ -1,280 +1,157 @@
-# 🌌 Space Portfolio - Interactive 3D Navigation
+# 🌌 Uday's Universe: an interactive 3D portfolio
 
-An immersive, space-themed portfolio website featuring 3D wormhole navigation, terminal-style loading, and full flight controls.
+The portfolio of **Uday Girish Maradana** (ML engineer & robotics researcher). You fly a spaceship through it.
+It boots from a physics-equation terminal and opens into a neon cockpit. From there you can fly
+through wormholes to each part of the portfolio, land a rover on planets, read the blog, or skip
+the 3D and explore everything in a text-mode shell.
 
-![Space Portfolio](https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=three.js&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+**Live:** [new.udaygirish.com](https://new.udaygirish.com)
+
+![Three.js](https://img.shields.io/badge/Three.js_r147-000000?style=for-the-badge&logo=three.js&logoColor=white)
+![JavaScript](https://img.shields.io/badge/Vanilla_JS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-## ✨ Features
+## ✨ What's inside
 
-### 🖥️ Terminal Loading Screen
-- **Matrix rain effect** with Japanese characters and binary
-- **CRT scanlines** for authentic retro terminal feel
-- **Physics equations** scrolling during world creation
-- **Stage-based initialization** (gravity, quantum fields, spacetime)
-- **Random glitch effects** for hacker aesthetic
+### 🖥️ Boot sequence & cockpit
+- `create_world.sh` loader with Matrix rain, scrolling physics equations, staged "world creation"
+  and a progress ring. Press **Esc** or the *Skip intro* button to skip it.
+- A neon cockpit HUD: nav computer, targeting, power grid, radar, velocity, and a
+  **nav terminal** (`help`, `ap work`, `scan`, `goto blog`, `chat`, …; Tab completes).
+- Full 6-axis flight, barrel rolls, a mining laser, autopilot and a reverse-wormhole return.
 
-### 🚀 3D Space Navigation
-- **Free flight controls** with WASD + mouse
-- **6-axis movement** (forward/back, left/right, up/down)
-- **Speed boost** with Shift key (2x speed)
-- **Barrel roll** maneuvers (Q/E keys)
-- **Mouse-controlled camera** for immersive look-around
+### 🧭 Ways to explore (star map)
+| Mode | What it does |
+|---|---|
+| **Explore** | Free flight through wormholes and planets |
+| **Guided tour** | Short self-paced routes (professional / explorer) |
+| **Quick access** | Plain one-click menu of every page |
+| **Terminal** | UDAY-OS: the whole site as a text shell (also the **`** key or `?mode=terminal`) |
 
-### 🌀 Wormhole System
-- **Multiple wormholes** with unique colors
-- **Config-driven** - easily add new portals
-- **Tunnel travel animation** when entering
-- **Reverse tunnel** when returning
-- **Proximity detection** - automatic entry when close
-- **HUD targeting** shows nearest wormhole
+### 🪐 My World View
+- A solar system of four landable worlds: Experience, Skills, Projects and Education. Six outer
+  satellites link to the *Beyond the Résumé* archive.
+- Smooth camera flights to each planet, clickable 3D labels and a **cinematic tour**.
+- Land and drive a rover with a minimap. Visit kiosks and find hidden data logs.
+- Exhibits, photo mode and Standard/High graphics settings.
 
-### 🎮 HUD Overlay
-- **Speed indicator** (cosmic units - fraction of light speed)
-- **Sector coordinates** (α, β, γ in light years)
-- **Target distance** to nearest wormhole
-- **Real-time updates** during flight
+### 📡 Transmission Archive (blog)
+- Markdown posts are built into static articles with search, channels and a reading queue.
+  Articles get KaTeX math and code highlighting.
+- The reading toolbar has **Compact / Wide / Full** widths and A−/A+ text size.
+  **Download PDF** uses a clean print layout.
 
-### 📝 Markdown-Based Blog
-- **Write posts in Markdown** (.md files)
-- **Auto-rendering** with marked.js
-- **Image support** from dedicated folder
-- **Card grid layout** with modal reading view
-- **Dark space theme** matching main navigation
+### 💬 Talk to Uday
+- **Live chat** is an offline auto-responder today. It's ready for a self-hosted RAG/LLM
+  backend; see [docs/chat-backend.md](docs/chat-backend.md).
+- **Leave a message** sends a real email via Formspree. It's in the comms panel, on the
+  Personal page, and available as `message` in the terminals.
 
-### 📱 Mobile Support
-- **Auto-detection** of mobile/tablet devices
-- **Virtual joystick** for movement
-- **Touch buttons** for thrust and boost
-- **Touch-drag camera rotation**
-- **Responsive design** for all screen sizes
+### 🎮 Fun & accessibility
+- **Captain's Log**: 13 badges, plus a Konami-code hyperdrive and `fortune`.
+- **`?`** opens a flight manual and **`/`** focuses the nav terminal.
+- A skip link to Quick access, labelled canvases, live-region consoles and reduced-motion
+  support. The terminal mode is a fully text-based way to explore.
 
-### 🎨 Visual Effects
-- **Starfield background** (5000 stars)
-- **Nebula clouds** (subtle background elements)
-- **Wormhole glow effects**
-- **Particle systems** in tunnel
-- **Green/cyan/orange** color scheme
-
-## 🛠️ Tech Stack
-
-- **Three.js** - 3D graphics and rendering
-- **Vanilla JavaScript** - No frameworks, pure JS
-- **HTML5 & CSS3** - Structure and styling
-- **Marked.js** - Markdown rendering for blog
-- **Google Fonts** - Orbitron, Inter, Playfair Display
-
-## 📁 Project Structure
-
-```
-new_web/
-├── index.html              # Main 3D entry point
-├── app.js                  # Core navigation logic
-├── styles.css              # Main styling
-├── config.js               # Wormhole configuration
-├── matrix.js               # Matrix rain effect
-├── hud.js                  # HUD & nebula functions
-├── mobile.js               # Mobile touch controls
-├── personal/               # Personal portfolio site
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
-├── work/                   # Professional portfolio site
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
-├── blog/                   # Markdown-based blog
-│   ├── index.html
-│   ├── style.css
-│   ├── script.js
-│   ├── blog-config.js
-│   ├── posts/              # Blog posts (.md files)
-│   └── images/             # Blog images
-├── CONFIG_GUIDE.md         # Wormhole configuration guide
-├── CONTENT_README.md       # Content management guide
-└── README.md               # This file
-```
-
-## 🚀 Quick Start
-
-### 1. Clone the repository
-```bash
-git clone <your-repo-url>
-cd new_web
-```
-
-### 2. Open in browser
-Simply open `index.html` in your web browser:
-```bash
-# Using Python
-python -m http.server 8000
-
-# Using Node.js
-npx http-server
-
-# Or just open the file directly
-open index.html
-```
-
-### 3. Navigate!
-- Watch the terminal loading sequence
-- Press **W** to start flying
-- Explore space and find wormholes
-- Enter wormholes to visit portfolio sites
+### 🔐 Command Deck (optional)
+An owner-only Google sign-in gateway and "Mission Control" launcher for private apps. It needs the
+Node server and is not part of the static site. See
+[docs/private-command-deck.md](docs/private-command-deck.md).
 
 ## 🎮 Controls
 
-### Desktop
-- **W/S** - Move forward/backward
-- **A/D** - Strafe left/right
-- **Space/Shift** - Move up/down
-- **Q/E** - Barrel roll
-- **Shift (hold)** - Speed boost (2x)
-- **Mouse** - Look around and steer
-- **Fly close + W** - Enter wormhole
+| Keys | Action |
+|---|---|
+| **W / S**, **A / D** | Thrust / reverse, strafe |
+| **Space / Shift** | Climb / descend (rover: jump / boost) |
+| **Q / E** | Barrel roll (rover: **E** launches back to orbit) |
+| **Mouse** | Steer (**M** toggles free / cone steering) |
+| **Click** | Mining laser |
+| **C** | Toggle cockpit view |
+| **?** · **/** · **`** | Flight manual · focus nav terminal · terminal mode |
+| **Esc** | Skip intro / close any panel |
 
-### Mobile/Tablet
-- **Virtual Joystick** (left) - Movement
-- **⬆ Button** - Forward thrust
-- **🚀 Button** - Speed boost
-- **Touch & drag** - Rotate camera
+On phones there's a virtual joystick, thrust and boost buttons, and touch-drag to look around.
 
-## ⚙️ Configuration
+## 🛠️ Tech stack
+- **Three.js r147** (global build via jsDelivr), with UnrealBloom post-processing on the cockpit
+- **Vanilla JS, HTML & CSS**. No framework; the public site is fully static.
+- **Node 22+** tooling: the blog build (marked, sanitize-html, highlight.js, KaTeX), checks and tests
+- **Express** for the optional private gateway (openid-client, sessions, proxy)
+- **Formspree** for the leave-a-message form
 
-### Adding New Wormholes
+## 📁 Project structure
 
-Edit `config.js`:
-
-```javascript
-const WORMHOLE_CONFIG = [
-    {
-        id: 'projects',
-        label: 'Projects',
-        color: 0xff6b35,  // Orange
-        position: { x: 0, y: 30, z: -120 },
-        destination: './projects/index.html'
-    }
-];
+```
+├── index.html, styles.css      # Home: boot loader + cockpit + open-space scene
+├── config.js                   # Wormhole definitions (see CONFIG_GUIDE.md)
+├── js/                         # Cockpit scene: core, flight, environment, audio, weapons, ui
+├── matrix.js, hud.js, mobile.js
+├── my_world_view/              # Planet system, rover, exhibits (world-*.js, app.js)
+├── work/ personal/ my_web/     # Professional, personal and research pages
+├── worlds/                     # "Beyond the Résumé" (generated)
+├── blog/                       # Transmission Archive: posts/*.md → articles/ (generated)
+├── command/, server/           # Command Deck gate + optional Node gateway
+├── shared/                     # Used on every page:
+│   ├── universe.js / .css      #   star map, nav bar, theme tokens
+│   ├── comms.js                #   chat + leave-a-message + shared terminal commands
+│   ├── fun.js                  #   badges, toasts, flight manual, accessibility
+│   ├── terminal-mode.js        #   UDAY-OS text-mode shell
+│   ├── space-pages.js          #   section numbering / active nav on content pages
+│   └── chat-config.json        #   chat endpoint + Formspree form
+├── shared-space-theme.css      # Neon theme for Personal / Work / Research
+├── assets/                     # Shared images & media
+├── scripts/                    # build-blog.mjs, check.mjs
+├── tests/                      # node:test suites
+└── docs/                       # Architecture, world view, rover, chat backend, gateway
 ```
 
-See [CONFIG_GUIDE.md](CONFIG_GUIDE.md) for detailed instructions.
+## 🚀 Run locally
 
-### Adding Blog Posts
+The public site is static, so any static server works:
 
-1. Create `blog/posts/my-post.md`
-2. Add entry to `blog/blog-config.js`:
-
-```javascript
-{
-    id: 'my-post',
-    title: 'My Post Title',
-    date: '2025-01-21',
-    author: 'Your Name',
-    file: 'my-post.md',
-    excerpt: 'Short description',
-    tags: ['AI', 'ML']
-}
+```bash
+python3 -m http.server 8000      # then open http://localhost:8000
 ```
 
-See [blog/BLOG_GUIDE.md](blog/BLOG_GUIDE.md) for more details.
+Blog edits, checks and tests need Node 22+:
+
+```bash
+npm ci
+npm run build    # rebuild blog/articles, archive, search index, worlds page
+npm run check    # validate JS + local asset references
+npm test         # node:test suites
+npm start        # optional: Node gateway with the private Command Deck
+```
+
+## ✍️ Editing content
+- **Blog:** add `blog/posts/<post>.md`, register it in `blog/blog-config.js`, then run
+  `npm run build`. Don't hand-edit `blog/articles/`. See [blog/BLOG_GUIDE.md](blog/BLOG_GUIDE.md).
+- **Wormholes:** edit `config.js` ([CONFIG_GUIDE.md](CONFIG_GUIDE.md)).
+- **Pages:** edit `work/`, `personal/` and `my_web/` directly. Terminal mode reads these pages
+  live, so it picks up your changes automatically.
+- **Planets & exhibits:** `my_world_view/world-content.js`. Outer satellites: `worlds/content.js`.
+- **Chat / email:** `shared/chat-config.json` (`endpoint` for the AI, `messageEndpoint` for
+  Formspree).
+- **Cache-busting:** shared assets are loaded with `?v=N`. Bump it when you change them.
 
 ## 🌐 Deployment
+GitHub Pages serves the **`gh-pages`** branch at `new.udaygirish.com` (it adds `CNAME` and
+`.nojekyll`). The usual flow is: feature branch → PR into **`dev`** → PR `dev` → **`gh-pages`**
+(and `main`). CI (`.github/workflows/universe-checks.yml`) runs build, check and test on PRs into
+`dev` and `main`.
 
-### GitHub Pages
-```bash
-# Push to GitHub
-git add .
-git commit -m "Initial commit"
-git push origin main
-
-# Enable GitHub Pages in repo settings
-# Point to main branch, root directory
-```
-
-Your site will be live at: `https://username.github.io`
-
-### Other Platforms
-- **Netlify**: Drag and drop the `new_web` folder
-- **Vercel**: Connect your GitHub repo
-- **Cloudflare Pages**: Push to GitHub and connect
-
-## 🎨 Color Scheme
-
-- **Primary**: Green (`#00ff88`)
-- **Secondary**: Cyan (`#06ffa5`)
-- **Accent**: Orange (`#ff6b35`)
-- **Background**: Black (`#000000`)
-- **Terminal**: Matrix Green (`#00ff00`)
-
-## 📊 Features Breakdown
-
-| Feature | Status | Description |
-|---------|--------|-------------|
-| Terminal Loading | ✅ | Matrix rain, CRT effects, physics equations |
-| 3D Navigation | ✅ | Full 6-axis flight controls |
-| Wormholes | ✅ | Multiple portals with tunnel travel |
-| HUD | ✅ | Speed, coordinates, target distance |
-| Mobile Controls | ✅ | Virtual joystick and touch buttons |
-| Blog System | ✅ | Markdown-based with auto-rendering |
-| Return Navigation | ✅ | Reverse tunnel animation |
-| Config System | ✅ | Easy wormhole management |
-
-## 🔧 Advanced Features
-
-- **Cosmic coordinates** - Light years and sector notation
-- **Speed in c units** - Fraction of light speed
-- **Auto-reload detection** - Always shows full loading
-- **URL parameter handling** - Clean return navigation
-- **Glitch effects** - Random text distortion
-- **Barrel roll physics** - Smooth Z-axis rotation
-- **Proximity entry** - Automatic wormhole detection
-
-## 📱 Browser Support
-
-- ✅ Chrome/Edge (recommended)
-- ✅ Firefox
-- ✅ Safari
-- ✅ Mobile browsers (iOS/Android)
-
-**Note**: Requires WebGL support for 3D graphics.
-
-## 🤝 Contributing
-
-Feel free to fork and customize! Some ideas:
-- Add more wormholes
-- Create new portfolio sections
-- Enhance visual effects
-- Add easter eggs
-- Implement VR support
+## 📚 Docs
+- [Architecture](docs/architecture.md) · [Universe expansion](docs/universe-expansion.md)
+- [My World View](docs/my_world_view.md) · [Rover mechanics](docs/rover_mechanics.md)
+- [Chat & email backend](docs/chat-backend.md) · [Private Command Deck](docs/private-command-deck.md)
+- [Content guide](CONTENT_README.md) · [Wormhole config](CONFIG_GUIDE.md)
 
 ## 📄 License
-
-MIT License - feel free to use for your own portfolio!
-
-## 🙏 Credits
-
-- **Three.js** - 3D graphics library
-- **Marked.js** - Markdown parsing
-- **Google Fonts** - Typography
-- Design inspiration from sci-fi interfaces and space exploration
-
-## 🚀 Live Demo
-
-Visit the live site: [Your deployment URL here]
+MIT. Feel free to borrow ideas for your own universe.
 
 ---
 
-**Made with ❤️ and lots of ☕ by Uday Girish Maradana**
-
+**Made with ❤️, ☕ and a lot of physics equations by Uday Girish Maradana.**
 *Explore the universe, one wormhole at a time.* 🌌
-
-## Universe expansion (feature branch)
-
-This branch adds visitor modes, an expanded My World View, the Transmission Archive and an optional owner-only Google-authenticated Command Deck.
-
-- [Architecture, content editing and validation](docs/universe-expansion.md)
-- [Private gateway and Google sign-in setup](docs/private-command-deck.md)
-
-Use Node 22+ and run `npm ci`, `npm run build`, `npm run check`, `npm test`, then `npm start`. The existing public pages still work on a static host. Private routes require the optional Node gateway and real owner/provider configuration; they fail closed without it.
