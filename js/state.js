@@ -55,7 +55,9 @@ window.cameraShakeAmount = 0.0;
 
 // Sound Synthesizer & Co-Pilot voice state
 window.audioCtx = null;
-window.soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+window.soundEnabled = (() => {
+    try { return localStorage.getItem('soundEnabled') !== 'false'; } catch (e) { return true; }
+})();
 window.engineOsc = null;
 window.engineFilter = null;
 window.engineGain = null;

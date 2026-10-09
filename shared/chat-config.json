@@ -1,0 +1,6 @@
+{
+  "endpoint": "",
+  "title": "Chat with Uday",
+  "greeting": "Hi, I'm Uday. Ask me about my work, research or how to get in touch.",
+  "timeoutMs": 45000
+}

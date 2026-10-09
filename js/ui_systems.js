@@ -776,11 +776,9 @@ function setupEventListeners() {
         soundToggle.addEventListener('click', () => {
             toggleSound();
         });
-        if (!soundEnabled) {
-            soundToggle.textContent = 'OFF';
-            soundToggle.className = 'pv alert';
-        }
     }
+    renderSoundState();
+    unlockAudioOnGesture();
 
     // Initialize interactive steering mode toggle listener
     const steerToggle = document.getElementById('cp-steer-val');

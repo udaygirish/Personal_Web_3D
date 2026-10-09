@@ -207,8 +207,13 @@ function init() {
     const terminalInput = document.getElementById('ap-console-input-bottom');
     if (terminalInput) {
         terminalInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab' && window.UniverseTerminal) {
+                e.preventDefault();
+                terminalInput.value = UniverseTerminal.complete(terminalInput.value, ['help', 'sound', 'land']);
+            }
             if (e.key === 'Enter') {
-                const cmd = terminalInput.value.trim().toLowerCase();
+                const rawCmd = terminalInput.value.trim();
+                const cmd = rawCmd.toLowerCase();
                 terminalInput.value = '';
                 if (cmd) {
                     writeToConsole(cmd.toUpperCase());
@@ -222,7 +227,8 @@ function init() {
                         } else if (mainCmd === 'land' || (mainCmd === 'help' && args[1] === 'land')) {
                             writeToConsole("LAND [no args]: Initiates atmospheric entry on the currently locked planetary target.");
                         } else {
-                            writeToConsole("COMMANDS LOG:\n- help: show options\n- sound: toggle audio feedback\n- land: initiate landing on target\nUsage: <command> --help");
+                            writeToConsole("COMMANDS LOG:\n- help: show options\n- sound: toggle audio feedback\n- land: initiate landing on target\nUsage: <command> --help  ·  Tab completes");
+                            if (window.UniverseTerminal) writeToConsole(UniverseTerminal.help);
                         }
                     } else if (mainCmd === 'sound') {
                         toggleSound();
@@ -232,8 +238,11 @@ function init() {
                         } else {
                             writeToConsole("ERROR: NO PLANETARY TARGET LOCKED.");
                         }
-                    } else {
-                        writeToConsole("UNRECOGNIZED COMMAND.");
+                    } else if (!(window.UniverseTerminal && UniverseTerminal.run(mainCmd, rawCmd.slice(mainCmd.length), writeToConsole, () => {
+                        const out = document.getElementById('ap-console-out');
+                        if (out) out.textContent = '';
+                    }))) {
+                        writeToConsole("UNRECOGNIZED COMMAND. Type 'help' for options.");
                     }
                 }
             }

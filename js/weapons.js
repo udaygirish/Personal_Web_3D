@@ -24,6 +24,9 @@ function initConsole() {
                     cmdHistoryIndex++;
                     input.value = cmdHistory[cmdHistoryIndex];
                 }
+            } else if (event.key === 'Tab' && window.UniverseTerminal) {
+                event.preventDefault();
+                input.value = UniverseTerminal.complete(input.value, LOCAL_COMMANDS);
             } else if (event.key === 'ArrowDown') {
                 event.preventDefault();
                 if (cmdHistoryIndex > 0) {
@@ -55,7 +58,7 @@ function initConsole() {
                 if (cmdHistory.length > 50) cmdHistory.pop();
                 cmdHistoryIndex = -1;
                 writeToConsole(`> ${rawVal}`);
-                executeConsoleCommand(cleanVal);
+                executeConsoleCommand(cleanVal, rawVal.trim());
             }
         });
     }
@@ -78,7 +81,15 @@ function writeToConsole(text) {
     output.scrollTop = output.scrollHeight;
 }
 
-function executeConsoleCommand(command) {
+const LOCAL_COMMANDS = ['help', 'scan', 'systems', 'ap', 'autopilot', 'warp', 'sound', 'steer', 'shunt', 'vent', 'status', 'logs'];
+
+function clearConsole() {
+    consoleLogBuffer.length = 0;
+    const output = document.getElementById('ap-console-out');
+    if (output) output.replaceChildren();
+}
+
+function executeConsoleCommand(command, rawCommand = command) {
     const parts = command.split(' ');
     const cmd = parts[0];
     const arg = parts.slice(1).join(' ');
@@ -102,7 +113,8 @@ function executeConsoleCommand(command) {
     
     switch (cmd) {
         case 'help':
-            writeToConsole("COMMANDS LOG:\n- help: show options\n- scan: range to targets\n- systems: diagnostic checks\n- ap [dest]: engage autopilot\n- ap off: disengage autopilot\n- warp: toggle speed streaks\n- sound: toggle audio feedback\n- steer: toggle steering mode (FREE / CONE)\n- shunt [engines|shields|systems]: route power\n- vent: flush coolant systems\n- status: show current ship status\n- logs: show last 10 console entries\nUsage: <command> --help");
+            writeToConsole("COMMANDS LOG:\n- help: show options\n- scan: range to targets\n- systems: diagnostic checks\n- ap [dest]: engage autopilot\n- ap off: disengage autopilot\n- warp: toggle speed streaks\n- sound: toggle audio feedback\n- steer: toggle steering mode (FREE / CONE)\n- shunt [engines|shields|systems]: route power\n- vent: flush coolant systems\n- status: show current ship status\n- logs: show last 10 console entries\nUsage: <command> --help  ·  Tab completes");
+            if (window.UniverseTerminal) writeToConsole(UniverseTerminal.help);
             break;
             
         case 'scan':
@@ -218,6 +230,7 @@ function executeConsoleCommand(command) {
             break;
             
         default:
+            if (window.UniverseTerminal && UniverseTerminal.run(cmd, rawCommand.slice(cmd.length), writeToConsole, clearConsole)) break;
             writeToConsole(`UNRECOGNIZED: "${cmd}". Type 'help' for options.`);
             break;
     }

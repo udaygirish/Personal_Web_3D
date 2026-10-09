@@ -103,6 +103,10 @@
     });
     if (typeof disableAutopilot === "function") disableAutopilot();
   }
+  // Chat panel + shared terminal commands.
+  const comms = document.createElement("script");
+  comms.src = url("shared/comms.js");
+  document.head.append(comms);
   document.addEventListener("DOMContentLoaded", () => {
     const bar = document.createElement("nav");
     bar.className = "universe-nav";
@@ -113,7 +117,7 @@
     const back = document.querySelector("a.back-button[href]");
     if (back) back.hidden = true;
     bar.innerHTML =
-      '<button type="button" data-open="map">Star map</button><button type="button" data-open="quick">Quick access</button><a href="' +
+      '<button type="button" data-open="map">Star map</button><button type="button" data-open="quick">Quick access</button><button type="button" data-open="chat">Chat</button><a href="' +
       (back ? back.href : url("index.html")) +
       '">' +
       (back
@@ -138,6 +142,11 @@
     }
     window.openUniverseMap = open;
     bar.querySelector('[data-open="map"]').onclick = open;
+    bar.querySelector('[data-open="chat"]').onclick = () => {
+      stopMovement();
+      if (document.pointerLockElement) document.exitPointerLock();
+      window.UniverseChat?.open();
+    };
     bar.querySelector('[data-open="quick"]').onclick = () => {
       open();
       dialog.querySelector('[data-mode="quick"]').click();
@@ -257,8 +266,12 @@
       location.pathname === new URL("index.html", root).pathname;
     // The home page keeps the terminal boot sequence; the star map stays
     // behind the HUD button instead of opening over it.
-    if (isHome && params.get("mode") === "explore")
-      dialog.querySelector('[data-mode="explore"]').click();
+    if (isHome && params.get("mode") === "explore") {
+      // The 3D scene may initialise after this handler; wait for it.
+      const go = () => dialog.querySelector('[data-mode="explore"]').click();
+      if (window.scene) go();
+      else window.addEventListener("load", go, { once: true });
+    }
     window.addEventListener("blur", stopMovement);
   });
 })();
