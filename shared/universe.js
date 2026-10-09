@@ -104,7 +104,9 @@
     if (typeof disableAutopilot === "function") disableAutopilot();
   }
   // Chat panel + shared terminal commands, and the badges / a11y layer.
-  for (const file of ["shared/comms.js?v=5", "shared/fun.js?v=5"]) {
+  const files = ["shared/comms.js?v=5", "shared/fun.js?v=5"];
+  if (document.querySelector('link[href*="shared-space-theme.css"]')) files.push("shared/space-pages.js?v=6");
+  for (const file of files) {
     const s = document.createElement("script");
     s.src = url(file);
     document.head.append(s);
