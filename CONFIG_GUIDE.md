@@ -163,7 +163,7 @@ const WORMHOLE_CONFIG = [
 ## 🔧 Technical Notes
 
 - Wormholes are created dynamically from `WORMHOLE_CONFIG`
-- No need to modify `app.js` - everything is config-driven
+- No need to modify `js/core.js` - everything is config-driven
 - Proximity detection works for all wormholes automatically
 - Tunnel color matches the wormhole you enter
 - Back buttons on portfolio sites link to `../index.html`

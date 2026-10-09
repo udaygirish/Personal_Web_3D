@@ -76,16 +76,19 @@ function simulateLoading() {
     // Guard: skip can only fire once
     let skipAllowed = false;
     let skipFired = false;
+    let completed = false;
 
     function skipLoading() {
         if (!skipAllowed || skipFired) return;
         skipFired = true;
         completeLoading();
     }
-
-    // Attach skip listeners — keydown or click anywhere
-    document.addEventListener('keydown', skipLoading, { once: true });
-    document.addEventListener('click', skipLoading, { once: true });
+    // Skipping is deliberate (Esc or the Skip button) so a stray click or
+    // key press doesn't cut the boot sequence short.
+    function onSkipKey(e) {
+        if (e.key === 'Escape') skipLoading();
+    }
+    document.addEventListener('keydown', onSkipKey);
 
     // Step 1: Show blinking cursor with Matrix rain
     function showCursor() {
@@ -95,10 +98,12 @@ function simulateLoading() {
         terminalOutput.appendChild(cursorLine);
 
         // Show skip hint bottom-right after cursor appears
-        const skipHint = document.createElement('div');
+        const skipHint = document.createElement('button');
         skipHint.id = 'skip-hint';
-        skipHint.textContent = 'PRESS ANY KEY TO SKIP';
-        skipHint.style.cssText = 'position:fixed;bottom:20px;right:20px;color:rgba(0,255,0,0.45);font-family:"Courier New",monospace;font-size:0.75rem;letter-spacing:2px;pointer-events:none;z-index:5;animation:blink-hint 1.5s infinite;';
+        skipHint.type = 'button';
+        skipHint.textContent = 'SKIP INTRO [ESC]';
+        skipHint.style.cssText = 'position:fixed;bottom:20px;left:20px;color:rgba(0,255,0,0.6);background:rgba(0,10,0,0.6);border:1px solid rgba(0,255,0,0.35);border-radius:3px;padding:6px 10px;cursor:pointer;font-family:"Courier New",monospace;font-size:0.75rem;letter-spacing:2px;z-index:5;animation:blink-hint 1.5s infinite;';
+        skipHint.addEventListener('click', () => { skipAllowed = true; skipLoading(); });
         document.body.appendChild(skipHint);
 
         setTimeout(() => {
@@ -279,12 +284,13 @@ function simulateLoading() {
 
     // Step 4: Complete and launch
     function completeLoading() {
+        if (completed) return;
+        completed = true;
         // Remove skip hint
         const skipHint = document.getElementById('skip-hint');
         if (skipHint) skipHint.remove();
         // Remove skip listeners in case they haven't fired yet
-        document.removeEventListener('keydown', skipLoading);
-        document.removeEventListener('click', skipLoading);
+        document.removeEventListener('keydown', onSkipKey);
 
         const completeLine = document.createElement('div');
         completeLine.className = 'terminal-line command';

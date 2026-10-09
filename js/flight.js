@@ -16,6 +16,7 @@ function showScene(sceneName) {
 }
 
 function startFlight() {
+    window.UniverseFun?.unlock('first_flight');
     if (isTransitioning || currentScene !== SCENES.COCKPIT) return;
     isTransitioning = true;
     currentScene = SCENES.OPEN_SPACE;
@@ -47,7 +48,7 @@ function startFlight() {
     // Open-space entry console message
     if (typeof writeToConsole === 'function') {
         setTimeout(() => {
-            writeToConsole("NAV SYSTEMS ONLINE. 5 WORMHOLE SIGNATURES DETECTED.");
+            writeToConsole("NAV SYSTEMS ONLINE. 6 WORMHOLE SIGNATURES DETECTED.");
             setTimeout(() => writeToConsole("LEFT: PERSONAL | RIGHT: WORK | BELOW: BLOG | ABOVE: WORLD VIEW | AHEAD: RESEARCH"), 1800);
         }, 600);
     }
@@ -208,6 +209,7 @@ function toggleAutopilot() {
 }
 
 function enableAutopilot() {
+    window.UniverseFun?.unlock('autopilot');
     autopilotActive = true;
     
     // Reset manual flight input flags to prevent immediate auto-disengage

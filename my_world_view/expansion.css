@@ -1,0 +1,268 @@
+.world-directory {
+  position: fixed;
+  /* Sits inside the cockpit's left panel, below NAV COMPUTER / SYSTEMS */
+  left: 10px;
+  top: 205px;
+  width: 172px;
+  padding: 12px;
+  background: rgba(0, 18, 20, 0.9);
+  border: 1px solid rgba(0, 255, 136, 0.45);
+  border-radius: 4px;
+  box-shadow:
+    0 0 20px rgba(0, 255, 136, 0.15),
+    inset 0 0 12px rgba(0, 255, 136, 0.05);
+  color: var(--u-text);
+  font: 15px/1.5 Inter, system-ui, sans-serif;
+  z-index: 1100;
+  max-height: calc(100dvh - 370px);
+  overflow: auto;
+  backdrop-filter: blur(12px);
+}
+.world-directory::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid var(--u-accent);
+  border-left: 2px solid var(--u-accent);
+  pointer-events: none;
+}
+.world-directory h2 {
+  margin: 6px 0;
+  font: 700 0.9rem/1.2 var(--u-display);
+  letter-spacing: 1px;
+  color: var(--u-accent);
+  text-shadow: 0 0 12px var(--u-glow);
+}
+.world-directory p {
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+  color: var(--u-muted);
+}
+.world-directory .u-eyebrow {
+  font-size: 0.6rem;
+  margin: 0;
+}
+.world-directory .u-actions {
+  margin: 10px 0;
+  gap: 6px;
+}
+.world-directory > a {
+  font-size: 0.75rem;
+}
+.world-directory a {
+  color: var(--u-cyan);
+}
+.world-directory label {
+  display: block;
+  margin: 15px 0;
+  font: 0.75rem/1.4 var(--u-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--u-muted);
+}
+.world-directory button,
+.world-directory select,
+.world-photo-controls button {
+  background: rgba(0, 18, 38, 0.85);
+  border: 1px solid rgba(0, 255, 136, 0.45);
+  border-radius: 4px;
+  color: var(--u-accent);
+  padding: 10px;
+  cursor: pointer;
+  font: 600 0.58rem/1.4 var(--u-display);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 7px 9px;
+  min-height: 32px;
+  transition: all 0.3s ease;
+}
+.world-directory button:hover,
+.world-photo-controls button:hover {
+  background: rgba(0, 255, 136, 0.18);
+  border-color: var(--u-accent);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+.world-planet-list {
+  display: grid;
+  gap: 6px;
+}
+/* Title sits left of the PLANETARY SCANNER panel instead of under it */
+.title-overlay {
+  right: 210px;
+  top: 22px;
+}
+.title-overlay h1 {
+  font-size: 1.4rem;
+  margin-bottom: 2px;
+}
+.title-overlay p {
+  font: 0.7rem/1.4 var(--u-mono);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--u-muted);
+}
+.system-info {
+  display: none;
+}
+/* Keep the shared nav clear of the NAV COMPUTER panel */
+.universe-nav {
+  left: 50%;
+  top: 72px;
+  transform: translateX(-50%);
+}
+.world-planet-list button {
+  text-align: left;
+  display: grid;
+  gap: 4px;
+  border-color: var(--u-line);
+  background: var(--u-panel);
+}
+.world-planet-list strong {
+  font-size: 0.8rem;
+  text-shadow: 0 0 8px var(--u-glow);
+}
+.world-planet-list span {
+  font: 0.8rem/1.3 Inter, system-ui, sans-serif;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--u-muted);
+}
+.world-directory.collapsed > :not(#world-directory-toggle) {
+  display: none;
+}
+.world-directory.collapsed {
+  width: auto;
+  padding: 6px;
+}
+.world-photo-controls {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20000;
+  display: flex;
+  gap: 12px;
+  background: rgba(0, 18, 20, 0.92);
+  padding: 12px;
+  border: 1px solid rgba(0, 255, 136, 0.45);
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+  color: var(--u-text);
+  font: 0.8rem var(--u-mono);
+  align-items: center;
+}
+.world-photo #cockpit-bezel,
+.world-photo .world-directory,
+.world-photo .universe-nav,
+.world-photo #rover-hud,
+.world-photo .title-overlay,
+.world-photo .view-toggle,
+.world-photo #planetInfoCard,
+.world-photo #planet-approach-hud {
+  display: none !important;
+}
+/* Only the details scroll, so the landing button always stays in view */
+#planetInfoCard .card-body {
+  max-height: min(26dvh, 230px);
+}
+#world-exhibit input[type="range"] {
+  width: 100%;
+  accent-color: var(--u-accent);
+}
+#land-btn {
+  min-height: 44px;
+}
+@media (max-width: 800px) {
+  .world-directory {
+    top: 65px;
+    left: 10px;
+    width: 200px;
+    padding: 12px;
+  }
+  .world-directory:not(:focus-within):not(:hover) {
+    max-height: 160px;
+  }
+  .world-photo-controls {
+    flex-wrap: wrap;
+    width: 90%;
+  }
+}
+body:has(.u-tour) .world-directory {
+  max-height: calc(100dvh - 340px);
+}
+
+/* Floating planet labels */
+.world-labels {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+}
+.world-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  justify-items: center;
+  gap: 1px;
+  padding: 4px 8px;
+  background: rgba(0, 12, 10, 0.55);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 3px;
+  color: var(--u-text);
+  cursor: pointer;
+  pointer-events: auto;
+  white-space: nowrap;
+  transition:
+    opacity 0.3s,
+    border-color 0.2s,
+    background 0.2s;
+}
+.world-label strong {
+  font: 700 0.62rem/1.2 var(--u-display);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--u-accent);
+}
+.world-label em {
+  font: normal 0.6rem/1.2 var(--u-mono);
+  color: var(--u-muted);
+}
+.world-label .dot {
+  position: absolute;
+  top: -9px;
+  width: 1px;
+  height: 8px;
+  background: rgba(0, 255, 136, 0.5);
+}
+.world-label:hover,
+.world-label:focus-visible,
+.world-label.active {
+  background: rgba(0, 255, 136, 0.15);
+  border-color: var(--u-accent);
+}
+.world-label.minor {
+  padding: 2px 6px;
+  border-color: rgba(0, 217, 255, 0.25);
+}
+.world-label.minor strong {
+  font-size: 0.55rem;
+  color: var(--u-cyan);
+}
+.world-label.minor em {
+  display: none;
+}
+.world-planet-list button[aria-pressed="true"],
+#world-tour[aria-pressed="true"] {
+  border-color: var(--u-accent);
+  background: rgba(0, 255, 136, 0.14);
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+}
+/* On a planet surface the orbital directory is just clutter */
+.world-surface .world-directory,
+.world-surface .world-labels {
+  display: none;
+}

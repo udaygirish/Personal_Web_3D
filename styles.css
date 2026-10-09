@@ -508,7 +508,7 @@ body {
 
 .main-title {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-size: clamp(1.4rem, 5.2vw, 5rem); /* full name must fit the cockpit glass */
     font-weight: 900;
     margin-bottom: var(--spacing-sm);
     background: linear-gradient(135deg, var(--color-professional-primary), var(--color-personal-primary));
@@ -1956,6 +1956,7 @@ body {
 /* --- Responsive adjustments --- */
 @media (max-width: 900px) {
     .cockpit-panel { width: 6.375rem; bottom: 7rem; }
+    .hud-toggle-btn { right: calc(6.375rem + 10px); }
     .cockpit-bottom { padding: 0 6.625rem; height: 7rem; }
     .cockpit-bezel-active #hud { padding-bottom: 7rem; }
 }
@@ -2008,7 +2009,7 @@ html {
 .hud-toggle-btn {
     position: fixed;
     top: 20px;
-    right: 20px;
+    right: calc(10.5rem + 14px); /* clear of the right cockpit panel */
     z-index: 100;
     pointer-events: auto; /* CRITICAL: allow user clicks */
     background: rgba(0, 18, 38, 0.85);

@@ -24,6 +24,9 @@ function initConsole() {
                     cmdHistoryIndex++;
                     input.value = cmdHistory[cmdHistoryIndex];
                 }
+            } else if (event.key === 'Tab' && window.UniverseTerminal) {
+                event.preventDefault();
+                input.value = UniverseTerminal.complete(input.value, LOCAL_COMMANDS);
             } else if (event.key === 'ArrowDown') {
                 event.preventDefault();
                 if (cmdHistoryIndex > 0) {
@@ -55,7 +58,7 @@ function initConsole() {
                 if (cmdHistory.length > 50) cmdHistory.pop();
                 cmdHistoryIndex = -1;
                 writeToConsole(`> ${rawVal}`);
-                executeConsoleCommand(cleanVal);
+                executeConsoleCommand(cleanVal, rawVal.trim());
             }
         });
     }
@@ -66,90 +69,28 @@ function initConsole() {
 }
 
 function writeToConsole(text) {
-    // Save to circular buffer
-    consoleLogBuffer.push(text);
+    consoleLogBuffer.push(String(text));
     if (consoleLogBuffer.length > MAX_LOG_BUFFER) consoleLogBuffer.shift();
-    
-    const output = document.getElementById('ap-console-out');
-
-    
-    // Left input setup
-    if (inputLeft) {
-        inputLeft.addEventListener('focus', () => {
-            isConsoleTyping = true;
-        });
-        inputLeft.addEventListener('blur', () => {
-            isConsoleTyping = false;
-        });
-        inputLeft.addEventListener('keydown', () => {
-            playClickSound();
-        });
-        inputLeft.addEventListener('keyup', (event) => {
-            if (event.key === 'Enter') {
-                const rawVal = inputLeft.value;
-                const cleanVal = rawVal.trim().toLowerCase();
-                inputLeft.value = '';
-                if (inputBottom) inputBottom.value = '';
-                
-                if (cleanVal.length === 0) return;
-                
-                writeToConsole(`> ${rawVal}`);
-                executeConsoleCommand(cleanVal);
-            }
-        });
-    }
-
-    // Bottom input setup
-    if (inputBottom) {
-        inputBottom.addEventListener('focus', () => {
-            isConsoleTyping = true;
-        });
-        inputBottom.addEventListener('blur', () => {
-            isConsoleTyping = false;
-        });
-        inputBottom.addEventListener('keydown', () => {
-            playClickSound();
-        });
-        inputBottom.addEventListener('keyup', (event) => {
-            if (event.key === 'Enter') {
-                const rawVal = inputBottom.value;
-                const cleanVal = rawVal.trim().toLowerCase();
-                inputBottom.value = '';
-                if (inputLeft) inputLeft.value = '';
-                
-                if (cleanVal.length === 0) return;
-                
-                writeToConsole(`> ${rawVal}`);
-                executeConsoleCommand(cleanVal);
-            }
-        });
-    }
-}
-
-function writeToConsole(text) {
     const output = document.getElementById('ap-console-out');
     if (!output) return;
-    
-    const div = document.createElement('div');
-    div.style.marginBottom = '6px';
-    div.style.fontFamily = "'Courier New', Courier, monospace";
-    output.appendChild(div);
-    
-    let charIdx = 0;
-    function typeChar() {
-        if (charIdx < text.length) {
-            div.textContent += text.charAt(charIdx);
-            charIdx++;
-            output.scrollTop = output.scrollHeight;
-            playClickSound();
-            setTimeout(typeChar, 10);
-        }
-    }
-    
-    typeChar();
+    output.replaceChildren(...consoleLogBuffer.map(line => {
+        const div = document.createElement('div');
+        div.textContent = line;
+        return div;
+    }));
+    output.scrollTop = output.scrollHeight;
 }
 
-function executeConsoleCommand(command) {
+const LOCAL_COMMANDS = ['help', 'scan', 'systems', 'ap', 'autopilot', 'warp', 'sound', 'steer', 'shunt', 'vent', 'status', 'logs'];
+
+function clearConsole() {
+    consoleLogBuffer.length = 0;
+    const output = document.getElementById('ap-console-out');
+    if (output) output.replaceChildren();
+}
+
+function executeConsoleCommand(command, rawCommand = command) {
+    window.UniverseFun?.countCommand();
     const parts = command.split(' ');
     const cmd = parts[0];
     const arg = parts.slice(1).join(' ');
@@ -173,7 +114,8 @@ function executeConsoleCommand(command) {
     
     switch (cmd) {
         case 'help':
-            writeToConsole("COMMANDS LOG:\n- help: show options\n- scan: range to targets\n- systems: diagnostic checks\n- ap [dest]: engage autopilot\n- ap off: disengage autopilot\n- warp: toggle speed streaks\n- sound: toggle audio feedback\n- steer: toggle steering mode (FREE / CONE)\n- shunt [engines|shields|systems]: route power\n- vent: flush coolant systems\n- status: show current ship status\n- logs: show last 10 console entries\nUsage: <command> --help");
+            writeToConsole("COMMANDS LOG:\n- help: show options\n- scan: range to targets\n- systems: diagnostic checks\n- ap [dest]: engage autopilot\n- ap off: disengage autopilot\n- warp: toggle speed streaks\n- sound: toggle audio feedback\n- steer: toggle steering mode (FREE / CONE)\n- shunt [engines|shields|systems]: route power\n- vent: flush coolant systems\n- status: show current ship status\n- logs: show last 10 console entries\nUsage: <command> --help  ·  Tab completes");
+            if (window.UniverseTerminal) writeToConsole(UniverseTerminal.help);
             break;
             
         case 'scan':
@@ -289,6 +231,7 @@ function executeConsoleCommand(command) {
             break;
             
         default:
+            if (window.UniverseTerminal && UniverseTerminal.run(cmd, rawCommand.slice(cmd.length), writeToConsole, clearConsole)) break;
             writeToConsole(`UNRECOGNIZED: "${cmd}". Type 'help' for options.`);
             break;
     }

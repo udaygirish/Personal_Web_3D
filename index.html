@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Journey Through Space | Portfolio</title>
+    <link rel="icon" href="shared/favicon.svg" type="image/svg+xml">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Uday Girish Maradana · Journey Through Space">
+    <meta property="og:description" content="Fly a spaceship through Uday Girish Maradana's portfolio: ML engineering, robotics research, projects and writing.">
+    <meta property="og:image" content="https://new.udaygirish.com/shared/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#03080e">
     <meta name="description" content="An immersive 3D portfolio experience - choose your path through the wormhole">
 
     <!-- Google Fonts -->
@@ -15,7 +22,9 @@
         rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="shared/universe.css?v=7">
+<script defer src="shared/universe.js?v=7"></script>
 </head>
 
 <body>
@@ -63,7 +72,7 @@
                 <div class="beacon-arrow beacon-down"><span>BLOG</span><br>▼</div>
                 <div class="beacon-center">🎯<br><span>RESEARCH<br>AHEAD</span></div>
             </div>
-            <div class="beacon-label">5 WORMHOLE SIGNATURES DETECTED — EXPLORE!</div>
+            <div class="beacon-label">6 WORMHOLE SIGNATURES DETECTED — EXPLORE!</div>
         </div>
 
         <!-- HUD Overlay -->
@@ -289,31 +298,34 @@ READY FOR INTERFACE COMMANDS.</div>
 
 
     <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Three.js Postprocessing for Bloom Effects -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <!-- Three.js r147: last release with the global examples/js build -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/Pass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/MaskPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
     <!-- Global State -->
-    <script src="js/state.js?v=2"></script>
+    <script src="shared/clock.js"></script>
+    <script src="js/state.js?v=5"></script>
     <!-- Wormhole Config -->
-    <script src="config.js?v=2"></script>
+    <script src="config.js?v=5"></script>
     <!-- Matrix Effect -->
-    <script src="matrix.js?v=2"></script>
+    <script src="matrix.js?v=5"></script>
     <!-- HUD & 3D Effects -->
-    <script src="hud.js?v=2"></script>
+    <script src="hud.js?v=5"></script>
     <!-- Mobile Controls -->
-    <script src="mobile.js?v=2"></script>
+    <script src="mobile.js?v=5"></script>
     <!-- Main Modular App -->
-    <script src="js/environment.js?v=2"></script>
-    <script src="js/audio.js?v=2"></script>
-    <script src="js/weapons.js?v=2"></script>
-    <script src="js/flight.js?v=2"></script>
-    <script src="js/ui_systems.js?v=2"></script>
-    <script src="js/core.js?v=2"></script>
+    <script src="js/environment.js?v=5"></script>
+    <script src="js/audio.js?v=5"></script>
+    <script src="js/weapons.js?v=5"></script>
+    <script src="js/flight.js?v=5"></script>
+    <script src="js/ui_systems.js?v=5"></script>
+    <script src="js/core.js?v=5"></script>
 </body>
 
 </html>

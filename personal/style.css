@@ -331,7 +331,7 @@ body {
 
 .about-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: var(--spacing-md);
 }
 
@@ -379,7 +379,7 @@ body {
 
 .interests-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: var(--spacing-md);
 }
 
@@ -425,7 +425,7 @@ body {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
     gap: var(--spacing-lg);
 }
 
@@ -509,7 +509,7 @@ body {
 
 .contact-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
     gap: var(--spacing-md);
     max-width: 900px;
     margin: 0 auto;

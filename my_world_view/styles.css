@@ -40,10 +40,10 @@ body {
     left: 20px;
     z-index: 100;
     padding: 12px 24px;
-    background: rgba(76, 201, 240, 0.2);
-    border: 2px solid #4cc9f0;
-    border-radius: 50px;
-    color: #4cc9f0;
+    background: rgba(0, 255, 136, 0.2);
+    border: 2px solid #00ff88;
+    border-radius: 4px;
+    color: #00ff88;
     font-family: 'Orbitron', sans-serif;
     font-size: 14px;
     font-weight: 600;
@@ -54,9 +54,9 @@ body {
 }
 
 .back-button:hover {
-    background: rgba(76, 201, 240, 0.4);
+    background: rgba(0, 255, 136, 0.4);
     transform: translateX(-5px);
-    box-shadow: 0 0 20px rgba(76, 201, 240, 0.6);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
 }
 
 /* Title Overlay */
@@ -72,11 +72,11 @@ body {
     font-family: 'Orbitron', sans-serif;
     font-size: 2rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #4cc9f0, #9d4edd);
+    background: linear-gradient(135deg, #00ff88, #00d9ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: 0 0 40px rgba(76, 201, 240, 0.5);
+    text-shadow: 0 0 40px rgba(0, 255, 136, 0.5);
     margin-bottom: 8px;
 }
 
@@ -95,8 +95,8 @@ body {
     z-index: 100;
     padding: 12px 24px;
     background: rgba(0, 0, 0, 0.7);
-    border: 1px solid rgba(76, 201, 240, 0.3);
-    border-radius: 50px;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 4px;
     backdrop-filter: blur(10px);
 }
 
@@ -107,7 +107,7 @@ body {
 }
 
 .controls-hint strong {
-    color: #4cc9f0;
+    color: #00ff88;
 }
 
 /* System Info */
@@ -118,7 +118,7 @@ body {
     z-index: 100;
     padding: 16px 24px;
     background: rgba(0, 0, 0, 0.6);
-    border-left: 4px solid #4cc9f0;
+    border-left: 4px solid #00ff88;
     border-radius: 4px;
     backdrop-filter: blur(10px);
 }
@@ -127,8 +127,8 @@ body {
     font-family: 'Orbitron', sans-serif;
     font-size: 16px;
     font-weight: 600;
-    color: #4cc9f0;
-    text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+    color: #00ff88;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
 /* Note: .planet-panel was removed — the my_world_view page uses the
@@ -169,8 +169,8 @@ body {
     z-index: 100;
     display: flex;
     background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(76, 201, 240, 0.3);
-    border-radius: 50px;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 4px;
     padding: 4px;
     backdrop-filter: blur(10px);
     pointer-events: auto;
@@ -181,7 +181,7 @@ body {
     border: none;
     color: rgba(255, 255, 255, 0.6);
     padding: 8px 20px;
-    border-radius: 40px;
+    border-radius: 4px;
     font-family: 'Orbitron', sans-serif;
     font-size: 14px;
     cursor: pointer;
@@ -189,9 +189,9 @@ body {
 }
 
 .toggle-btn.active {
-    background: rgba(76, 201, 240, 0.2);
-    color: #4cc9f0;
-    box-shadow: 0 0 15px rgba(76, 201, 240, 0.3);
+    background: rgba(0, 255, 136, 0.2);
+    color: #00ff88;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
 }
 
 .toggle-btn:hover:not(.active) {
@@ -241,10 +241,10 @@ body {
     top: 0;
     left: 0;
     width: 300px;
-    background: rgba(10, 10, 15, 0.9);
+    background: rgba(0, 18, 20, 0.92);
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(76, 201, 240, 0.5);
-    border-radius: 12px;
+    border: 1px solid rgba(0, 255, 136, 0.5);
+    border-radius: 4px;
     padding: 0;
     z-index: 200;
     opacity: 0;
@@ -262,9 +262,9 @@ body {
 }
 
 .card-header {
-    background: linear-gradient(90deg, rgba(76, 201, 240, 0.2), transparent);
+    background: linear-gradient(90deg, rgba(0, 255, 136, 0.2), transparent);
     padding: 15px 20px;
-    border-bottom: 1px solid rgba(76, 201, 240, 0.3);
+    border-bottom: 1px solid rgba(0, 255, 136, 0.3);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -273,9 +273,9 @@ body {
 .card-header h2 {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.1rem;
-    color: #4cc9f0;
+    color: #00ff88;
     margin: 0;
-    text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
 .card-body {
@@ -361,7 +361,7 @@ body {
     transform: translateX(-50%);
     border-width: 10px 10px 0;
     border-style: solid;
-    border-color: rgba(76, 201, 240, 0.5) transparent transparent transparent;
+    border-color: rgba(0, 255, 136, 0.5) transparent transparent transparent;
 }
 
 /* =========================================
@@ -376,7 +376,7 @@ body {
     padding: 10px 24px;
     background: rgba(0, 10, 8, 0.85);
     border: 1px solid rgba(0, 255, 136, 0.5);
-    border-radius: 50px;
+    border-radius: 4px;
     font-family: 'Orbitron', sans-serif;
     font-size: 0.75rem;
     letter-spacing: 1px;
@@ -412,7 +412,7 @@ body {
     gap: 0;
     background: rgba(0, 8, 5, 0.88);
     border: 1px solid rgba(0, 255, 136, 0.4);
-    border-radius: 12px;
+    border-radius: 4px;
     overflow: hidden;
     backdrop-filter: blur(12px);
     box-shadow: 0 0 30px rgba(0, 255, 136, 0.15);
@@ -451,8 +451,8 @@ body {
 .rover-hud-key {
     font-size: 0.9rem;
     font-weight: 900;
-    color: #4cc9f0;
-    text-shadow: 0 0 12px rgba(76,201,240,0.7);
+    color: #00d9ff;
+    text-shadow: 0 0 12px rgba(0, 217, 255, 0.7);
     animation: key-pulse 1.5s ease-in-out infinite;
 }
 
@@ -509,7 +509,7 @@ body {
     background: rgba(0, 15, 10, 0.95);
     border: 1px solid rgba(0, 255, 136, 0.4);
     box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
-    border-radius: 12px;
+    border-radius: 4px;
     padding: 40px;
     width: 90%;
     max-width: 600px;

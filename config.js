@@ -3,6 +3,7 @@
 // ========================================
 
 const WORMHOLE_CONFIG = [
+    { id: 'command', label: 'Command Deck', color: 0xf4c77e, position: { x: 100, y: 80, z: -350 }, destination: './command/index.html' },
     {
         id: 'personal',
         label: 'Personal',
