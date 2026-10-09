@@ -104,7 +104,7 @@
     if (typeof disableAutopilot === "function") disableAutopilot();
   }
   // Chat panel + shared terminal commands, and the badges / a11y layer.
-  const files = ["shared/comms.js?v=7", "shared/fun.js?v=5"];
+  const files = ["shared/comms.js?v=9", "shared/fun.js?v=9", "shared/terminal-mode.js?v=10"];
   if (document.querySelector('link[href*="shared-space-theme.css"]')) files.push("shared/space-pages.js?v=6");
   for (const file of files) {
     const s = document.createElement("script");
@@ -142,7 +142,7 @@
     const dialog = document.createElement("dialog");
     dialog.className = "u-dialog";
     dialog.setAttribute("aria-labelledby", "universe-title");
-    dialog.innerHTML = `<button class="u-close" aria-label="Close star map">Close</button><p class="u-eyebrow">UDAY’S UNIVERSE / NAVIGATION</p><h2 id="universe-title">Choose your journey.</h2><p class="u-muted">Explore freely, follow a route, or go straight to a destination.</p><div class="u-grid"><button class="u-card" data-mode="explore"><span>01 / Free flight</span><strong>Explore</strong><span>Wormholes, planets and rover expeditions.</span></button><button class="u-card" data-mode="guided"><span>02 / Follow a route</span><strong>Guided tour</strong><span>A short, self-paced introduction.</span></button><button class="u-card" data-mode="quick"><span>03 / Direct navigation</span><strong>Quick access</strong><span>Get to the content in one click.</span></button></div><div id="u-route-picker" hidden><h3>Pick a route</h3><div class="u-actions"><button data-tour="professional">Professional · 4 stops</button><button data-tour="explorer">Explorer · 4 stops</button></div></div><div id="u-destinations"><h3>Destinations</h3><div class="u-grid">${destinations.map(([title, desc, path]) => `<a class="u-card" href="${url(path)}"><strong>${title}</strong><span>${desc}</span></a>`).join("")}</div></div><p class="u-muted" id="u-preference"></p><label><input type="checkbox" id="u-quiet"> Reduce decorative motion</label>`;
+    dialog.innerHTML = `<button class="u-close" aria-label="Close star map">Close</button><p class="u-eyebrow">UDAY’S UNIVERSE / NAVIGATION</p><h2 id="universe-title">Choose your journey.</h2><p class="u-muted">Explore freely, follow a route, or go straight to a destination.</p><div class="u-grid"><button class="u-card" data-mode="explore"><span>01 / Free flight</span><strong>Explore</strong><span>Wormholes, planets and rover expeditions.</span></button><button class="u-card" data-mode="guided"><span>02 / Follow a route</span><strong>Guided tour</strong><span>A short, self-paced introduction.</span></button><button class="u-card" data-mode="quick"><span>03 / Direct navigation</span><strong>Quick access</strong><span>Get to the content in one click.</span></button><button class="u-card" data-mode="terminal"><span>04 / Text only</span><strong>Terminal</strong><span>Explore and read everything from a shell. Shortcut: \`</span></button></div><div id="u-route-picker" hidden><h3>Pick a route</h3><div class="u-actions"><button data-tour="professional">Professional · 4 stops</button><button data-tour="explorer">Explorer · 4 stops</button></div></div><div id="u-destinations"><h3>Destinations</h3><div class="u-grid">${destinations.map(([title, desc, path]) => `<a class="u-card" href="${url(path)}"><strong>${title}</strong><span>${desc}</span></a>`).join("")}</div></div><p class="u-muted" id="u-preference"></p><label><input type="checkbox" id="u-quiet"> Reduce decorative motion</label>`;
     document.body.append(dialog);
     window.UniverseFun?.renderLog();
     function open() {
@@ -183,6 +183,11 @@
       (button) =>
         (button.onclick = () => {
           const mode = button.dataset.mode;
+          if (mode === "terminal") {
+            dialog.close();
+            window.UniverseOS?.open();
+            return;
+          }
           store.set("universe-mode", mode);
           dialog.querySelector("#u-route-picker").hidden = mode !== "guided";
           dialog.querySelector("#u-destinations").hidden = mode === "guided";

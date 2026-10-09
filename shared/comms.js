@@ -103,7 +103,7 @@
     return "My AI co-pilot isn't connected yet, so I can't answer that one live. Ask about my CV, work, research or how to contact me — or switch to \"Leave a message\" above and it goes straight to my inbox.";
   }
 
-  async function askBackend(message, bodyEl) {
+  async function askBackend(message, onUpdate) {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), config.timeoutMs);
     try {
@@ -122,7 +122,7 @@
       if (type.includes("application/json")) {
         const data = await res.json();
         const reply = data.reply ?? data.message?.content ?? data.choices?.[0]?.message?.content ?? "";
-        bodyEl.replaceChildren(linkify(reply));
+        onUpdate(reply);
         return reply;
       }
       // Plain-text (or chunked) streaming: append as it arrives.
@@ -133,8 +133,7 @@
         const { value, done } = await reader.read();
         if (done) break;
         reply += decoder.decode(value, { stream: true });
-        bodyEl.replaceChildren(linkify(reply));
-        log.scrollTop = log.scrollHeight;
+        onUpdate(reply);
       }
       return reply;
     } finally {
@@ -142,28 +141,38 @@
     }
   }
 
-  async function send(message) {
-    message = message.trim();
-    if (!message) return;
-    addMessage("user", message);
+  // One question to the chat channel (AI backend or offline responder).
+  // Shared by the comms panel and terminal mode; onUpdate streams text.
+  async function ask(message, onUpdate = () => {}) {
     history.push({ role: "user", content: message });
     window.UniverseFun?.unlock("comms");
     await configReady;
-    const bodyEl = addMessage("assistant", "…");
     let reply;
     if (config.endpoint) {
       try {
-        reply = await askBackend(message, bodyEl);
+        reply = await askBackend(message, onUpdate);
       } catch (e) {
-        reply = offlineReply(message);
-        bodyEl.replaceChildren(linkify("(Uplink failed — answering offline.) " + reply));
+        reply = "(Uplink failed — answering offline.) " + offlineReply(message);
+        onUpdate(reply);
         setStatus(false);
       }
     } else {
       reply = offlineReply(message);
-      bodyEl.replaceChildren(linkify(reply));
+      onUpdate(reply);
     }
     history.push({ role: "assistant", content: reply });
+    return reply;
+  }
+
+  async function send(message) {
+    message = message.trim();
+    if (!message) return;
+    addMessage("user", message);
+    const bodyEl = addMessage("assistant", "…");
+    await ask(message, (text) => {
+      bodyEl.replaceChildren(linkify(text));
+      log.scrollTop = log.scrollHeight;
+    });
   }
 
   function setStatus(online) {
@@ -181,6 +190,28 @@
     "Feedback on this site",
     "Something else",
   ];
+  // Deliver one message to Uday's inbox; throws with a readable reason.
+  async function deliverMail({ name, email, topic = TOPICS[0], message, where = "page", gotcha = "" }) {
+    await configReady;
+    const data = new FormData();
+    data.set("name", name);
+    data.set("email", email);
+    data.set("topic", topic);
+    data.set("message", message);
+    data.set("_gotcha", gotcha);
+    data.set("_replyto", email);
+    data.set("_subject", `Uday's Universe · ${topic} · from ${name}`);
+    data.set("sent_from", `${location.pathname} (${where})`);
+    const res = await fetch(config.messageEndpoint, {
+      method: "POST",
+      body: data,
+      headers: { Accept: "application/json" },
+    });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(body.errors?.map((x) => x.message).join(", ") || "HTTP " + res.status);
+    window.UniverseFun?.unlock("comms");
+  }
+
   let mailCount = 0;
   function mailForm(where) {
     const id = "u-mail-" + ++mailCount;
@@ -198,26 +229,22 @@
     form.onsubmit = async (e) => {
       e.preventDefault();
       if (!form.reportValidity()) return;
-      await configReady;
       const data = new FormData(form);
       const name = String(data.get("name")).trim();
       const email = String(data.get("email")).trim();
-      data.set("_replyto", email);
-      data.set("_subject", `Uday's Universe · ${data.get("topic")} · from ${name}`);
-      data.set("sent_from", `${location.pathname} (${where})`);
       button.disabled = true;
       say("Transmitting…", "pending");
       try {
-        const res = await fetch(config.messageEndpoint, {
-          method: "POST",
-          body: data,
-          headers: { Accept: "application/json" },
+        await deliverMail({
+          name,
+          email,
+          topic: String(data.get("topic")),
+          message: String(data.get("message")),
+          gotcha: String(data.get("_gotcha") || ""),
+          where,
         });
-        const body = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(body.errors?.map((x) => x.message).join(", ") || "HTTP " + res.status);
         form.reset();
         say(`Transmission received ✓ Thanks, ${name} — I'll reply to ${email}.`, "ok");
-        window.UniverseFun?.unlock("comms");
       } catch (err) {
         say(`Couldn't send that (${err.message}). You can email me directly: mailto:${PROFILE.email}`, "error");
       } finally {
@@ -298,6 +325,7 @@
     "- map / quick: open star map / quick access\n" +
     "- chat [message]: open the comms link and talk to me\n" +
     "- message: send me an email from right here\n" +
+    "- terminal: full-screen text mode for the whole site (or press `)\n" +
     "- whoami: who flies this ship\n" +
     "- contact / cv / github / linkedin\n" +
     "- time: ship clock\n" +
@@ -308,7 +336,7 @@
 
   const COMMANDS = [
     "goto", "open", "cd", "places", "ls", "map", "quick", "chat", "ask", "whoami",
-    "about", "message", "mail", "contact", "cv", "resume", "github", "linkedin", "time", "date", "clear",
+    "about", "terminal", "message", "mail", "contact", "cv", "resume", "github", "linkedin", "time", "date", "clear",
     "badges", "hint", "keys", "fortune",
   ];
 
@@ -336,6 +364,12 @@
         return true;
       case "quick":
         document.querySelector('.universe-nav [data-open="quick"]')?.click();
+        return true;
+      case "terminal":
+      case "tty":
+      case "os":
+        write("BOOTING UDAY-OS TEXT MODE…");
+        window.UniverseOS?.open();
         return true;
       case "message":
       case "mail":
@@ -418,8 +452,8 @@
     return hits.length === 1 ? hits[0] + " " : value;
   }
 
-  window.UniverseChat = { open, send, message: () => open("", "message") };
-  window.UniverseMail = { form: mailForm, mount: mountMailForms };
+  window.UniverseChat = { open, send, ask, message: () => open("", "message") };
+  window.UniverseMail = { form: mailForm, mount: mountMailForms, deliver: deliverMail, topics: TOPICS, profile: PROFILE };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mountMailForms);
   else mountMailForms();
   window.UniverseTerminal = { run, complete, help: HELP, commands: COMMANDS };
