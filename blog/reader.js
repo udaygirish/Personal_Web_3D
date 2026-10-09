@@ -37,6 +37,40 @@
     window.syncReadingButtons();
     window.dispatchEvent(new Event("reading-change"));
   });
+  // Reading progress beam + "on this frequency" section tracking.
+  const body = document.querySelector(".article-body");
+  if (body) {
+    const beam = document.createElement("div");
+    beam.className = "u-progress";
+    beam.setAttribute("aria-hidden", "true");
+    document.body.append(beam);
+    const update = () => {
+      const r = body.getBoundingClientRect();
+      const total = r.height - innerHeight * 0.6;
+      const done = Math.min(1, Math.max(0, -r.top / Math.max(total, 1)));
+      beam.style.transform = `scaleX(${done})`;
+    };
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("resize", update);
+    update();
+    const links = [...document.querySelectorAll(".article-toc a[href^='#']")];
+    if (links.length && "IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            links.forEach((a) =>
+              a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id),
+            );
+          }),
+        { rootMargin: "0px 0px -70% 0px" },
+      );
+      links.forEach((a) => {
+        const t = document.getElementById(a.getAttribute("href").slice(1));
+        if (t) io.observe(t);
+      });
+    }
+  }
   document.getElementById("copy-link")?.addEventListener("click", async () => {
     const status = document.getElementById("reader-status");
     try {

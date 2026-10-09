@@ -513,6 +513,43 @@ body.u-hyper canvas {
 .universe-nav--inline {
   position: static;
 }
+.universe-nav--docked {
+  padding-top: 16px;
+  flex-wrap: wrap;
+}
+
+/* Starfield behind every text page (blog, Beyond, Command Deck) */
+.u-page {
+  position: relative;
+}
+.u-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, #e0f8f0 50%, transparent 51%),
+    radial-gradient(1px 1px at 72% 12%, #c8fff0 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 38% 64%, #00d9ff 50%, transparent 51%),
+    radial-gradient(1px 1px at 88% 78%, #e0f8f0 50%, transparent 51%),
+    radial-gradient(1px 1px at 22% 88%, #e0f8f0 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 58% 34%, #00ff88 50%, transparent 51%),
+    radial-gradient(1px 1px at 94% 42%, #e0f8f0 50%, transparent 51%),
+    radial-gradient(1px 1px at 6% 52%, #c8fff0 50%, transparent 51%),
+    radial-gradient(ellipse at 15% 110%, rgba(0, 217, 255, 0.08), transparent 55%),
+    radial-gradient(ellipse at 90% -10%, rgba(0, 255, 136, 0.08), transparent 50%);
+  background-size:
+    340px 340px, 420px 420px, 510px 510px, 380px 380px, 460px 460px,
+    560px 560px, 300px 300px, 440px 440px, 100% 100%, 100% 100%;
+  opacity: 0.7;
+  animation: u-twinkle 6s ease-in-out infinite alternate;
+}
+@keyframes u-twinkle {
+  to {
+    opacity: 0.45;
+  }
+}
 .universe-nav .u-short {
   display: none;
 }

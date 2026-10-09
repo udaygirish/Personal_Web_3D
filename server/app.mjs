@@ -340,6 +340,7 @@ export function createApp({
   app.get("/healthz", (req, res) => res.json({ status: "ok" }));
   // Explicit static allowlist: never expose the repository root, .env, session files or server config.
   for (const directory of [
+    "assets",
     "shared",
     "js",
     "personal",

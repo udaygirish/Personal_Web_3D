@@ -104,7 +104,7 @@
     if (typeof disableAutopilot === "function") disableAutopilot();
   }
   // Chat panel + shared terminal commands, and the badges / a11y layer.
-  for (const file of ["shared/comms.js?v=4", "shared/fun.js?v=4"]) {
+  for (const file of ["shared/comms.js?v=5", "shared/fun.js?v=5"]) {
     const s = document.createElement("script");
     s.src = url(file);
     document.head.append(s);
@@ -128,9 +128,14 @@
       "</a>";
     // Inside a page header, sit where the back link was so the header's own
     // links keep their place; otherwise float over the page.
+    const container = document.querySelector(".u-page .u-container");
     if (back && back.closest(".navbar")) {
       bar.classList.add("universe-nav--inline");
       back.before(bar);
+    } else if (container) {
+      // Text pages: a docked bar at the top of the page, not floating over it.
+      bar.classList.add("universe-nav--inline", "universe-nav--docked");
+      container.prepend(bar);
     } else document.body.append(bar);
     const dialog = document.createElement("dialog");
     dialog.className = "u-dialog";
