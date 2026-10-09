@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Universe | Uday Girish</title>
+    <link rel="icon" href="../shared/favicon.svg" type="image/svg+xml">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Life Beyond the Code · Uday Girish Maradana">
+    <meta property="og:description" content="Personal projects, interests and the human side of Uday's universe.">
+    <meta property="og:image" content="https://new.udaygirish.com/shared/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#03080e">
     <meta name="description" content="Explore my personal universe - creative projects, hobbies, and life beyond code">
 
     <!-- Google Fonts -->
@@ -14,12 +21,15 @@
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../shared-space-theme.css?v=7">
+    <link rel="stylesheet" href="style.css?v=3">
     <!-- Markdown Parser -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="../shared/universe.css?v=7">
+<script defer src="../shared/universe.js?v=7"></script>
 </head>
 
-<body>
+<body class="space-theme-active">
     <!-- Animated Background -->
     <div class="stars-background"></div>
     <canvas id="particle-canvas"></canvas>
@@ -69,9 +79,9 @@
                     <div class="card-icon">✨</div>
                     <h3>Who I Am</h3>
                     <p>
-                        I turn tea ☕ into code! Beyond my professional work in ML and robotics, I'm fascinated
-                        by the deeper questions - how intelligence emerges, why systems behave the way they do,
-                        and what the future holds at the intersection of quantum computing and AI.
+                        I turn tea ☕ into code! I'm a Senior Machine Learning Engineer at Tiger Analytics, having
+                        graduated with my Master's in Robotics Engineering from WPI. I'm fascinated by the deeper
+                        questions of intelligence, consciousness, and explainable AI systems.
                     </p>
                 </div>
                 <div class="about-card" data-aos="fade-up">
@@ -87,9 +97,9 @@
                     <div class="card-icon">🚀</div>
                     <h3>My Journey</h3>
                     <p>
-                        From building drones and autonomous robots in college to researching cutting-edge ML
-                        at WPI, my path has been fueled by hands-on experimentation and a love for building
-                        intelligent systems that push technological boundaries.
+                        From building drones and semi-humanoid robots in college to researching cutting-edge ML
+                        and reinforcement learning for grasping at WPI, my path is driven by hands-on experimentation
+                        and a love for building intelligent systems that push boundaries.
                     </p>
                 </div>
             </div>
@@ -149,34 +159,34 @@
                 <div class="project-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="project-image">
                         <div class="project-overlay">
-                            <span class="project-tag">3D Art</span>
+                            <span class="project-tag">Robotics</span>
                         </div>
                     </div>
                     <div class="project-content">
-                        <h3>Procedural Worlds</h3>
-                        <p>Exploring procedural generation to create infinite, unique 3D landscapes.</p>
+                        <h3>RIGGU V2 Semi-Humanoid</h3>
+                        <p>Designing and fabricating an interactive semi-humanoid robotics framework with ROS, SLAM, and NLP.</p>
                     </div>
                 </div>
                 <div class="project-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="project-image">
                         <div class="project-overlay">
-                            <span class="project-tag">Photography</span>
+                            <span class="project-tag">Edge AI</span>
                         </div>
                     </div>
                     <div class="project-content">
-                        <h3>Urban Nightscapes</h3>
-                        <p>Capturing the beauty of cities at night through long exposure photography.</p>
+                        <h3>TinyML Ackerman Bot</h3>
+                        <p>Implementing neural network vision models on low-power edge microcontrollers for autonomous RC car control.</p>
                     </div>
                 </div>
                 <div class="project-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="project-image">
                         <div class="project-overlay">
-                            <span class="project-tag">Music</span>
+                            <span class="project-tag">Web 3D</span>
                         </div>
                     </div>
                     <div class="project-content">
-                        <h3>Cosmic Beats</h3>
-                        <p>Electronic music inspired by space, featuring ambient soundscapes and synth-wave.</p>
+                        <h3>3D Celestial Portfolio</h3>
+                        <p>Developing an interactive 3D solar system rendering your professional universe using Three.js and CSS shaders.</p>
                     </div>
                 </div>
             </div>
@@ -191,23 +201,31 @@
                 Interested in collaborating on creative projects or just want to chat? Reach out!
             </p>
             <div class="contact-cards">
-                <a href="mailto:your.email@example.com" class="contact-card" data-aos="flip-left" data-aos-delay="100">
+                <a href="mailto:einsteingirish@gmail.com" class="contact-card" data-aos="flip-left" data-aos-delay="100">
                     <div class="contact-icon">📧</div>
                     <h3>Email</h3>
                     <p>einsteingirish@gmail.com</p>
                 </a>
-                <a href="https://twitter.com/yourusername" target="_blank" class="contact-card" data-aos="flip-left"
+                <a href="https://twitter.com/UdayGirishM" target="_blank" class="contact-card" data-aos="flip-left"
                     data-aos-delay="200">
                     <div class="contact-icon">🐦</div>
                     <h3>Twitter</h3>
                     <p>@UdayGirishM</p>
                 </a>
-                <a href="https://instagram.com/yourusername" target="_blank" class="contact-card" data-aos="flip-left"
+                <a href="https://instagram.com/udaygirish" target="_blank" class="contact-card" data-aos="flip-left"
                     data-aos-delay="300">
                     <div class="contact-icon">📷</div>
                     <h3>Instagram</h3>
                     <p>@udaygirish</p>
                 </a>
+            </div>
+            <div class="transmission-panel" data-aos="fade-up">
+                <div class="transmission-head">
+                    <span class="section-eyebrow">// direct channel</span>
+                    <h3>Send a transmission</h3>
+                    <p>Drop me a note here and it lands straight in my inbox. I read every one.</p>
+                </div>
+                <div data-mail-mount="personal page"></div>
             </div>
         </div>
     </section>

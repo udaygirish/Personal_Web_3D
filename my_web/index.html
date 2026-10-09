@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research & Publications | Uday Girish Maradana</title>
+    <link rel="icon" href="../shared/favicon.svg" type="image/svg+xml">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Research · Uday Girish Maradana">
+    <meta property="og:description" content="Research in monocular perception, reinforcement learning and clinical computer vision.">
+    <meta property="og:image" content="https://new.udaygirish.com/shared/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#03080e">
+    <meta name="description"
+        content="Scientific publications and robotics research papers of Uday Girish Maradana on Computer Vision, Drone Navigation, and AI.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../shared-space-theme.css?v=7">
+    <link rel="stylesheet" href="style.css">
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="../shared/universe.css?v=7">
+<script defer src="../shared/universe.js?v=7"></script>
+</head>
+
+<body class="space-theme-active">
+    <!-- Animated Background -->
+    <div class="stars-background"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="../index.html?from=my_web" class="back-button">
+            <span>←</span>
+            <span>Return to Navigation</span>
+        </a>
+        <div class="nav-links">
+            <a href="#about">Research Focus</a>
+            <a href="#publications">Publications</a>
+            <a href="#repositories">GitHub Repos</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">🔬 Research & Publications</div>
+            <h1 class="hero-title">
+                <span class="gradient-text">Pioneering</span>
+                <span class="gradient-text">Autonomous Intellect</span>
+            </h1>
+            <p class="hero-subtitle">
+                Exploring the boundaries of monocular perception, reinforcement learning, and clinical computer vision.
+            </p>
+            <div class="hero-buttons">
+                <a href="#publications" class="btn btn-primary">Read Publications</a>
+                <a href="#repositories" class="btn btn-secondary">Explore Code</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- Research Focus -->
+    <section id="about" class="section about">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Research Agenda</h2>
+            <div class="about-grid">
+                <div class="about-card" data-aos="fade-right">
+                    <div class="card-icon">🛸</div>
+                    <h3>Active Perception</h3>
+                    <p>
+                        Developing minimal-computation navigation pipelines for tiny robots. By leveraging monocular optical flow
+                        uncertainty and active robot exploration, systems can navigate cluttered, dynamic environments without high-power metric depth sensors.
+                    </p>
+                </div>
+                <div class="about-card" data-aos="fade-up">
+                    <div class="card-icon">🦾</div>
+                    <h3>Robot Manipulation</h3>
+                    <p>
+                        Applying end-to-end reinforcement learning and language-grounded vision models to multi-DOF robotic arms.
+                        The goal is to enable complex pick-and-place tasks under highly variable real-world conditions.
+                    </p>
+                </div>
+                <div class="about-card" data-aos="fade-left">
+                    <div class="card-icon">🩺</div>
+                    <h3>Clinical CV</h3>
+                    <p>
+                        Pioneering deep learning solutions in medical imaging. Integrating Segment Anything Models (SAM) and
+                        point tracking algorithms to perform dynamic frame-by-frame ultrasound analysis for biomechanical assessment.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publications" class="section publications">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Scientific Work</h2>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">In Review</div>
+                        <h3>An Artificial Intelligence Approach for Automated Dynamic Ultrasound Measurement in the Assessment of Patellar Instability</h3>
+                        <p class="authors">He, Xingxin; Crasta, Nikitha; Maradana, Uday Girish; Varadarajan, Kartik Mangudi; Tanaka, Miho J.; Liu, Fang</p>
+                        <p class="description">
+                            Introduces AUTS (AI-based Ultrasound Tracking System) for dynamic assessment of patellofemoral joint function. Using SAM and point tracking, AUTS measures Medial Patellofemoral Distance frame-by-frame, providing high diagnostic reliability for patellar instability.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Accepted ICRA 2026 / Submitted IEEE RAL</div>
+                        <h3>MinNav: Minimalist Navigation using Optical flow for Active Tiny Aerial Robots</h3>
+                        <p class="authors">Aniket Patil, Mandeep Singh, Uday Girish Maradana, Nitin J. Sanket</p>
+                        <p class="description">
+                            Proposes a navigation stack based on monocular optical flow uncertainty to guide active nano-drones through static and dynamic obstacles and gaps without metric depth sensors, executing all calculations onboard on limited hardware.
+                        </p>
+                        <a href="https://pear.wpi.edu/research/minnav.html" target="_blank" class="pub-link">Project Page ↗</a>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Springer 2020</div>
+                        <h3>RIGGU: A Semi-humanoid Robot Platform for Speech and Image Recognition</h3>
+                        <p class="authors">Uday Girish Maradana, et al.</p>
+                        <p class="description">
+                            Presents the design, mechanical structure, and ROS integration of a semi-humanoid robot platform utilizing face, object, and speech recognition for assistive care and hospitality applications.
+                        </p>
+                        <a href="https://link.springer.com/chapter/10.1007/978-981-15-3914-5_3" target="_blank" class="pub-link">Publisher Link ↗</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Repositories Section -->
+    <section id="repositories" class="section repositories">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Open Source Research</h2>
+            <div class="repos-grid">
+                <a href="https://github.com/udaygirish/Embodied_Agent_Planning" target="_blank" class="repo-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="repo-icon">📂</div>
+                    <h3>Embodied Agent Planning</h3>
+                    <p>Comparison of traditional motion planners (A*, RRT) with end-to-end reinforcement learning for indoor navigation.</p>
+                    <span class="repo-lang">Python</span>
+                </a>
+                <a href="https://github.com/udaygirish/3link_manipulator_dynamics" target="_blank" class="repo-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="repo-icon">📂</div>
+                    <h3>3R Manipulator Dynamics</h3>
+                    <p>Kinematic and dynamic modeling, workspace trajectory execution, and control simulation of a 3R link robot.</p>
+                    <span class="repo-lang">MATLAB</span>
+                </a>
+                <a href="https://github.com/udaygirish/quadrotor_lqr_basic" target="_blank" class="repo-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="repo-icon">📂</div>
+                    <h3>Alien Catcher UAV Control</h3>
+                    <p>Guidance and intercept strategy for catching aerial targets with a drone using Linear Quadratic Regulator (LQR) control.</p>
+                    <span class="repo-lang">Python</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Let's Connect</h2>
+            <div class="contact-cards">
+                <a href="mailto:einsteingirish@gmail.com" class="contact-card" data-aos="flip-left" data-aos-delay="100">
+                    <div class="contact-icon">📧</div>
+                    <h3>Academic Queries</h3>
+                    <p>einsteingirish@gmail.com</p>
+                </a>
+                <a href="https://github.com/udaygirish" target="_blank" class="contact-card" data-aos="flip-left" data-aos-delay="200">
+                    <div class="contact-icon">💻</div>
+                    <h3>GitHub Profile</h3>
+                    <p>github.com/udaygirish</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Uday Girish. Scientific exploration without limits.</p>
+            <a href="../index.html" class="footer-link">Return to Navigation</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+[
+  {
+    "id": "lab",
+    "name": "Lab Control",
+    "description": "Experiments and local tools",
+    "target": "http://127.0.0.1:8080"
+  }
+]

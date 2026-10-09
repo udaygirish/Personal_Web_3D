@@ -40,10 +40,10 @@ body {
     left: 20px;
     z-index: 100;
     padding: 12px 24px;
-    background: rgba(76, 201, 240, 0.2);
-    border: 2px solid #4cc9f0;
-    border-radius: 50px;
-    color: #4cc9f0;
+    background: rgba(0, 255, 136, 0.2);
+    border: 2px solid #00ff88;
+    border-radius: 4px;
+    color: #00ff88;
     font-family: 'Orbitron', sans-serif;
     font-size: 14px;
     font-weight: 600;
@@ -54,9 +54,9 @@ body {
 }
 
 .back-button:hover {
-    background: rgba(76, 201, 240, 0.4);
+    background: rgba(0, 255, 136, 0.4);
     transform: translateX(-5px);
-    box-shadow: 0 0 20px rgba(76, 201, 240, 0.6);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
 }
 
 /* Title Overlay */
@@ -72,11 +72,11 @@ body {
     font-family: 'Orbitron', sans-serif;
     font-size: 2rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #4cc9f0, #9d4edd);
+    background: linear-gradient(135deg, #00ff88, #00d9ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-shadow: 0 0 40px rgba(76, 201, 240, 0.5);
+    text-shadow: 0 0 40px rgba(0, 255, 136, 0.5);
     margin-bottom: 8px;
 }
 
@@ -95,8 +95,8 @@ body {
     z-index: 100;
     padding: 12px 24px;
     background: rgba(0, 0, 0, 0.7);
-    border: 1px solid rgba(76, 201, 240, 0.3);
-    border-radius: 50px;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 4px;
     backdrop-filter: blur(10px);
 }
 
@@ -107,7 +107,7 @@ body {
 }
 
 .controls-hint strong {
-    color: #4cc9f0;
+    color: #00ff88;
 }
 
 /* System Info */
@@ -118,7 +118,7 @@ body {
     z-index: 100;
     padding: 16px 24px;
     background: rgba(0, 0, 0, 0.6);
-    border-left: 4px solid #4cc9f0;
+    border-left: 4px solid #00ff88;
     border-radius: 4px;
     backdrop-filter: blur(10px);
 }
@@ -127,114 +127,13 @@ body {
     font-family: 'Orbitron', sans-serif;
     font-size: 16px;
     font-weight: 600;
-    color: #4cc9f0;
-    text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+    color: #00ff88;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
-/* Planet Info Panel */
-.planet-panel {
-    position: fixed;
-    right: -500px;
-    top: 0;
-    width: 450px;
-    height: 100vh;
-    background: rgba(10, 10, 15, 0.95);
-    backdrop-filter: blur(20px);
-    border-left: 2px solid rgba(76, 201, 240, 0.5);
-    padding: 40px;
-    z-index: 200;
-    transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    overflow-y: auto;
-    box-shadow: -10px 0 50px rgba(0, 0, 0, 0.8);
-    pointer-events: auto;
-}
+/* Note: .planet-panel was removed — the my_world_view page uses the
+   floating .planet-info-card layout instead. */
 
-.planet-panel.active {
-    right: 0;
-}
-
-.close-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    color: #ffffff;
-    font-size: 24px;
-    font-weight: 300;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.close-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: rotate(90deg);
-}
-
-.planet-panel h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #4cc9f0;
-    text-shadow: 0 0 20px rgba(76, 201, 240, 0.5);
-}
-
-.planet-panel h3 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.3rem;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    color: #9d4edd;
-}
-
-.planet-panel p {
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 15px;
-}
-
-.planet-panel ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.planet-panel li {
-    padding: 8px 0;
-    padding-left: 20px;
-    position: relative;
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.planet-panel li::before {
-    content: '▸';
-    position: absolute;
-    left: 0;
-    color: #4cc9f0;
-}
-
-/* Scrollbar */
-.planet-panel::-webkit-scrollbar {
-    width: 8px;
-}
-
-.planet-panel::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.planet-panel::-webkit-scrollbar-thumb {
-    background: rgba(76, 201, 240, 0.5);
-    border-radius: 4px;
-}
-
-.planet-panel::-webkit-scrollbar-thumb:hover {
-    background: rgba(76, 201, 240, 0.8);
-}
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -270,8 +169,8 @@ body {
     z-index: 100;
     display: flex;
     background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(76, 201, 240, 0.3);
-    border-radius: 50px;
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 4px;
     padding: 4px;
     backdrop-filter: blur(10px);
     pointer-events: auto;
@@ -282,7 +181,7 @@ body {
     border: none;
     color: rgba(255, 255, 255, 0.6);
     padding: 8px 20px;
-    border-radius: 40px;
+    border-radius: 4px;
     font-family: 'Orbitron', sans-serif;
     font-size: 14px;
     cursor: pointer;
@@ -290,9 +189,9 @@ body {
 }
 
 .toggle-btn.active {
-    background: rgba(76, 201, 240, 0.2);
-    color: #4cc9f0;
-    box-shadow: 0 0 15px rgba(76, 201, 240, 0.3);
+    background: rgba(0, 255, 136, 0.2);
+    color: #00ff88;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
 }
 
 .toggle-btn:hover:not(.active) {
@@ -342,10 +241,10 @@ body {
     top: 0;
     left: 0;
     width: 300px;
-    background: rgba(10, 10, 15, 0.9);
+    background: rgba(0, 18, 20, 0.92);
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(76, 201, 240, 0.5);
-    border-radius: 12px;
+    border: 1px solid rgba(0, 255, 136, 0.5);
+    border-radius: 4px;
     padding: 0;
     z-index: 200;
     opacity: 0;
@@ -363,9 +262,9 @@ body {
 }
 
 .card-header {
-    background: linear-gradient(90deg, rgba(76, 201, 240, 0.2), transparent);
+    background: linear-gradient(90deg, rgba(0, 255, 136, 0.2), transparent);
     padding: 15px 20px;
-    border-bottom: 1px solid rgba(76, 201, 240, 0.3);
+    border-bottom: 1px solid rgba(0, 255, 136, 0.3);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -374,9 +273,9 @@ body {
 .card-header h2 {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.1rem;
-    color: #4cc9f0;
+    color: #00ff88;
     margin: 0;
-    text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
 .card-body {
@@ -389,35 +288,53 @@ body {
     font-size: 0.9rem;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
     margin-bottom: 15px;
 }
 
 .card-body h3 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.9rem;
-    color: #9d4edd;
+    color: #00ff88;
     margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-size: 1.1rem;
 }
 
 .card-body ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
 }
 
 .card-body li {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7);
-    padding: 4px 0 4px 15px;
-    position: relative;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
 }
 
-.card-body li::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: #4cc9f0;
+.card-body li:last-child {
+    border-bottom: none;
+}
+
+/* Landing Button Upgrade */
+.land-btn-primary {
+    width: 100%;
+    background: linear-gradient(90deg, #00ff88, #00aa55);
+    color: #000;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.land-btn-primary:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 25px rgba(0, 255, 136, 0.8);
+    background: linear-gradient(90deg, #00ffaa, #00cc66);
 }
 
 .close-card-btn {
@@ -444,5 +361,173 @@ body {
     transform: translateX(-50%);
     border-width: 10px 10px 0;
     border-style: solid;
-    border-color: rgba(76, 201, 240, 0.5) transparent transparent transparent;
+    border-color: rgba(0, 255, 136, 0.5) transparent transparent transparent;
+}
+
+/* =========================================
+   Planet Approach HUD
+   ========================================= */
+.planet-approach-hud {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    padding: 10px 24px;
+    background: rgba(0, 10, 8, 0.85);
+    border: 1px solid rgba(0, 255, 136, 0.5);
+    border-radius: 4px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: #00ff88;
+    text-shadow: 0 0 10px rgba(0,255,136,0.6);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+}
+
+.planet-approach-hud.visible {
+    opacity: 1;
+    animation: approach-pulse 2s ease-in-out infinite;
+}
+
+@keyframes approach-pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(0,255,136,0.2); }
+    50%       { box-shadow: 0 0 25px rgba(0,255,136,0.5); }
+}
+
+/* =========================================
+   Rover Surface HUD
+   ========================================= */
+.rover-hud {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    display: flex;
+    gap: 0;
+    background: rgba(0, 8, 5, 0.88);
+    border: 1px solid rgba(0, 255, 136, 0.4);
+    border-radius: 4px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.15);
+}
+
+.rover-hud-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 22px;
+    border-right: 1px solid rgba(0,255,136,0.15);
+    min-width: 90px;
+}
+
+.rover-hud-item:last-child {
+    border-right: none;
+}
+
+.rover-hud-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 2px;
+    color: rgba(0, 255, 136, 0.5);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.rover-hud-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #00ff88;
+    text-shadow: 0 0 8px rgba(0,255,136,0.5);
+}
+
+.rover-hud-key {
+    font-size: 0.9rem;
+    font-weight: 900;
+    color: #00d9ff;
+    text-shadow: 0 0 12px rgba(0, 217, 255, 0.7);
+    animation: key-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes key-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.5; }
+}
+
+/* =========================================
+   Compass
+   ========================================= */
+.rover-compass {
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin: 0 auto;
+}
+#compass-needle {
+    transform-origin: 20px 20px;
+    transition: transform 0.1s linear;
+}
+
+/* =========================================
+   2D Map Labels
+   ========================================= */
+.label-2d {
+    position: absolute;
+    color: #ffffff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    pointer-events: none;
+    transform: translate(-50%, -100%);
+    text-shadow: 0 0 4px #000;
+    white-space: nowrap;
+}
+
+/* =========================================
+   Kiosk Modal
+   ========================================= */
+.kiosk-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 5, 10, 0.85);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.kiosk-modal-content {
+    background: rgba(0, 15, 10, 0.95);
+    border: 1px solid rgba(0, 255, 136, 0.4);
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+    border-radius: 4px;
+    padding: 40px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+.kiosk-modal-content h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00ff88;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.kiosk-body {
+    line-height: 1.6;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.9);
 }

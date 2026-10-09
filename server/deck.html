@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Mission Control · Uday’s Universe</title>
+    <link rel="icon" href="/shared/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/shared/universe.css?v=7" />
+    <link rel="stylesheet" href="/command/command.css?v=5" />
+    <script defer src="/command/deck.js?v=5"></script>
+  </head>
+  <body class="u-page deck">
+    <main class="u-container">
+      <nav class="u-nav">
+        <a href="/index.html">Return to orbit</a
+        ><span class="u-eyebrow">COMMAND DECK / PRIVATE</span>
+      </nav>
+      <header class="deck-header">
+        <div>
+          <p class="u-eyebrow">MISSION CONTROL</p>
+          <h1>Welcome aboard, Commander.</h1>
+          <p class="deck-owner"><span class="led" data-state="ok"></span><span id="owner-email">Verifying…</span></p>
+        </div>
+        <div class="deck-side">
+          <div class="deck-clock" aria-label="Ship time"><span class="u-eyebrow">SHIP TIME</span><strong id="deck-clock">--:--:--</strong></div>
+          <form action="/auth/logout" method="post">
+            <input type="hidden" name="csrf" id="logout-csrf" /><button id="sign-out" disabled>Seal airlock · Sign out</button>
+          </form>
+        </div>
+      </header>
+      <div class="deck-strip" role="status">
+        <span><span class="led" data-state="ok"></span>Session secure</span>
+        <span><span class="led" data-state="ok"></span>Gateway online</span>
+        <span id="deck-status">Loading modules…</span>
+      </div>
+      <h2 class="deck-section-title">Docked modules</h2>
+      <div class="deck-grid" id="private-apps"></div>
+      <div class="deck-empty" id="deck-empty" hidden>
+        <div class="dock-bay" aria-hidden="true"></div>
+        <h2>Docking bay empty.</h2>
+        <p>
+          Your owner session is active. Add applications to
+          <code>server/apps.json</code> and restart the gateway to dock them here.
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

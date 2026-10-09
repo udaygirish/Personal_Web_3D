@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Journey Through Space | Portfolio</title>
+    <link rel="icon" href="shared/favicon.svg" type="image/svg+xml">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Uday Girish Maradana · Journey Through Space">
+    <meta property="og:description" content="Fly a spaceship through Uday Girish Maradana's portfolio: ML engineering, robotics research, projects and writing.">
+    <meta property="og:image" content="https://new.udaygirish.com/shared/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#03080e">
     <meta name="description" content="An immersive 3D portfolio experience - choose your path through the wormhole">
 
     <!-- Google Fonts -->
@@ -15,7 +22,9 @@
         rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="shared/universe.css?v=7">
+<script defer src="shared/universe.js?v=7"></script>
 </head>
 
 <body>
@@ -43,7 +52,7 @@
                 <div class="welcome-message">
                     <p class="welcome-text">Explore my universe</p>
                     <div class="controls-hint">
-                        <p class="control-item">🖱️ Mouse to look around and steer</p>
+                        <p class="control-item">🖱️ Move mouse to steer (360° Free Flight)</p>
                         <p class="control-item">⬆️ W/S to move forward/backward</p>
                         <p class="control-item">⬅️ ➡️ A/D to strafe left/right</p>
                         <p class="control-item">🚀 Space/Shift to thrust up/down</p>
@@ -51,6 +60,19 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Direction Beacon — shown on first open-space entry, fades on movement -->
+        <div id="direction-beacon" class="hidden">
+            <div class="beacon-ring"></div>
+            <div class="beacon-arrows">
+                <div class="beacon-arrow beacon-left">◀ <span>PERSONAL</span></div>
+                <div class="beacon-arrow beacon-right"><span>WORK</span> ▶</div>
+                <div class="beacon-arrow beacon-up">▲<br><span>WORLD VIEW</span></div>
+                <div class="beacon-arrow beacon-down"><span>BLOG</span><br>▼</div>
+                <div class="beacon-center">🎯<br><span>RESEARCH<br>AHEAD</span></div>
+            </div>
+            <div class="beacon-label">6 WORMHOLE SIGNATURES DETECTED — EXPLORE!</div>
         </div>
 
         <!-- HUD Overlay -->
@@ -72,6 +94,11 @@
                 <div class="warning-text">WARNING: DEEP SPACE DETECTED</div>
                 <div class="warning-subtext">Return to navigation zone</div>
             </div>
+
+            <!-- Cockpit View Toggle -->
+            <button id="cockpit-toggle-btn" class="hud-toggle-btn" title="Toggle Cockpit View [C]">
+                <span class="toggle-icon">👁️</span> <span class="toggle-text">COCKPIT VIEW</span>
+            </button>
 
             <div class="hud-top">
                 <div class="hud-item">
@@ -122,27 +149,183 @@
                 </button>
             </div>
         </div>
+
+        <!-- Cockpit Bezel — persistent spaceship HUD visible during open space flight.
+             All pointer-events are none so it never blocks clicks on the 3D scene. -->
+        <div id="cockpit-bezel" class="hidden">
+
+            <!-- Targeting Crosshair -->
+            <div class="crosshair">
+                <div class="ch-h"></div>
+                <div class="ch-v"></div>
+                <div class="ch-ring"></div>
+                <div class="ch-dot"></div>
+            </div>
+
+            <!-- Floating AI Console Output Overlay -->
+            <div class="console-output bottom-console-output" id="ap-console-out">SYSTEM LOG OVERVIEW:
+READY FOR INTERFACE COMMANDS.</div>
+
+            <!-- Left Instrument Panel: coordinates + system status -->
+            <div class="cockpit-panel cockpit-panel-left">
+                <div class="panel-title">NAV COMPUTER</div>
+                <div class="panel-row"><span class="pl">SECTOR α</span><span class="pv" id="cp-x">0.0000</span></div>
+                <div class="panel-row"><span class="pl">SECTOR β</span><span class="pv" id="cp-y">0.0000</span></div>
+                <div class="panel-row"><span class="pl">SECTOR γ</span><span class="pv" id="cp-z">0.0000</span></div>
+                <div class="panel-sep"></div>
+                <div class="panel-title">SYSTEMS</div>
+                <div class="panel-row"><span class="pl">HULL</span><span class="pv ok">NOMINAL</span></div>
+                <div class="panel-row"><span class="pl">NAV</span><span class="pv ok">ONLINE</span></div>
+                <div class="panel-row"><span class="pl">WARP</span><span class="pv ok">READY</span></div>
+                <div class="panel-row"><span class="pl">SOUND</span><span class="pv alert" id="cp-sound-val" style="cursor: pointer;" title="Click to toggle sound">OFF</span></div>
+                <div class="panel-row"><span class="pl">STEER</span><span class="pv ok" id="cp-steer-val" style="cursor: pointer;" title="Click to toggle steering mode">FREE</span></div>
+                
+                <div class="panel-sep"></div>
+                <div class="panel-title">POWER GRID</div>
+                <div class="panel-row"><span class="pl">SHIELD</span><span class="pv ok" id="cp-shield-val">100%</span></div>
+                <div class="pv-bar-wrap"><div class="pv-bar-fill" id="cp-shield-bar" style="width: 100%;"></div></div>
+                <div class="panel-row"><span class="pl">REACTOR</span><span class="pv ok" id="cp-reactor-val">98.4%</span></div>
+                <div class="pv-bar-wrap"><div class="pv-bar-fill" id="cp-reactor-bar" style="width: 98.4%;"></div></div>
+                <div class="panel-row"><span class="pl">COOLANT</span><span class="pv ok" id="cp-coolant-val">NOMINAL</span></div>
+            </div>
+
+            <!-- Right Instrument Panel: nearest target + propulsion -->
+            <div class="cockpit-panel cockpit-panel-right">
+                <div class="panel-title">TARGETING</div>
+                <div class="panel-row"><span class="pl">TARGET</span><span class="pv" id="cp-target">---</span></div>
+                <div class="panel-row"><span class="pl">DIST</span><span class="pv" id="cp-dist">---</span></div>
+                
+                <div class="panel-sep"></div>
+                <div class="panel-title">AUTOPILOT</div>
+                <div class="panel-autopilot">
+                    <select id="ap-dest-select" class="ap-select">
+                        <option value="">SELECT DEST</option>
+                    </select>
+                    <button id="ap-toggle-btn" class="ap-btn">ENGAGE AP</button>
+                    <div id="ap-status" class="ap-status">OFFLINE</div>
+                </div>
+
+                <div class="panel-sep"></div>
+                <div class="panel-title">PROPULSION</div>
+                <div class="panel-row"><span class="pl">ENGINE</span><span class="pv ok">ONLINE</span></div>
+                <div class="panel-row"><span class="pl">BOOST</span><span class="pv" id="cp-boost">STANDBY</span></div>
+                <div class="panel-sep"></div>
+                <div class="panel-row"><span class="pl">VELOCITY</span><span class="pv" id="cp-vel">0.000c</span></div>
+            </div>
+
+            <!-- Bottom Control Panel: always-visible control reference + throttle -->
+            <div class="cockpit-bottom">
+                <div class="cockpit-label-brand">CONSTELLATION MK.III &bull; FLIGHT CONTROL SYSTEM</div>
+
+                <div class="ctrl-section">
+                    <div class="ctrl-title">THRUST</div>
+                    <div class="wasd-cluster">
+                        <div class="kr"><div class="nav-key" id="ck-w">W</div></div>
+                        <div class="kr">
+                            <div class="nav-key" id="ck-a">A</div>
+                            <div class="nav-key" id="ck-s">S</div>
+                            <div class="nav-key" id="ck-d">D</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-section">
+                    <div class="ctrl-title">ALTITUDE</div>
+                    <div class="wasd-cluster">
+                        <div class="kr"><div class="nav-key wide" id="ck-space">SPACE ↑</div></div>
+                        <div class="kr"><div class="nav-key wide" id="ck-shift">SHIFT ↓</div></div>
+                    </div>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-section">
+                    <div class="ctrl-title">LOOK &amp; STEER</div>
+                    <div class="mouse-icon-wrap">
+                        <div class="mouse-svg">
+                            <div class="ms-body">
+                                <div class="ms-btns"><div class="ms-lb"></div><div class="ms-rb"></div></div>
+                                <div class="ms-wheel-wrap"><div class="ms-wheel"></div></div>
+                            </div>
+                        </div>
+                        <div class="mouse-hint">MOVE MOUSE</div>
+                    </div>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-section">
+                    <div class="ctrl-title">BARREL ROLL</div>
+                    <div class="wasd-cluster">
+                        <div class="kr">
+                            <div class="nav-key" id="ck-q">Q</div>
+                            <div class="nav-key" id="ck-e">E</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ctrl-divider"></div>
+
+                <div class="ctrl-section radar-section">
+                    <div class="ctrl-title">NAV RADAR</div>
+                    <div class="radar-container">
+                        <canvas id="radar-canvas" width="80" height="80"></canvas>
+                    </div>
+                </div>
+
+                <div class="ctrl-divider terminal-divider"></div>
+
+                <div class="ctrl-section terminal-section">
+                    <div class="ctrl-title">NAV TERMINAL</div>
+                    <input type="text" id="ap-console-input-bottom" class="bottom-console-input" placeholder="ENTER SYSTEM COMMAND" autocomplete="off" spellcheck="false" />
+                </div>
+
+                <div class="ctrl-divider terminal-divider"></div>
+
+                <div class="ctrl-section throttle-section">
+                    <div class="ctrl-title">VELOCITY</div>
+                    <div class="throttle-wrap">
+                        <div class="throttle-track"><div class="throttle-fill" id="cp-throttle"></div></div>
+                        <div class="throttle-val" id="cp-speed">0.000c</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
+
     <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Three.js Postprocessing for Bloom Effects -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <!-- Three.js r147: last release with the global examples/js build -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/Pass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/MaskPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <!-- Global State -->
+    <script src="shared/clock.js"></script>
+    <script src="js/state.js?v=5"></script>
     <!-- Wormhole Config -->
-    <script src="config.js"></script>
+    <script src="config.js?v=5"></script>
     <!-- Matrix Effect -->
-    <script src="matrix.js"></script>
+    <script src="matrix.js?v=5"></script>
     <!-- HUD & 3D Effects -->
-    <script src="hud.js"></script>
+    <script src="hud.js?v=5"></script>
     <!-- Mobile Controls -->
-    <script src="mobile.js"></script>
-    <!-- Main App -->
-    <script src="app.js"></script>
+    <script src="mobile.js?v=5"></script>
+    <!-- Main Modular App -->
+    <script src="js/environment.js?v=5"></script>
+    <script src="js/audio.js?v=5"></script>
+    <script src="js/weapons.js?v=5"></script>
+    <script src="js/flight.js?v=5"></script>
+    <script src="js/ui_systems.js?v=5"></script>
+    <script src="js/core.js?v=5"></script>
 </body>
 
 </html>

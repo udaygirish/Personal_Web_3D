@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Portfolio | Uday Girish Maradana</title>
+    <link rel="icon" href="../shared/favicon.svg" type="image/svg+xml">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Work · Uday Girish Maradana">
+    <meta property="og:description" content="Experience, skills and publications of an ML engineer and robotics researcher.">
+    <meta property="og:image" content="https://new.udaygirish.com/shared/og-card.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#03080e">
     <meta name="description"
         content="Senior ML Engineer specializing in Machine Learning, MLOps, Robotics, and Computer Vision">
 
@@ -15,12 +22,15 @@
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../shared-space-theme.css?v=7">
+    <link rel="stylesheet" href="style.css?v=3">
     <!-- Markdown Parser -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="../shared/universe.css?v=7">
+<script defer src="../shared/universe.js?v=7"></script>
 </head>
 
-<body>
+<body class="space-theme-active">
     <!-- Animated Background -->
     <div class="stars-background"></div>
     <canvas id="particle-canvas"></canvas>
@@ -35,6 +45,7 @@
             <a href="#about">About</a>
             <a href="#experience">Experience</a>
             <a href="#skills">Skills</a>
+            <a href="#publications">Publications</a>
             <a href="#contact">Contact</a>
         </div>
     </nav>
@@ -47,7 +58,7 @@
                 <span class="gradient-text typing-text" id="typing-text"></span>
             </h1>
             <p class="hero-subtitle">
-                Senior ML Engineer @ webAI | Robotics Researcher | Building Intelligent Autonomous Systems
+                Senior ML Engineer @ Tiger Analytics | Robotics Researcher | Building Intelligent Autonomous Systems
             </p>
             <div class="hero-stats">
                 <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
@@ -82,7 +93,7 @@
                 <div class="about-intro" data-aos="fade-right">
                     <h3>Machine Learning Engineer & Robotics Researcher</h3>
                     <p>
-                        I'm currently a Senior Machine Learning Engineer at webAI, where I build and scale ML solutions
+                        I'm currently a Senior Machine Learning Engineer at Tiger Analytics, where I build and scale ML solutions
                         for production systems. My expertise spans Machine Learning, Deep Learning, MLOps, Reinforcement
                         Learning, and Robotics. With over 6 years of experience across industry and research, I've
                         developed end-to-end ML solutions that bridge cutting-edge research and real-world applications.
@@ -131,18 +142,39 @@
                 <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
                     <div class="timeline-marker"></div>
                     <div class="timeline-content">
-                        <div class="timeline-date">May 2025 - Present</div>
+                        <div class="timeline-date">Dec 2025 - Present</div>
+                        <h3>Senior Machine Learning Engineer</h3>
+                        <h4>Tiger Analytics</h4>
+                        <p>
+                            Leading ML engineering and MLOps development with primary focus on developing ML Platforms
+                            and ML Solutions for Business use cases. Working on Agents, RAGs, Digital Twins and
+                            scalable production ML systems.
+                        </p>
+                        <div class="tech-stack">
+                            <span>LLMs / RAG</span>
+                            <span>Agents</span>
+                            <span>MLOps</span>
+                            <span>Digital Twins</span>
+                            <span>AWS / GCP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="125">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">May 2025 - Dec 2025</div>
                         <h3>Senior Machine Learning Engineer</h3>
                         <h4>webAI</h4>
                         <p>
-                            Building and scaling ML solutions for webAI's platform. Developing production-ready ML
-                            systems
-                            and infrastructure that power intelligent applications at scale.
+                            Built Private Intelligence for Enterprises — developing LLMs (open-source), RAG pipelines,
+                            and Agentic systems for production environments.
                         </p>
                         <div class="tech-stack">
+                            <span>LLMs</span>
+                            <span>RAG</span>
+                            <span>Agents</span>
                             <span>Python</span>
-                            <span>TensorFlow</span>
-                            <span>PyTorch</span>
                             <span>MLOps</span>
                         </div>
                     </div>
@@ -470,6 +502,83 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publications" class="section publications">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Publications</h2>
+            <div class="timeline">
+
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">In Review · ORS Annual Meeting 2025</div>
+                        <h3>AI-Based Ultrasound Tracking System for Patellar Instability</h3>
+                        <h4>He, Crasta, <strong>Maradana</strong>, Varadarajan, Tanaka, Liu — ORS 2025</h4>
+                        <p>
+                            Introduces an AI-based Ultrasound Tracking System (AUTS) using SAM for segmentation and
+                            PIPs for point tracking to measure Medial Patellofemoral Distance frame-by-frame from
+                            ultrasound videos. Tested on 42 knees with strong agreement against manual measurements.
+                        </p>
+                        <div class="tech-stack">
+                            <span>Medical AI</span>
+                            <span>SAM</span>
+                            <span>Point Tracking</span>
+                            <span>Ultrasound</span>
+                        </div>
+                        <a href="https://www.ors.org/wp-content/uploads/AM25/612.pdf" target="_blank"
+                           class="pub-link">📄 View Paper</a>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Accepted · ICRA 2026</div>
+                        <h3>MinNav: Minimalist Navigation using Optical Flow for Active Tiny Aerial Robots</h3>
+                        <h4>Patil, Singh, <strong>Maradana</strong>, Sanket — ICRA 2026</h4>
+                        <p>
+                            MinNav is a navigation stack based on optical flow and its uncertainty enabling tiny aerial
+                            robots to fly through scenes with static and dynamic obstacles and unknown-shaped gaps,
+                            without any prior knowledge of scene components. Demonstrates 70% success rate across
+                            diverse real-world environments.
+                        </p>
+                        <div class="tech-stack">
+                            <span>Optical Flow</span>
+                            <span>UAV Navigation</span>
+                            <span>Robotics</span>
+                            <span>Computer Vision</span>
+                        </div>
+                        <a href="https://pear.wpi.edu/research/minnav.html" target="_blank"
+                           class="pub-link">🔗 Paper Website</a>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Published · Springer ISTA 2020</div>
+                        <h3>RIGGU: A Semi-Humanoid Robot Platform for Speech and Image Recognition</h3>
+                        <h4><strong>Uday Girish M.</strong> et al. — Intelligent Systems, Technologies and Applications (Springer)</h4>
+                        <p>
+                            Proposes integration of object, face, emotion recognition, and navigation of a
+                            semi-humanoid robot platform using ROS. RIGGU is designed for hospitality, treating autism,
+                            and assisting aged people.
+                        </p>
+                        <div class="tech-stack">
+                            <span>ROS</span>
+                            <span>Computer Vision</span>
+                            <span>Humanoid Robotics</span>
+                            <span>NLP</span>
+                        </div>
+                        <a href="https://link.springer.com/chapter/10.1007%2F978-981-15-3914-5_3" target="_blank"
+                           class="pub-link">📄 View Paper</a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>

@@ -51,7 +51,7 @@ function updateHUD() {
 
             // Warning for My World View
             const hudTarget = document.getElementById('hud-target');
-            if (nearest.id === 'my_world_view') {
+            if (nearest.type === 'my_world_view') {
                 hudTarget.textContent += ' [⚠️ CONSTRUCTION ZONE]';
                 hudTarget.style.color = '#ff9e3d';
                 hudTarget.classList.add('warning-pulse');
@@ -84,7 +84,51 @@ function updateHUD() {
         document.getElementById('hud-target').textContent = '---';
         document.getElementById('hud-distance').textContent = '---';
     }
+
+    // ---- Mirror data into cockpit side panels ----
+    // These elements only exist when the cockpit bezel is visible,
+    // so guard every update with a null check.
+
+    // Left panel: live sector coordinates
+    const cpX = document.getElementById('cp-x');
+    const cpY = document.getElementById('cp-y');
+    const cpZ = document.getElementById('cp-z');
+    if (cpX) cpX.textContent = (camera.position.x * lyScale).toFixed(4);
+    if (cpY) cpY.textContent = (camera.position.y * lyScale).toFixed(4);
+    if (cpZ) cpZ.textContent = (camera.position.z * lyScale).toFixed(4);
+
+    // Right panel: velocity, boost status
+    const cpVel   = document.getElementById('cp-vel');
+    const cpBoost = document.getElementById('cp-boost');
+    if (cpVel)   cpVel.textContent = speedC.toFixed(3) + 'c';
+    if (cpBoost) {
+        cpBoost.textContent = speedBoost ? 'ACTIVE' : 'STANDBY';
+        cpBoost.className   = 'pv ' + (speedBoost ? 'warn' : 'ok');
+    }
+
+    // Bottom panel: throttle bar + speed readout (max ≈ 0.06c with boost)
+    const cpThrottle = document.getElementById('cp-throttle');
+    const cpSpeed    = document.getElementById('cp-speed');
+    const maxC = 0.06;
+    if (cpThrottle) cpThrottle.style.width = Math.min(100, (speedC / maxC) * 100).toFixed(1) + '%';
+    if (cpSpeed)    cpSpeed.textContent = speedC.toFixed(3) + 'c';
+
+    // Right panel: nearest wormhole target (reuse already-computed nearest)
+    if (wormholes.length > 0) {
+        let cpNearest = null, cpMinDist = Infinity;
+        wormholes.forEach(w => {
+            const d = camera.position.distanceTo(w.group.position);
+            if (d < cpMinDist) { cpMinDist = d; cpNearest = w; }
+        });
+        if (cpNearest) {
+            const cpTarget = document.getElementById('cp-target');
+            const cpDist   = document.getElementById('cp-dist');
+            if (cpTarget) cpTarget.textContent = cpNearest.type.toUpperCase();
+            if (cpDist)   cpDist.textContent   = (cpMinDist * lyScale).toFixed(3) + ' LY';
+        }
+    }
 }
+
 
 // ========================================
 // 3D Enhancements - Nebula Clouds
