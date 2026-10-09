@@ -420,6 +420,7 @@ function fireMiningLaser() {
 }
 
 function shatterCrystal(index, point) {
+    window.UniverseFun?.unlock('miner');
     const data = spaceCrystalsData[index];
     if (!data || data.scale.x <= 0.01) return; // already shattered
 

@@ -103,10 +103,12 @@
     });
     if (typeof disableAutopilot === "function") disableAutopilot();
   }
-  // Chat panel + shared terminal commands.
-  const comms = document.createElement("script");
-  comms.src = url("shared/comms.js");
-  document.head.append(comms);
+  // Chat panel + shared terminal commands, and the badges / a11y layer.
+  for (const file of ["shared/comms.js", "shared/fun.js"]) {
+    const s = document.createElement("script");
+    s.src = url(file);
+    document.head.append(s);
+  }
   document.addEventListener("DOMContentLoaded", () => {
     const bar = document.createElement("nav");
     bar.className = "universe-nav";
@@ -135,6 +137,7 @@
     dialog.setAttribute("aria-labelledby", "universe-title");
     dialog.innerHTML = `<button class="u-close" aria-label="Close star map">Close</button><p class="u-eyebrow">UDAY’S UNIVERSE / NAVIGATION</p><h2 id="universe-title">Choose your journey.</h2><p class="u-muted">Explore freely, follow a route, or go straight to a destination.</p><div class="u-grid"><button class="u-card" data-mode="explore"><span>01 / Free flight</span><strong>Explore</strong><span>Wormholes, planets and rover expeditions.</span></button><button class="u-card" data-mode="guided"><span>02 / Follow a route</span><strong>Guided tour</strong><span>A short, self-paced introduction.</span></button><button class="u-card" data-mode="quick"><span>03 / Direct navigation</span><strong>Quick access</strong><span>Get to the content in one click.</span></button></div><div id="u-route-picker" hidden><h3>Pick a route</h3><div class="u-actions"><button data-tour="professional">Professional · 4 stops</button><button data-tour="explorer">Explorer · 4 stops</button></div></div><div id="u-destinations"><h3>Destinations</h3><div class="u-grid">${destinations.map(([title, desc, path]) => `<a class="u-card" href="${url(path)}"><strong>${title}</strong><span>${desc}</span></a>`).join("")}</div></div><p class="u-muted" id="u-preference"></p><label><input type="checkbox" id="u-quiet"> Reduce decorative motion</label>`;
     document.body.append(dialog);
+    window.UniverseFun?.renderLog();
     function open() {
       stopMovement();
       if (document.pointerLockElement) document.exitPointerLock();

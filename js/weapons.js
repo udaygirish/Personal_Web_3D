@@ -90,6 +90,7 @@ function clearConsole() {
 }
 
 function executeConsoleCommand(command, rawCommand = command) {
+    window.UniverseFun?.countCommand();
     const parts = command.split(' ');
     const cmd = parts[0];
     const arg = parts.slice(1).join(' ');

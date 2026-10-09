@@ -141,6 +141,7 @@
     if (!message) return;
     addMessage("user", message);
     history.push({ role: "user", content: message });
+    window.UniverseFun?.unlock("comms");
     await configReady;
     const bodyEl = addMessage("assistant", "…");
     let reply;
@@ -210,11 +211,15 @@
     "- whoami: who flies this ship\n" +
     "- contact / cv / github / linkedin\n" +
     "- time: ship clock\n" +
+    "- badges / hint: your Captain's Log and a nudge toward the next badge\n" +
+    "- keys: controls & shortcuts (or press ?)\n" +
+    "- fortune: wisdom from the void\n" +
     "- clear: clear the console";
 
   const COMMANDS = [
     "goto", "open", "cd", "places", "ls", "map", "quick", "chat", "ask", "whoami",
     "about", "contact", "cv", "resume", "github", "linkedin", "time", "date", "clear",
+    "badges", "hint", "keys", "fortune",
   ];
 
   function run(cmd, rawArg, write, clear) {
@@ -271,6 +276,19 @@
       case "clear":
         clear?.();
         return true;
+      case "badges":
+        write(window.UniverseFun ? UniverseFun.progressText() : "LOG UNAVAILABLE.");
+        return true;
+      case "hint":
+        write(window.UniverseFun ? UniverseFun.hint() : "NO HINTS TODAY.");
+        return true;
+      case "keys":
+      case "controls":
+        window.UniverseFun?.openHelp();
+        return true;
+      case "fortune":
+        write(FORTUNES[Math.floor(Math.random() * FORTUNES.length)]);
+        return true;
       case "sudo":
         write("PERMISSION DENIED. NICE TRY, CADET.");
         return true;
@@ -278,6 +296,19 @@
         return false;
     }
   }
+
+  const FORTUNES = [
+    "\"Somewhere, something incredible is waiting to be known.\" — Carl Sagan",
+    "\"The best way to predict the future is to invent it.\" — Alan Kay",
+    "\"All models are wrong, but some are useful.\" — George Box",
+    "\"Simulation is doomed to succeed.\" — every roboticist, eventually",
+    "\"It works on my rover.\" — field log, sol 42",
+    "Gradient descent tip: if you're lost, take small steps downhill.",
+    "Kalman's advice: trust your model, but listen to your sensors.",
+    "There are 10 kinds of pilots: those who read binary and those who crash.",
+    "\"The universe is under no obligation to make sense to you.\" — Neil deGrasse Tyson",
+    "Loss went to NaN? Check your learning rate before you check the universe.",
+  ];
 
   // Tab-completion over shared + page-specific commands.
   function complete(value, localCommands = []) {

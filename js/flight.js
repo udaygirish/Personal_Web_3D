@@ -16,6 +16,7 @@ function showScene(sceneName) {
 }
 
 function startFlight() {
+    window.UniverseFun?.unlock('first_flight');
     if (isTransitioning || currentScene !== SCENES.COCKPIT) return;
     isTransitioning = true;
     currentScene = SCENES.OPEN_SPACE;
@@ -208,6 +209,7 @@ function toggleAutopilot() {
 }
 
 function enableAutopilot() {
+    window.UniverseFun?.unlock('autopilot');
     autopilotActive = true;
     
     // Reset manual flight input flags to prevent immediate auto-disengage

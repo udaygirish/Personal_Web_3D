@@ -213,6 +213,7 @@ function init() {
             }
             if (e.key === 'Enter') {
                 const rawCmd = terminalInput.value.trim();
+                if (rawCmd) window.UniverseFun?.countCommand();
                 const cmd = rawCmd.toLowerCase();
                 terminalInput.value = '';
                 if (cmd) {
